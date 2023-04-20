@@ -1,0 +1,66 @@
+// 一级标题16px 二级标题14px 三级标题12px 苹方-简-中黑体
+@mixin font-base-title($size: 16px, $color: var(--color_text), $weight: 0) {
+  font-size: $size;
+  color: $color;
+  font-weight: $weight;
+  font-family: PingFangSC-Medium, PingFang SC;
+}
+// 正文默认12px 苹方-简-常规体
+@mixin font-base($size: 12px, $color: var(--color_text), $weight: 0) {
+  font-size: $size;
+  color: $color;
+  font-weight: $weight;
+  font-family: PingFangSC-Regular, PingFang SC;
+}
+@mixin position-base($position: relative, $left: 0, $top: 0, $index: auto) {
+  position: $position;
+  left: $left;
+  top: $top;
+  z-index: $index;
+}
+@mixin overflow-base($x: auto, $y: auto) {
+  overflow-x: $x;
+  overflow-y: $y;
+}
+@mixin line($width: 100%) {
+  width: $width;
+  height: 1px;
+  background-color: var(--el-border-color);
+}
+@mixin ellipsis ($line: 1){
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: $line;
+  -webkit-box-orient: vertical;
+}
+
+@mixin dot-status ($color) {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: $color;
+}
+
+@mixin alert-status ($bg-color, $color) {
+  background-color: $bg-color;
+  color: $color;
+  border-radius: 4px;
+  margin: 8px auto;
+  padding: 0 8px;
+  .alert-title{
+    font-size: 14px;
+    margin: 0;
+    padding: 8px 0 8px;
+    display: flex;
+    .el-icon{
+      margin-right: 8px;
+    }
+  }
+  .alert-desc{
+    font-size: 12px;
+    line-height: 18px;
+    padding-bottom: 9px;
+  }
+}

@@ -1,0 +1,842 @@
+import { t } from '@/utils/language';
+
+export const CMDB_DATA_SEARCH_PARAMS = {
+  labelWidth: 0,
+  formConfig: [],
+  formBtnConfig: [
+    {
+      name: 'showmoreFilters',
+      emitName: 'showmoreFilters'
+    },
+    {
+      name: 'reset',
+      emitName: 'reset'
+    },
+    {
+      name: 'query',
+      emitName: 'query',
+      type: 'primary'
+    }
+  ]
+}
+
+export const CMDB_DATA_TABLE_THEAD: Array<any> = [
+  { type: 'slot', prop: 'order', label: '#', width: 50, align: 'center' },
+  { type: 'slot', prop: 'subtype', width: 200, label: t('resourceType'), align: 'center' },
+  { type: 'slot', prop: 'baseinfo', width: 450, label: t('basicInfo'), align: 'center' },
+  { type: 'slot', prop: 'system', width: 450, label: t('systemInfo'), align: 'center' },
+  { type: 'slot', prop: 'contact', width: 450, label: t('contactInfo'), align: 'center' },
+  { type: 'slot', prop: 'control', label: t('resourceOperate'), align: 'center' },
+]
+
+export const RESOURCE_TYPE_MODEL_CONFIG = {
+  width: '1000px',
+  title: t('selectServer'),
+  // noFooter: true,
+  noDefaultFooter: true,
+}
+
+/**
+ *   bindMsgDesc: '确定要绑定服务树吗？',
+  returnTitle: '归还资源',
+  returnMsgDesc: '确认要将资源归还到资源池吗',
+ */
+export const BIND_TREE_MAP = {
+  bind: {
+    title: t('bindTooltip'),
+    desc: t('bindMsgDesc'),
+  },
+  return: {
+    title: t('returnTitle'),
+    desc: t('returnMsgDesc')
+  }
+}
+
+export const device_dataRet = {
+  "stat": true,
+  "extcol": {
+    "audit": {
+      "name": "audit",
+      "alias": "审计",
+      "select": [
+        "YES",
+        "NO"
+      ]
+    },
+    "_ingestion_": {
+      "select": [
+        "YES",
+        "NO"
+      ],
+      "alias": "摄取",
+      "name": "_ingestion_"
+    },
+    "remarks": {
+      "name": "remarks",
+      "alias": "备注"
+    }
+  },
+  "treenamecol": "服务树",
+  "data": [
+    [
+      [
+        "操作系统",
+        "Linux"
+      ],
+      [
+        "名称",
+        "cicd-ops-hwbj4az1-01"
+      ],
+      [
+        "公网IP",
+        "114.116.222.174"
+      ],
+      [
+        "最大带宽Mbps",
+        "800"
+      ],
+      [
+        "所在可用区",
+        "cn-north-4a"
+      ],
+      [
+        "运维负责人",
+        "wengyisheng"
+      ],
+      [
+        "内存",
+        "1024"
+      ],
+      [
+        "实例类型",
+        "s6.small.1"
+      ],
+      [
+        "部门",
+        "聚云科技"
+      ],
+      [
+        "实例ID",
+        "49a50d86-42cf-4922-b725-27b5308e629a"
+      ],
+      [
+        "区域",
+        "cn-north-4"
+      ],
+      [
+        "基准带宽Mbps",
+        "100"
+      ],
+      [
+        "状态",
+        "ACTIVE"
+      ],
+      [
+        "业务负责人",
+        "wengyisheng"
+      ],
+      [
+        "内网IP",
+        "10.213.0.55"
+      ],
+      [
+        "tags",
+        "Department:聚云科技, Name:cicd-ops-hwbj4az1-01, OpsOwner:wengyisheng, Product:cicd发布代理, ProductOwner:wengyisheng, tree:cn_news_bigdata.news"
+      ],
+      [
+        "vpc_id",
+        "1d9f0888-dad6-4fb5-a634-d2567307eb0e"
+      ],
+      [
+        "hostId",
+        "df5d4d2f43a628e4434952dc36fef796c5a53b07bf50c14a455f9269"
+      ],
+      [
+        "_name_",
+        "cicd-ops-hwbj4az1-01"
+      ],
+      [
+        "locked",
+        "0"
+      ],
+      [
+        "user_id",
+        "0d410c04b20090274f76c00d08efc0d8"
+      ],
+      [
+        "created",
+        "2022-08-18T10:24:18Z"
+      ],
+      [
+        "updated",
+        "2023-02-10T20:15:55Z"
+      ],
+      [
+        "account",
+        "huawei001"
+      ],
+      [
+        "progress",
+        "0"
+      ],
+      [
+        "tag.Name",
+        "cicd-ops-hwbj4az1-01"
+      ],
+      [
+        "image.id",
+        "c897112b-7018-4362-b39b-668bf9b5096b"
+      ],
+      [
+        "vpc_name",
+        "NewsRecommend-BeiJing4-CM"
+      ],
+      [
+        "tag.tree",
+        "cn_news_bigdata.news"
+      ],
+      [
+        "tenant_id",
+        "0d4383f5af80f2b42f71c00db4defe2d"
+      ],
+      [
+        "flaver_id",
+        "s6.small.1"
+      ],
+      [
+        "accessIPv6",
+        ""
+      ],
+      [
+        "_synctime_",
+        "2023-03-02 18:10:31"
+      ],
+      [
+        "accessIPv4",
+        ""
+      ],
+      [
+        "tag.Product",
+        "cicd发布代理"
+      ],
+      [
+        "host_status",
+        "UP"
+      ],
+      [
+        "accountuuid",
+        "huawei.1"
+      ],
+      [
+        "_pricestat_",
+        "0"
+      ],
+      [
+        "flavor.disk",
+        "0"
+      ],
+      [
+        "flavor.name",
+        "s6.small.1"
+      ],
+      [
+        "description",
+        ""
+      ],
+      [
+        "config_drive",
+        ""
+      ],
+      [
+        "tag.OpsOwner",
+        "wengyisheng"
+      ],
+      [
+        "flavor.vcpus",
+        "1"
+      ],
+      [
+        "tag.Department",
+        "聚云科技"
+      ],
+      [
+        "sys_tags.0.key",
+        "_sys_enterprise_project_id"
+      ],
+      [
+        "addresses.0.key",
+        "1d9f0888-dad6-4fb5-a634-d2567307eb0e"
+      ],
+      [
+        "sys_tags.0.value",
+        "0"
+      ],
+      [
+        "tag.ProductOwner",
+        "wengyisheng"
+      ],
+      [
+        "OS-DCF:diskConfig",
+        "MANUAL"
+      ],
+      [
+        "_default_ip_kind_",
+        "inip"
+      ],
+      [
+        "OS-EXT-STS:vm_state",
+        "active"
+      ],
+      [
+        "auto_terminate_time",
+        ""
+      ],
+      [
+        "OS-EXT-SRV-ATTR:host",
+        "df5d4d2f43a628e4434952dc36fef796c5a53b07bf50c14a455f9269"
+      ],
+      [
+        "security_groups.0.id",
+        "e9093a61-7129-4d70-930b-09af8fc7fc3c"
+      ],
+      [
+        "enterprise_project_id",
+        "0"
+      ],
+      [
+        "OS-EXT-STS:power_state",
+        "1"
+      ],
+      [
+        "OS-SRV-USG:launched_at",
+        "2022-08-18T10:24:29.000000"
+      ],
+      [
+        "security_groups.0.name",
+        "dashboard-news-base"
+      ],
+      [
+        "addresses.0.value.0.addr",
+        "10.213.0.55"
+      ],
+      [
+        "OS-EXT-SRV-ATTR:hostname",
+        "cicd-ops-hwbj4az1-01"
+      ],
+      [
+        "addresses.0.value.1.addr",
+        "114.116.222.174"
+      ],
+      [
+        "OS-EXT-SRV-ATTR:kernel_id",
+        ""
+      ],
+      [
+        "OS-EXT-SRV-ATTR:ramdisk_id",
+        ""
+      ],
+      [
+        "addresses.0.value.1.version",
+        "4"
+      ],
+      [
+        "addresses.0.value.0.version",
+        "4"
+      ],
+      [
+        "OS-EXT-AZ:availability_zone",
+        "cn-north-4a"
+      ],
+      [
+        "OS-EXT-SRV-ATTR:launch_index",
+        "0"
+      ],
+      [
+        "OS-EXT-SRV-ATTR:instance_name",
+        "instance-0187ae82"
+      ],
+      [
+        "OS-EXT-SRV-ATTR:reservation_id",
+        "r-yynn9smb"
+      ],
+      [
+        "OS-EXT-SRV-ATTR:root_device_name",
+        "/dev/vda"
+      ],
+      [
+        "OS-EXT-SRV-ATTR:hypervisor_hostname",
+        "698fee1e33125446081d211ae7962cbf0174dd3f2cd49d8dd46da8f7"
+      ],
+      [
+        "addresses.0.value.0.OS-EXT-IPS:type",
+        "fixed"
+      ],
+      [
+        "addresses.0.value.1.OS-EXT-IPS:type",
+        "floating"
+      ],
+      [
+        "addresses.0.value.0.OS-EXT-IPS:port_id",
+        "b190cf05-eff2-4f47-94b9-4f6b1fef731f"
+      ],
+      [
+        "addresses.0.value.1.OS-EXT-IPS:port_id",
+        "b190cf05-eff2-4f47-94b9-4f6b1fef731f"
+      ],
+      [
+        "os-extended-volumes:volumes_attached.0.id",
+        "83c9babe-9555-4165-adfa-2f1b20a86b9b"
+      ],
+      [
+        "addresses.0.value.0.OS-EXT-IPS-MAC:mac_addr",
+        "fa:16:3e:82:ac:e3"
+      ],
+      [
+        "addresses.0.value.1.OS-EXT-IPS-MAC:mac_addr",
+        "fa:16:3e:82:ac:e3"
+      ],
+      [
+        "os-extended-volumes:volumes_attached.0.device",
+        "/dev/vda"
+      ],
+      [
+        "os-extended-volumes:volumes_attached.0.bootIndex",
+        "0"
+      ],
+      [
+        "os-extended-volumes:volumes_attached.0.delete_on_termination",
+        "false"
+      ],
+      [
+        "服务树",
+        "bbb.bb,aaa.aaa.aaa"
+      ],
+      [
+        "_tree_",
+        "bbb.bb,aaa.aaa.aaa"
+      ],
+      [
+        "audit",
+        "YES"
+      ],
+      [
+        "remarks",
+        "rerege"
+      ],
+      [
+        "_ingestion_",
+        "NO"
+      ]
+    ],
+    [
+      [
+        "操作系统",
+        "Linux"
+      ],
+      [
+        "名称",
+        "cicd-ops-hwbj4az1-01"
+      ],
+      [
+        "公网IP",
+        "114.116.222.174"
+      ],
+      [
+        "最大带宽Mbps",
+        "800"
+      ],
+      [
+        "所在可用区",
+        "cn-north-4a"
+      ],
+      [
+        "运维负责人",
+        "wengyisheng"
+      ],
+      [
+        "内存",
+        "1024"
+      ],
+      [
+        "实例类型",
+        "s6.small.1"
+      ],
+      [
+        "部门",
+        "聚云科技"
+      ],
+      [
+        "实例ID",
+        "49a50d86-42cf-4922-b725-27b5308e629a"
+      ],
+      [
+        "区域",
+        "cn-north-4"
+      ],
+      [
+        "基准带宽Mbps",
+        "100"
+      ],
+      [
+        "状态",
+        "ACTIVE"
+      ],
+      [
+        "业务负责人",
+        "wengyisheng"
+      ],
+      [
+        "内网IP",
+        "10.213.0.55"
+      ],
+      [
+        "tags",
+        "Department:聚云科技, Name:cicd-ops-hwbj4az1-01, OpsOwner:wengyisheng, Product:cicd发布代理, ProductOwner:wengyisheng, tree:cn_news_bigdata.news"
+      ],
+      [
+        "vpc_id",
+        "1d9f0888-dad6-4fb5-a634-d2567307eb0e"
+      ],
+      [
+        "hostId",
+        "df5d4d2f43a628e4434952dc36fef796c5a53b07bf50c14a455f9269"
+      ],
+      [
+        "_name_",
+        "cicd-ops-hwbj4az1-01"
+      ],
+      [
+        "locked",
+        "0"
+      ],
+      [
+        "user_id",
+        "0d410c04b20090274f76c00d08efc0d8"
+      ],
+      [
+        "created",
+        "2022-08-18T10:24:18Z"
+      ],
+      [
+        "updated",
+        "2023-02-10T20:15:55Z"
+      ],
+      [
+        "account",
+        "huawei002"
+      ],
+      [
+        "progress",
+        "0"
+      ],
+      [
+        "tag.Name",
+        "cicd-ops-hwbj4az1-01"
+      ],
+      [
+        "image.id",
+        "c897112b-7018-4362-b39b-668bf9b5096b"
+      ],
+      [
+        "vpc_name",
+        "NewsRecommend-BeiJing4-CM"
+      ],
+      [
+        "tag.tree",
+        "cn_news_bigdata.news"
+      ],
+      [
+        "tenant_id",
+        "0d4383f5af80f2b42f71c00db4defe2d"
+      ],
+      [
+        "flaver_id",
+        "s6.small.1"
+      ],
+      [
+        "accessIPv6",
+        ""
+      ],
+      [
+        "_synctime_",
+        "2023-03-02 18:11:08"
+      ],
+      [
+        "accessIPv4",
+        ""
+      ],
+      [
+        "tag.Product",
+        "cicd发布代理"
+      ],
+      [
+        "host_status",
+        "UP"
+      ],
+      [
+        "accountuuid",
+        "huawei.ecs.1"
+      ],
+      [
+        "_pricestat_",
+        "0"
+      ],
+      [
+        "flavor.disk",
+        "0"
+      ],
+      [
+        "flavor.name",
+        "s6.small.1"
+      ],
+      [
+        "description",
+        ""
+      ],
+      [
+        "config_drive",
+        ""
+      ],
+      [
+        "tag.OpsOwner",
+        "wengyisheng"
+      ],
+      [
+        "flavor.vcpus",
+        "1"
+      ],
+      [
+        "tag.Department",
+        "聚云科技"
+      ],
+      [
+        "sys_tags.0.key",
+        "_sys_enterprise_project_id"
+      ],
+      [
+        "addresses.0.key",
+        "1d9f0888-dad6-4fb5-a634-d2567307eb0e"
+      ],
+      [
+        "sys_tags.0.value",
+        "0"
+      ],
+      [
+        "tag.ProductOwner",
+        "wengyisheng"
+      ],
+      [
+        "OS-DCF:diskConfig",
+        "MANUAL"
+      ],
+      [
+        "_default_ip_kind_",
+        "inip"
+      ],
+      [
+        "OS-EXT-STS:vm_state",
+        "active"
+      ],
+      [
+        "auto_terminate_time",
+        ""
+      ],
+      [
+        "OS-EXT-SRV-ATTR:host",
+        "df5d4d2f43a628e4434952dc36fef796c5a53b07bf50c14a455f9269"
+      ],
+      [
+        "security_groups.0.id",
+        "e9093a61-7129-4d70-930b-09af8fc7fc3c"
+      ],
+      [
+        "enterprise_project_id",
+        "0"
+      ],
+      [
+        "OS-EXT-STS:power_state",
+        "1"
+      ],
+      [
+        "OS-SRV-USG:launched_at",
+        "2022-08-18T10:24:29.000000"
+      ],
+      [
+        "security_groups.0.name",
+        "dashboard-news-base"
+      ],
+      [
+        "addresses.0.value.0.addr",
+        "10.213.0.55"
+      ],
+      [
+        "OS-EXT-SRV-ATTR:hostname",
+        "cicd-ops-hwbj4az1-01"
+      ],
+      [
+        "addresses.0.value.1.addr",
+        "114.116.222.174"
+      ],
+      [
+        "OS-EXT-SRV-ATTR:kernel_id",
+        ""
+      ],
+      [
+        "OS-EXT-SRV-ATTR:ramdisk_id",
+        ""
+      ],
+      [
+        "addresses.0.value.1.version",
+        "4"
+      ],
+      [
+        "addresses.0.value.0.version",
+        "4"
+      ],
+      [
+        "OS-EXT-AZ:availability_zone",
+        "cn-north-4a"
+      ],
+      [
+        "OS-EXT-SRV-ATTR:launch_index",
+        "0"
+      ],
+      [
+        "OS-EXT-SRV-ATTR:instance_name",
+        "instance-0187ae82"
+      ],
+      [
+        "OS-EXT-SRV-ATTR:reservation_id",
+        "r-yynn9smb"
+      ],
+      [
+        "OS-EXT-SRV-ATTR:root_device_name",
+        "/dev/vda"
+      ],
+      [
+        "OS-EXT-SRV-ATTR:hypervisor_hostname",
+        "698fee1e33125446081d211ae7962cbf0174dd3f2cd49d8dd46da8f7"
+      ],
+      [
+        "addresses.0.value.0.OS-EXT-IPS:type",
+        "fixed"
+      ],
+      [
+        "addresses.0.value.1.OS-EXT-IPS:type",
+        "floating"
+      ],
+      [
+        "addresses.0.value.0.OS-EXT-IPS:port_id",
+        "b190cf05-eff2-4f47-94b9-4f6b1fef731f"
+      ],
+      [
+        "addresses.0.value.1.OS-EXT-IPS:port_id",
+        "b190cf05-eff2-4f47-94b9-4f6b1fef731f"
+      ],
+      [
+        "os-extended-volumes:volumes_attached.0.id",
+        "83c9babe-9555-4165-adfa-2f1b20a86b9b"
+      ],
+      [
+        "addresses.0.value.0.OS-EXT-IPS-MAC:mac_addr",
+        "fa:16:3e:82:ac:e3"
+      ],
+      [
+        "addresses.0.value.1.OS-EXT-IPS-MAC:mac_addr",
+        "fa:16:3e:82:ac:e3"
+      ],
+      [
+        "os-extended-volumes:volumes_attached.0.device",
+        "/dev/vda"
+      ],
+      [
+        "os-extended-volumes:volumes_attached.0.bootIndex",
+        "0"
+      ],
+      [
+        "os-extended-volumes:volumes_attached.0.delete_on_termination",
+        "false"
+      ],
+      [
+        "服务树",
+        "bbb.bb,aaa.aaa.aaa"
+      ],
+      [
+        "_tree_",
+        "bbb.bb,aaa.aaa.aaa"
+      ],
+      [
+        "audit",
+        "YES"
+      ],
+      [
+        "remarks",
+        "rerege"
+      ],
+      [
+        "_ingestion_",
+        "NO"
+      ]
+    ]
+  ],
+  "grpcol": {
+    "system": [
+      {
+        "name": "操作系统"
+      },
+      {
+        "name": "实例类型"
+      },
+      {
+        "name": "flavor.vcpus",
+        "tail": "(核)"
+      },
+      {
+        "name": "内存",
+        "tail": "(兆)"
+      },
+      {
+        "prefix": "tag."
+      },
+      {
+        "prefix": "security_groups."
+      }
+    ],
+    "baseinfo": [
+      {
+        "name": "名称"
+      },
+      {
+        "name": "实例ID"
+      },
+      {
+        "name": "状态",
+        "success": [
+          "ACTIVE"
+        ]
+      },
+      {
+        "name": "account",
+        "color": "red"
+      },
+      {
+        "name": "所在可用区"
+      },
+      {
+        "name": "部门"
+      },
+      {
+        "name": "业务负责人"
+      },
+      {
+        "name": "运维负责人"
+      },
+      {
+        "name": "公网IP"
+      },
+      {
+        "name": "内网IP"
+      }
+    ]
+  }
+}

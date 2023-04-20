@@ -1,0 +1,238 @@
+
+:root {
+  --color_primary: #757FFF; // 主色选中状态
+  --color_primary_50: rgba(117, 127, 255, .5);
+  --color_primary_30: rgba(117, 127, 255, .3);
+  --color_primary_10: rgba(117, 127, 255, .1);
+  --color_menu_text: #ACB3CB;
+
+  --color_white: #FFF!important;  
+
+  // 仪表盘配色
+  --color-chart-1: #757FFF;
+  --color-chart-2: #E96464;
+  --color-chart-3: #FFDD75;
+  --color-chart-4: #38C6C0;
+  --color-chart-5: #8879F0;
+
+  --color-chart-6: #F39C96;
+  --color-chart-7: #939BFF;
+  --color-chart-8: #FFF3C7;
+  --color-chart-9: #88D6C8;
+  --color-chart-10: #A18DFB;
+
+  --color-chart-11: #E96579;
+  --color-chart-12: #F8B96C;
+  --color-chart-13: #FAC7AA;
+  --color-chart-14: #92DCA1;
+  --color-tip-green: #3CC0A4;
+  --color-tip-red: #F56C6B;
+  // 重新定义element值
+  --el-component-size: 32px!important;
+
+  --el-color-primary: #757FFF!important;
+  --el-color-danger: #E96464!important;
+  --el-color-error: #E96464!important;
+  --el-color-warning: #F8B96C!important;
+  --el-color-success: #38C6C0!important;
+  --el-border-color: #ACB3CB!important;
+  --el-color-gray: #D0D5E0 !important;
+  --el-menu-base-level-padding: 16px!important;
+  --el-menu-item-height: 40px!important;
+  --el-menu-sub-item-height: 40px!important;
+  --el-menu-hover-bg-color: transparent!important;
+  --el-color-primary-light-5: #939BFF!important; // 按钮link悬浮的颜色
+  --el-color-primary-light-9: rgba(117, 127, 255, .1)!important;
+
+  --el-text-color-disabled: transparent!important; // 组合输入框样式优化
+  // --el-button-disabled-border-color: transparent; // 禁用按钮border颜色
+  --el-alert-warning-bg: #DEE1FF!important; // 警告背景色
+  --el-alert-warning-color: #333555!important; // 警告字体色
+  --el-alert-warning-icon-color: #757FFF!important; // 警告icon色
+
+}
+// 定义明暗主题的颜色
+.light {
+  // 中性色
+  --color_menu_1_bg: #111544; // 头部一级导航
+  --color_menu_2_bg: #fff; // 二级导航颜色
+  --color_main_bg: #F0F3FA; // 主背景色
+  --color_menu_shadow: rgba(240,243,250, .5); // 二级导航投影 50%
+  --color_table_header_bg: #F6F9FD; // 表头颜色
+  --color_border: #EFEFF5; //分割线颜色
+  --color_input_bg: #F6F9FD; // 输入框背景颜色
+  --color_dialog_bg: #FFFFFF; // 弹框背景颜色
+  --color_dialog_shadow: rgba(240,243,250, .7); // 弹窗投影 70%
+  --color_input_active_bg: #F1F2FF; // 下拉等选中的背景色
+  --color_select_item_text: #050626; // select Item 默认文字的颜色
+  --color_input_text: #050626; // 输入框文字的颜色
+
+  // 文字颜色
+  --color_text_menu_1: #ACB3CB; // 头部一级导航-默认
+  --color_text_menu_1_active: #FFFFFF; // 头部一级导航选中
+  --color_text_menu_2: #687591; // 二级导航-默认
+  --color_text_menu_2_active: #757FFF; // 头部二级导航选中
+  --color_text: #050626; // 正文颜色
+  --color_text_secondary: #3E3F57; // 次要文字
+  --color_text_tip: #ACB3CB; // 提示类文字、icon按钮中的文字颜色
+  --color_text_disabled: #CFD6ED; // 不可点击
+
+  // 按钮颜色
+  --color_btn_bg: #757FFF; // 主按钮色
+  --color_btn_text: #fff; // 主按钮文字颜色
+  --color_btn_secondary_bg: #F1F2FF; // 次要按钮/不可点击
+  --color_btn_secondary_text: #31345D; // 次要按钮文字
+  --color_btn_disabled_text: #CFD6ED; // 不可点击文字
+  --color_btn_hover_bg: #939BFF; // 主按钮悬浮背景色
+  --color_btn_secondary_hover_bg: rgba(117, 127, 255, .1);; // 次按钮悬浮背景色
+  --color_btn_disabled_bg: #EEF1F7; // 主按钮禁用背景色
+
+  --color_text_tip_primary: #757FFF; // 文字提示类
+  --color_text_danger: #E96464; // 文本款类提示/删除
+  --color_text_success: #38C6C0; // 操作成功
+  --color_text_warning: #F8B96C; // 警告色
+  --color_disabled: #EEF1F7; // 不可点击
+  --color_board: #FFFFFF; // 看板颜色
+
+  --color_header_env_bg: #F6F9FD; // 头部环境切换背景颜色
+  --color_header_env_text: #ACB3CB; // 头部环境切换文字颜色
+  --color_text_select_active: #757FFF; // select 文字选中的颜色
+
+  
+  --color_bg: #fff; // 看板颜色
+  --color_bg_con: #fff; // body看板颜色
+  --color_breadcrumb_text: #B2B2B2; // breadcrumb的文字颜色
+  --color_list_active_bg: rgba(117,127,255, .1); // 服务套餐左侧选中背景颜色
+  --color_fold_panel_header_bg: #F4F5FC; // 折叠面板头部颜色
+  --color-search-button-disable: #D7DBE9; // 复合搜索按钮禁用样式
+  --color-button-link-border: #E1E2ED; // link按钮边框颜色
+  --color-header-line: #E1E2ED; // 头部分割线
+  --color-input-bg: #F6F9FD; // 输入框的背景颜色
+  --color-dialog-line: #EFEFF5; // 弹框中上下线的颜色
+
+  --coloe-input-append-bg: #E8EEF8; // 符合按钮的背景颜色
+
+  --color-date-color-overlay: #fff!important; // 时间选择框面板的颜色
+  --color-date-disabled-text: #ACB3CB; // 时间选择框面板的上个月、下个月文字的颜色
+
+
+
+  // 重写element的value
+  --el-fill-color-blank: #fff!important;
+  --el-text-color-primary: #050626!important;
+  
+  --el-bg-color: #FFFFFF!important; 
+  --el-text-color-secondary: #687591!important; // header头文字的颜色
+  --el-fill-color-light: #F4F5FC!important;// 表格hover的颜色
+  --el-border-color-light: #e4e7ed!important; // el-card的边框颜色
+  --el-border-color-lighter: #E1E2ED!important; // 表格框架
+  --el-radio-checked-color: #ffffff; // 单选按钮选中样式
+  --el-calendar-prev-color: #ACB3CB; // 日历字体颜色
+  --el-calendar-current-color: #3E3F57; // 日历字体颜色
+  --el-calendar-thead-border: rgba(153,153,153,0.2); // 日历边框
+  --el-calendar-icon-color: #ACB3CB; // 日历箭头颜色
+  --el-pagination-all-total-color: #687591; // 分页组件总条数
+  --el-pagination-all-page-color: #21243F; // 总页数字体颜色
+
+  --el-color-primary-light-8: #d9ecff!important; // tag边框
+  --el-text-color-placeholder: #CFD6ED!important;  // 禁用按钮的文本颜色
+}
+.dark {
+  // 中性色
+  --color_menu_1_bg: #141732; // 头部一级导航
+  --color_menu_2_bg: #242642; // 二级导航颜色
+  --color_main_bg: #141420; // 主背景色
+  --color_menu_shadow: transparent; // 二级导航投影 50%
+  --color_table_header_bg: #191A2B; // 表头颜色
+  --color_border: #1D1F38; //分割线颜色
+  --color_input_bg: #191A2B; // 输入框背景颜色
+  --color_dialog_bg: #242642; // 弹框背景颜色
+  --color_dialog_shadow: #000000; // 弹窗投影
+  --color_input_active_bg: rgba(117, 127, 255, .1); // 下拉等选中的背景色
+  --color_select_item_text: #ACB3CD; // select Item 默认文字的颜色
+  --color_input_text: #fff; // 输入框文字的颜色
+
+  // 文字颜色
+  --color_text_menu_1: #ACB3CB; // 头部一级导航-默认
+  --color_text_menu_1_active: #FFFFFF; // 头部一级导航选中
+  --color_text_menu_2: #ACB3CB; // 二级导航-默认、dialog的title
+  --color_text_menu_2_active: #FFFFFF; // 头部二级导航选中
+  --color_text: #FFFFFF; // 正文颜色
+  --color_text_secondary: #ACB3CB; // 次要文字
+  --color_text_tip: #62637B; // 提示类文字、icon按钮中的文字颜色
+  --color_text_disabled: #31345D; // 不可点击
+
+  // 按钮颜色
+  --color_btn_bg: #757FFF; // 主按钮色
+  --color_btn_text: #fff; // 主按钮文字颜色
+  --color_btn_secondary_bg: #31345D; // 次要按钮/不可点击
+  --color_btn_secondary_text: #ACB3CB; // 次要按钮文字
+  --color_btn_disabled_text: #676A98; // 不可点击文字
+  --color_btn_hover_bg: #939BFF; // 主按钮悬浮背景色
+  --color_btn_secondary_hover_bg: #30357D; // 次按钮悬浮背景色
+  --color_btn_disabled_bg: #31345D; // 主、次按钮禁用背景色
+
+
+  --color_text_tip_primary: #757FFF; // 文字提示类
+  --color_text_danger: #E96464; // 文本款类提示/删除
+  --color_text_success: #38C6C0; // 操作成功
+  --color_text_warning: #F8B96C; // 警告色
+  --color_disabled: #31345D; // 不可点击
+
+  --color_board: #242642; // 看板颜色
+
+  --color_header_env_bg: #242642; // 头部环境切换背景颜色
+  --color_header_env_text: #62637B; // 头部环境切换文字颜色、备注类信息
+  --color_text_select_active: #fff; // select 文字选中的颜色
+
+
+
+  --color_bg: #242642; // 看板颜色
+  --color_bg_con: transparent;
+  --color_breadcrumb_text: #33345B; // breadcrumb的文字颜色
+  --color_table_header_bg: #191A2B;// header头的颜色
+  --color_list_active_bg: rgba(117,127,255, .1); // 服务套餐左侧选中背景颜色
+  --color_fold_panel_header_bg: #191A2B; // 折叠面板头部颜色
+  
+ 
+  --color-search-button-disable: #D7DBE9; // 复合搜索按钮禁用样式
+  --color-button-link-border: #1D1F38; // link按钮边框颜色
+
+  --color-header-line: #ACB3CB; // 头部分割线
+  --color-input-bg: #191A2B; // 输入框的背景颜色
+
+  --color-dialog-line: #323557; // 弹框中上下线的颜色
+
+  --coloe-input-append-bg: #31345D; // 符合按钮的背景颜色
+
+  --color-date-color-overlay: #242642!important; // 时间选择框面板的颜色
+  --color-date-disabled-text: #676889; // 时间选择框面板的上个月、下个月文字的颜色
+
+
+
+
+  
+  // 重写element的value
+  --el-fill-color-blank: transparent!important;// 折叠面板内容颜色
+  --el-text-color-primary: #FFFFFF!important;
+  --el-bg-color: #242642!important; // dialog背景颜色
+  --el-text-color-secondary: #ACB3CB!important; // header头文字的颜色
+  --el-fill-color-light: #2D3056!important;// 表格hover的颜色
+  --el-border-color-light: #33345B!important; // el-card的边框颜色
+  --el-border-color-lighter: #1D1F38!important; // 表格框架
+  --el-radio-checked-color: #ffffff; // 单选按钮选中样式
+  --el-calendar-prev-color: #ACB3CB; // 日历字体颜色
+  --el-calendar-current-color: #fff; // 日历字体颜色
+  --el-calendar-thead-border: rgba(153,153,153,0.2); // 日历边框
+  --el-calendar-icon-color: #ACB3CB; // 日历箭头颜色
+  --el-pagination-all-total-color: #687591; // 分页组件总条数
+  --el-pagination-all-page-color: #21243F; // 总页数字体颜色
+
+
+  --el-color-primary-light-8: #3E3F57!important; // tag边框
+  --el-text-color-placeholder: #62637B!important; // 输入框 placeholder的颜色
+  --el-mask-color: #3E3F57!important; // loading遮罩的背景色
+  --el-text-color-regular: #687591!important; // checkbox 文字颜色
+  // --el-checkbox-checked-icon-color: #687591!important; // checkbox 框的颜色
+
+}
