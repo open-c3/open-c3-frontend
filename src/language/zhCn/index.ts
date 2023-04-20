@@ -1177,5 +1177,15 @@ export default {
   myApproval: '我的审批',
   editApprovalTitle: `审批：{name}`,
   approvalAgree: '确定同意吗',
-  approvalRefuse: '确定拒绝吗'
+  approvalRefuse: '确定拒绝吗',
+  sourceFile: '源文件',
+  selectSharedFile: '选择共享文件',
+  selectSourceServerFile: '选择源服务器文件',
+  selectBuildFile: '选择构建文件',
+  fileList: '文件列表',
+  serverAddress: '服务器地址',
+  environment: '环境',
+  serverFile: '服务器文件',
+  selectFile:'选择文件',
+  manualInput: '手动输入',
 }
