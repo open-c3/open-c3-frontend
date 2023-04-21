@@ -1164,4 +1164,18 @@ export default {
   serverFile: 'Server File',
   selectFile: 'select File',
   manualInput: 'Manual Input',
+  scpSelectNote:'Please click on the table row to select the file',
+  defultEmpty: 'default empty',
+  node: 'node',
+  buildFile:'Build File',
+  ciThead: 'Build ID (Pipeline ID)',
+  scpBuildNote:'Please fill in the build ID and version first',
+  targetFile: 'Target file',
+  targetPath: 'Target path',
+  syncDelete:'synchronous delete',
+  fileOwner:'file Owner',
+  filePermissions:'File Permissions',
+  targetPathTip:'The destination path ending with ‘/’ represents a directory and not a file. For example,/tmp/means to save the file to this directory,/tmp/test.txt means to save the file to this directory, and the file name is test.txt',
+  scpDeleteTip: 'When enabled, delete files not found in SRC in DEST when synchronizing folders',
+  
 }

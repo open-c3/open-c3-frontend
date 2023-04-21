@@ -7,7 +7,7 @@ export const SCP_SOURCE_FILE_SELECT_TYPE_HEAD = {
     data: [],
     thead: [
       { prop: 'name', align: 'center', label: t('fileList') },
-      { type: 'slot', prop: 'serverAddress', align: 'center', label: t('serverAddress') }
+      { type: 'slot', prop: 'address', align: 'center', label: t('serverAddress') }
     ]
   },
   server: {
@@ -16,7 +16,7 @@ export const SCP_SOURCE_FILE_SELECT_TYPE_HEAD = {
     data: [],
     thead: [
       { type: 'slot', prop: 'name', align: 'center', label: t('fileList') },
-      { type: 'slot', prop: 'serverAddress', align: 'center', label: t('serverAddress') }
+      { type: 'slot', prop: 'address', align: 'center', label: t('serverAddress') }
     ]
   },
   build: {
@@ -35,15 +35,15 @@ export const SHARE_DIALOG_CONFIG = {
   width: '1000px',
 }
 
-export const SERVER_DIALOG_CONFIG = {
-  title: t('serverFile'),
+export const BUILD_DIALOG_CONFIG = {
+  title: t('buildFile'),
   width: '1000px',
 }
 
-export const BUILD_DIALOG_CONFIG = {
-  title: t('serverFile'),
-  width: '1000px',
-}
+export const BUILD_THEAD_CONFIG = [
+  { type: 'slot', prop: 'ci', align: 'center', label: t('ciThead') },
+  { type: 'slot', prop: 'version', align: 'center', label: t('version') }
+]
 
 export const TABS_CONFIG: { label: string, name: string }[] = [
   {
@@ -55,6 +55,118 @@ export const TABS_CONFIG: { label: string, name: string }[] = [
     name: 'input'
   }
 ]
+
+export const TARGET_SOURCE_CONFIG = {
+  width: '1000px',
+  title: 'targetFile',
+  noDefaultFooter: true,
+  form: {
+    position: 'right',
+    gutter: 20,
+    labelWidth: 150,
+    config: [
+      {
+        label: 'targetPath',
+        prop: 'dp',
+        type: 'slot',
+        class: 'w450',
+        rules: [
+          { required: true, trigger: 'blur', message: t('requiredText') },
+        ],
+        span: 24
+      },
+      {
+        label: 'syncDelete',
+        prop: 'scp_delete',
+        type: 'slot',
+        class: 'w450',
+        span: 24
+      },
+      {
+        label: 'executionAccount',
+        prop: 'dstUser',
+        type: 'slot',
+        rules: [
+          { required: true, trigger: 'change', message: t('requiredText') }
+        ],
+        span: 24
+      },
+      {
+        label: 'targetMachine',
+        prop: 'choiceResult',
+        type: 'slot',
+        class: 'w450',
+        data: [],
+        rules: [
+          { required: true, trigger: 'change', message: t('requiredText') }
+        ],
+        span: 24
+      },
+      {
+        label: 'fileOwner',
+        prop: 'fileChown',
+        type: 'slot',
+        class: 'w450',
+        data: [],
+        span: 24
+
+      },
+      {
+        label: 'filePermissions',
+        prop: 'chmod',
+        type: 'slot',
+        class: 'w450',
+        data: [],
+        span: 24
+
+      },
+      {
+        label: 'Timeout',
+        prop: 'timeout',
+        type: 'slot',
+        class: 'w450',
+        data: [],
+        rules: [
+          { required: true, trigger: 'blur', message: t('requiredText') },
+        ],
+        span: 24
+      },
+      {
+        label: 'effectiveEnv',
+        prop: 'unClickDeployenv',
+        type: 'slot',
+        class: 'w450',
+        data: [],
+        rules: [
+          { required: true, trigger: 'blur', message: t('requiredText') },
+        ],
+        span: 24
+      },
+      {
+        label: 'effectiveAction',
+        prop: 'unClickAction',
+        type: 'slot',
+        class: 'w450',
+        data: [],
+        rules: [
+          { required: true, trigger: 'blur', message: t('requiredText') },
+        ],
+        span: 24
+      },
+      {
+        label: 'Batch',
+        prop: 'unClickBatches',
+        type: 'slot',
+        class: 'w450',
+        data: [],
+        rules: [
+          { required: true, trigger: 'blur', message: t('requiredText') },
+        ],
+        span: 24
+      },
+    ]
+  }
+}
 
 export const bytesToSize = (bytes: number) => {
   if (bytes === 0) return '0 B';

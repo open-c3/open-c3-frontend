@@ -15,37 +15,48 @@
           </div>
         </div>
       </template>
-      <Table :thead="sourceFileType[activeName].thead" :data="sourceFileType[activeName].data" class="source-table">
+      <Table :thead="sourceFileType[activeName].thead" :data="sourceFileType[activeName].data" class="source-table"
+        :tableLoading="sourceFileType[activeName].loading">
         <template #name="{ row }">
           <div>
             <el-input v-model="row.name" />
           </div>
         </template>
-        <template #serverAddress="{ row }">
-          <div>
+        <template #address="{ row }">
+          <div v-if="!row.address">{{$t('defultEmpty')}}</div>
+          <div v-else>
+            <span>{{$t('node')}}</span>：
+            <span>{{row.address || '-'}}</span>
           </div>
         </template>
       </Table>
     </el-card>
   </div>
-  <component :is="compType[activeName]" v-if="compFlag" v-model="compFlag" :config="compConfig[activeName]" :compParams="compParams" @close="compClose"
-  @success="compSuccess"
-  />
+  <component :ref="compType[activeName]" :is="compType[activeName]" v-if="compFlag" v-model="compFlag" :treeId="String(treeId)"
+    :config="compConfig[activeName]" :radioOption="SELECT_SERVER_RADIO_OPTION" :editItem="compParams" @close="compClose"
+    @success="compSuccess" />
+
 </template>
 
 <script lang="ts">
 import { defineComponent, onMounted, reactive, toRefs, computed, watch, getCurrentInstance, ComponentInternalInstance } from 'vue'
 import Table from '@/components/table/index.vue'
-import ShareCard from './ShareCard.vue'
+import store from '@/store'
+import Selectserver from '@/views/quickentry/components/Selectserver.vue'
+import ShareCardModal from './ShareCardModal.vue'
+import BuildCardModal from './BuildCardModal.vue'
 import {
   SHARE_DIALOG_CONFIG,
-  SERVER_DIALOG_CONFIG,
   BUILD_DIALOG_CONFIG,
   SCP_SOURCE_FILE_SELECT_TYPE_HEAD
 } from '../config'
+import {
+  SELECT_SERVER_RADIO_OPTION,
+  ADD_ENV_GROUPS_CONFIG,
+} from '../../config'
 
 export default defineComponent({
-  components: { Table, ShareCard },
+  components: { Table, ShareCardModal, Selectserver, BuildCardModal },
   props: {
     treeId: {
       type: String,
@@ -53,35 +64,76 @@ export default defineComponent({
     }
   },
   setup() {
+    const { proxy } = getCurrentInstance() as ComponentInternalInstance
+    const scpSourceFile = computed(() => { return store.getters.scpSourceFile })
+    const selectIpArray = computed(() => {
+      return store.getters.selectIpArray
+    })
+
+    const selectGroupArray = computed(() => {
+      return store.getters.selectGroupArray
+    })
+
+    const customArray = computed(() => {
+      return store.getters.customArray
+    })
+
     const state = reactive({
       tableName: '',
       activeName: 'share',
       compFlag: false,
       compParams: {},
       sourceFileType: SCP_SOURCE_FILE_SELECT_TYPE_HEAD,
-      compType: { share: 'ShareCard', server: 'ShareCard', build: 'ShareCard' },
-      compConfig: { share: SHARE_DIALOG_CONFIG, server: SERVER_DIALOG_CONFIG, build: BUILD_DIALOG_CONFIG }
+      compType: { share: 'ShareCardModal', server: 'Selectserver', build: 'BuildCardModal' },
+      compConfig: { share: SHARE_DIALOG_CONFIG, server: ADD_ENV_GROUPS_CONFIG, build: BUILD_DIALOG_CONFIG },
+      serverList: [],
     })
 
     const handleSelectSourceType: (type: string) => void = (type: string): void => {
       state.activeName = type
       state.compFlag = true
+      state.compParams = {
+        title: proxy.$t('selectServer')
+      }
     }
 
-    const compClose:() => void = ():void => {
+    const compClose: () => void = () => {
       state.compFlag = false
+      const params = {}
+        const newServerList = [...selectIpArray.value, ...selectGroupArray.value, customArray.value]
+        if (newServerList.length === 1 && newServerList[0] === '') {
+          params['address'] = ''
+        }else {
+          const address = newServerList.join(',')
+          params['address'] = address
+        }
+      if (state.activeName === 'share') {
+        state.sourceFileType[state.activeName].data = [{ ...scpSourceFile.value, ...params }]
+        return
+      }
+      if (state.activeName === 'server') {
+        state.sourceFileType[state.activeName].data = [{...scpSourceFile.value, ...params}]
+        return
+      }
+      if (state.activeName === 'build') {
+        state.sourceFileType[state.activeName].data = [{...scpSourceFile.value}]
+      }
     }
 
-    const compSuccess:() =>void = ():void => {
+    const compSuccess: () => void = (): void => {
       compClose()
     }
+
+    watch(() => [selectIpArray.value, selectGroupArray.value, customArray.value], (value) => {
+      console.log(value)
+      state.serverList = value
+    })
 
     onMounted(() => {
     })
 
-    watch(() => state.activeName, (value) => {
-    })
     return {
+      SELECT_SERVER_RADIO_OPTION,
       ...toRefs(state),
       handleSelectSourceType,
       compClose,
