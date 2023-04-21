@@ -1177,5 +1177,7 @@ export default {
   filePermissions:'File Permissions',
   targetPathTip:'The destination path ending with ‘/’ represents a directory and not a file. For example,/tmp/means to save the file to this directory,/tmp/test.txt means to save the file to this directory, and the file name is test.txt',
   scpDeleteTip: 'When enabled, delete files not found in SRC in DEST when synchronizing folders',
-  
+  fileChownMessage:'The chown operation is performed. If it is empty, the final ownership of the file is related to the startup user of the agent',
+  chmodMessage: 'When chmod is empty, file permissions are related to system settings.',
+  distributionFileMessage:'Are you sure you want to distribute the file?',
 }

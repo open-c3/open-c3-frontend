@@ -66,7 +66,7 @@ export const TARGET_SOURCE_CONFIG = {
     labelWidth: 150,
     config: [
       {
-        label: 'targetPath',
+        label: 'targetPath',  // 目标路径
         prop: 'dp',
         type: 'slot',
         class: 'w450',
@@ -76,14 +76,14 @@ export const TARGET_SOURCE_CONFIG = {
         span: 24
       },
       {
-        label: 'syncDelete',
+        label: 'syncDelete',  // 同步Delete
         prop: 'scp_delete',
         type: 'slot',
         class: 'w450',
         span: 24
       },
       {
-        label: 'executionAccount',
+        label: 'executionAccount', //执行账户
         prop: 'dstUser',
         type: 'slot',
         rules: [
@@ -92,7 +92,7 @@ export const TARGET_SOURCE_CONFIG = {
         span: 24
       },
       {
-        label: 'targetMachine',
+        label: 'targetMachine', // 目标机器
         prop: 'choiceResult',
         type: 'slot',
         class: 'w450',
@@ -103,7 +103,7 @@ export const TARGET_SOURCE_CONFIG = {
         span: 24
       },
       {
-        label: 'fileOwner',
+        label: 'fileOwner', //文件归属者
         prop: 'fileChown',
         type: 'slot',
         class: 'w450',
@@ -112,7 +112,7 @@ export const TARGET_SOURCE_CONFIG = {
 
       },
       {
-        label: 'filePermissions',
+        label: 'filePermissions', //文件权限
         prop: 'chmod',
         type: 'slot',
         class: 'w450',
@@ -121,49 +121,57 @@ export const TARGET_SOURCE_CONFIG = {
 
       },
       {
-        label: 'Timeout',
+        label: 'Timeout', // 超时时间
         prop: 'timeout',
-        type: 'slot',
+        type: 'text',
         class: 'w450',
-        data: [],
-        rules: [
-          { required: true, trigger: 'blur', message: t('requiredText') },
-        ],
+        placeholder: 'timeoutPlaceholder',
         span: 24
       },
       {
-        label: 'effectiveEnv',
+        label: 'effectiveEnv', // 生效环境
         prop: 'unClickDeployenv',
-        type: 'slot',
-        class: 'w450',
-        data: [],
+        type: 'radio',
+        data: [
+          { name: t('alwaysExecute'), id: 'always'},
+          { name: t('testEnv'), id: 'test'},
+          { name: t('onlineEnv'), id: 'online'}
+        ],
         rules: [
-          { required: true, trigger: 'blur', message: t('requiredText') },
+          { required: true, trigger: 'change', message: t('requiredText') }
         ],
         span: 24
       },
       {
-        label: 'effectiveAction',
+        label: 'effectiveAction', // 生效动作
         prop: 'unClickAction',
-        type: 'slot',
-        class: 'w450',
-        data: [],
+        type: 'radio',
+        data: [
+          { name: t('alwaysExecute'), id: 'always'},
+          { name: t('executeDeploy'), id: 'deploy'},
+          { name: t('executeRollback'), id: 'rollback'}
+        ],
         rules: [
-          { required: true, trigger: 'blur', message: t('requiredText') },
+          { required: true, trigger: 'change', message: t('requiredText') }
         ],
         span: 24
       },
       {
-        label: 'Batch',
+        label: 'Batch', // 分批
         prop: 'unClickBatches',
-        type: 'slot',
-        class: 'w450',
-        data: [],
+        type: 'radio',
+        data: [
+          { name: t('alwaysExecute'), id: 'always'},
+          { name: t('firstGroupOnly'), id: 'firsttime'},
+          { name: t('lastGroupOnly'), id: 'thelasttime'},
+          { name: t('notFirstGroup'), id: 'notfirsttime'},
+          { name: t('notLastGroup'), id: 'notthelasttime'}
+        ],
         rules: [
-          { required: true, trigger: 'blur', message: t('requiredText') },
+          { required: true, trigger: 'change', message: t('requiredText') }
         ],
         span: 24
-      },
+      }
     ]
   }
 }

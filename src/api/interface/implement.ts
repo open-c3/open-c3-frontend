@@ -42,3 +42,7 @@ export interface RunScriptTaskInfo {
   action: string,
   batches: string
 }
+
+export interface DistrictGileInfo {
+  
+}

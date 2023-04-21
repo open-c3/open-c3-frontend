@@ -1201,4 +1201,7 @@ export default {
   filePermissions: '文件权限',
   targetPathTip: '目标路径以‘/’结尾代表一个目录，不以‘/’结尾表示一个文件。如：/tmp/表示将文件保存到此目录下，/tmp/test.txt表示将文件保存到此目录下，文件名为test.txt',
   scpDeleteTip: '开启后，同步文件夹时删除DEST中SRC没有的文件',  
+  fileChownMessage:'做chown操作，为空的情况下文件最后的归属着和Agent的启动用户有关。',
+  chmodMessage: '做chmod操作，为空的情况下文件权限和系统设置有关。',
+  distributionFileMessage:'确定要分发文件吗？',
 }
