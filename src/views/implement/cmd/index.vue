@@ -1,7 +1,6 @@
 <template>
   <div class="body-layout1">
-    <span class="layout-title">{{ treeData?.parent }}</span>
-    <el-divider class="costv-divider mt16 mb16" />
+    <saas-tabs :label="treeData?.parent" class="mt-20" />
     <div class="layout-content">
       <base-form ref="form" :config="config.form" :params="params" class="mt10 layout-content-form">
         <!-- 脚本内容 -->
