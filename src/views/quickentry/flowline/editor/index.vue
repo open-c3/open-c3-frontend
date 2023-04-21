@@ -435,7 +435,7 @@
         </template>
         <div>
           <div v-if="projectForm.ci_type === 'kubernetes'">
-            <el-form v-model="projectForm" label-width="200px">
+            <el-form :model="projectForm" label-width="200px">
               <el-form-item :label="$t('autoOnlineDeploy')" prop="callonlineenv">
                 <el-switch v-model="projectForm.callonlineenv" active-text="ON" inactive-text="OFF" inline-prompt
                   size="large" />
@@ -448,7 +448,7 @@
           </div>
           <div v-else>
             <!-- 测试分组 -->
-            <el-form v-model="projectForm" label-width="200px">
+            <el-form :model="projectForm" label-width="200px">
               <el-button class="add-groups mt20 mb20" type=primary :icon="Plus" @click="onAddGroups('test')">
                 {{ $t('testEnvGroup') }}
               </el-button>
@@ -469,7 +469,7 @@
             <el-divider class="costv-divider mt0 mb16" />
 
             <!-- 线上分组 -->
-            <el-form v-model="projectForm" label-width="200px">
+            <el-form :model="projectForm" label-width="200px">
               <el-button class="add-groups mt20 mb20" type="primary" :icon="Plus" @click="onAddGroups('online')">
                 {{ $t('onlineEnvGroup') }}
               </el-button>
@@ -503,7 +503,7 @@
           </div>
         </template>
         <div>
-          <el-form class="editor-form" v-model="projectForm" label-width="300px">
+          <el-form class="editor-form" :model="projectForm" label-width="300px">
             <!-- <el-button class="add-groups mt20 mb20" type="primary" :icon="Plus" @click="onJobStep">
               {{ $t('jobStep') }}
             </el-button> -->

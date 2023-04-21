@@ -172,7 +172,7 @@
         </div>
 
         <div v-else>
-          <el-form v-model="noGrpcolForm" label-width="180px">
+          <el-form :model="noGrpcolForm" label-width="180px">
             <div v-for="item in noGrpcol" :key="item">
               <div v-for="cItem in item" :key="cItem[0]">
                 <el-form-item :label="cItem[0]"> {{ cItem[1] }} </el-form-item>

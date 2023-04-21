@@ -9,7 +9,7 @@
 
         <div v-if="editStep === 1">
           <div v-if="editData.metadata">
-            <el-form class="edit-data-form" v-model="editData" label-width="160px" :inline="true">
+            <el-form class="edit-data-form" :model="editData" label-width="160px" :inline="true">
               <el-form-item :label="$t('name')" prop="name">
                 <el-input v-model="editData.metadata.name" :disabled="dialogType === 'apply'" />
               </el-form-item>
@@ -27,7 +27,7 @@
             </el-form>
 
             <!-- metadata -->
-            <el-form class="edit-data-form" v-model="editData" label-width="160px">
+            <el-form class="edit-data-form" :model="editData" label-width="160px">
               <el-form-item :label="$t('tag')">
                 <AppCreateTags :title="$t('tag')" :tableConfig="tableConfig" :tableType="'metaTable'" />
               </el-form-item>
@@ -46,7 +46,7 @@
             <el-divider class="costv-divider mt0 mb16" />
 
             <!-- selector  -->
-            <el-form class="edit-data-form" v-model="editData" label-width="160px" :inline="true">
+            <el-form class="edit-data-form" :model="editData" label-width="160px" :inline="true">
               <el-form-item label="selector【matchLabels】">
                 <AppCreateTags title="selector【matchLabels】" :tableConfig="tableConfig" :tableType="'selectorTable'" />
               </el-form-item>
@@ -54,11 +54,11 @@
             <el-divider class="costv-divider mt0 mb16" />
 
             <!-- 滚动升级策略 -->
-            <el-form class="edit-data-form" v-model="editData" label-width="160px">
+            <el-form class="edit-data-form" :model="editData" label-width="160px">
               <el-form-item :label="$t('rollUpgStrate')">
                 <el-tabs v-model="editData.spec.strategy.type" class="demo-tabs">
                   <el-tab-pane label="RollingUpdate" name="RollingUpdate">
-                    <el-form v-model="editData" label-width="100px" :inline="true">
+                    <el-form :model="editData" label-width="100px" :inline="true">
                       <el-form-item label="MaxUnavailable">
                         <el-input v-model="editData.spec.strategy.rollingUpdate.maxUnavailable" />
                       </el-form-item>
@@ -76,7 +76,7 @@
             <el-divider class="costv-divider mt0 mb16" />
 
             <!-- 添加数据卷 -->
-            <el-form class="edit-data-form" v-model="editData" label-width="160px">
+            <el-form class="edit-data-form" :model="editData" label-width="160px">
               <el-form-item :label="$t('AddDataVolume')">
                 <AddButtonGroupTable :typeFlag="true" class="demo-tabs" :buttonGroup="dataVolumeArr"
                   :tableConfig="editData['volume']" :tableType="'volume'" />
@@ -85,7 +85,7 @@
             <el-divider class="costv-divider mt0 mb16" />
 
             <!-- 拉取私有镜像管理 -->
-            <el-form class="edit-data-form" v-model="editData" label-width="160px">
+            <el-form class="edit-data-form" :model="editData" label-width="160px">
               <el-form-item :label="$t('pullPrivateImage')">
                 <PullPrivateImage class="demo-tabs" :title="$t('pullPrivateImage')" :buttonGroup="privateImageArr"
                   :tableConfig="editData" :tableType="'privateImage'" :editItems="editItem" />
@@ -93,7 +93,7 @@
             </el-form>
 
             <!-- 调度 -->
-            <el-form class="edit-data-form" v-model="editData" label-width="160px">
+            <el-form class="edit-data-form" :model="editData" label-width="160px">
               <el-form-item label="nodeSelector">
                 <AppCreateTags title="nodeSelector" :tableConfig="tableConfig" :tableType="'nodeSelectorTable'" />
               </el-form-item>
@@ -107,7 +107,7 @@
             </el-form>
 
             <!-- hostAliases -->
-            <el-form class="edit-data-form" v-model="editData" label-width="160px">
+            <el-form class="edit-data-form" :model="editData" label-width="160px">
               <el-form-item label="hostAliases">
                 <HostAliasesTable title="hostAliases" class="demo-tabs" :tableConfig="tableConfig"
                   :tableType="'hostAliases'" />
@@ -115,7 +115,7 @@
             </el-form>
 
             <!-- 容器 -->
-            <el-form class="edit-data-form" v-model="editData" label-width="160px">
+            <el-form class="edit-data-form" :model="editData" label-width="160px">
               <el-form-item :label="$t('container')">
                 <AddContainer class="demo-tabs" :editData="editData" :container="containers" :tableType="'containers'"
                   :buttonGroup="CONTAINER_GROUP_ARR" />

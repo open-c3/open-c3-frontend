@@ -16,7 +16,7 @@
           </div>
         </template>
         <div class="card-content">
-          <el-form v-model="detailInfo" label-width="120px" class="detail-form">
+          <el-form :model="detailInfo" label-width="120px" class="detail-form">
             <el-row :gutter="20">
               <el-col :span="8">
                 <!-- 作业名称 -->
@@ -99,7 +99,7 @@
               <Table :thead="[]" :data="itemTableConfig[index][`${item.subtask_type}-${index}`].tableConfig.list">
                 <el-table-column type="expand">
                   <template #default="{ row }">
-                    <el-form v-model="row.extended" label-width="100px" :inline="true">
+                    <el-form :model="row.extended" label-width="100px" :inline="true">
                       <div v-if="item.subtask_type === 'approval'">
                         <el-form-item :label="`${$t('approvalContent')}：`">
                           {{ row?.extended?.cont || '' }}

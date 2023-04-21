@@ -10,7 +10,7 @@
       <div class="table-items" v-for="(item, index) in containerArr" :key="index">
         <el-row style="height:100%" :gutter="20">
           <el-col :span="22">
-            <el-form v-model="item.containerForm" label-width="100px">
+            <el-form :model="item.containerForm" label-width="100px">
               <!-- name -->
               <el-form-item :label="`${$t('container')}${$t('name')}`">
                 <el-input v-model="item.containerForm.name" />
