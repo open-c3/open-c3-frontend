@@ -2,13 +2,17 @@
   <div class="body-layout1">
     <saas-tabs :label="treeData?.parent" class="mt-20" />
     <div class="layout-content">
-      <el-form ref="form" v-model="scpForm" label-width="100px">
+      <el-form ref="form" :model="scpForm" label-width="100px">
         <el-form-item :label="$t('JobName')">
           <el-input class="w450" v-model="scpForm.name" />
         </el-form-item>
       </el-form>
       <div class="mt10">
         <SourceFileCard :treeId="String(treeId)" class="source-card"/>
+      </div>
+
+      <div class="mt10">
+        <TargetFileCard :treeId="String(treeId)" class="source-card"/>
       </div>
     </div>
   </div>
@@ -20,6 +24,7 @@ import store from '@/store'
 import moment from 'moment'
 import Table from '@/components/table/index.vue'
 import SourceFileCard from './operate/SourceFileCard.vue'
+import TargetFileCard from './operate/TargetFileCard.vue'
 import {
   SCP_SOURCE_FILE_SELECT_TYPE_HEAD
 } from './config'
@@ -31,7 +36,7 @@ import {
 } from '@/api/interface/implement'
 
 export default defineComponent({
-  components: { Table, SourceFileCard },
+  components: { Table, SourceFileCard, TargetFileCard },
   props: {},
   setup() {
     const { proxy } = getCurrentInstance() as ComponentInternalInstance
