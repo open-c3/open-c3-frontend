@@ -81,3 +81,28 @@ export interface createJobxGroupData {
   node?: string;
   percent?: string;
 }
+
+// 获取机器列表
+export interface getMachineListParams{
+  name?: string;
+  create_user?: string;
+  create_time_start?: string;
+  create_time_end?: string;
+  inip?: string;
+  exip?: string;
+}
+
+// 添加机器
+export interface addMachineData {
+  name: string;
+}
+
+// 报警通知列表
+export interface getNotifyListParams{
+  name?: string;
+}
+
+// 添加报警人
+export interface addNotifyUserData {
+  user: string;
+}
