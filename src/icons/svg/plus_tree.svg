@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="14px" height="14px" viewBox="0 0 14 14" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>形状结合</title>
+    <g id="系统管理" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="组织管理" transform="translate(-67.000000, -257.000000)" stroke="#ACB3CB">
+            <path d="M70,258 L78,258 C79.1045695,258 80,258.895431 80,260 L80,268 C80,269.104569 79.1045695,270 78,270 L70,270 C68.8954305,270 68,269.104569 68,268 L68,260 C68,258.895431 68.8954305,258 70,258 Z M74,261.272727 L74,266.727273 M71,263.999989 L77,264.000011" id="形状结合"></path>
+        </g>
+    </g>
+</svg>
