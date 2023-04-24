@@ -2,7 +2,7 @@
   <el-row>
     <el-col :span="22">
       <div class="table-items-btn-content">
-        <el-form style="width:100%" v-model="tableData" label-width="80px" :inline="true">
+        <el-form style="width:100%" :model="tableData" label-width="80px" :inline="true">
           <el-row style="width:100%">
             <el-col :span="8" class="table-items-btn-content-first">
               <el-form-item label="key" class="table-items-btn-content-first-form">

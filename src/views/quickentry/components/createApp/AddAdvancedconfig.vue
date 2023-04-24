@@ -2,7 +2,7 @@
     <!-- 高级调度设置 -->
     <div class="data-form-tags">
       <!-- First -->
-      <el-form v-model="affinityData" label-width="160px">
+      <el-form :model="affinityData" label-width="160px">
         <div v-for="(typeItem, typeIndex) in FIRST_AFFINITY_SECHDUE" :key="typeItem.typeName">
           <el-form-item v-for="(sechdueItem, sechdueIndex) in typeItem.sechdue" :key="sechdueItem"
             :label="sechdueItem.label">
@@ -76,7 +76,7 @@
       </el-form>
 
       <!-- Second -->
-      <el-form v-model="affinityData" label-width="160px">
+      <el-form :model="affinityData" label-width="160px">
         <div v-for="(typeItem, typeIndex) in SECOND_AFFINITY_SECHDUE" :key="typeItem.typeName">
           <el-form-item v-for="(sechdueItem, sechdueIndex) in typeItem.sechdue" :key="sechdueItem"
             :label="sechdueItem.label">
@@ -149,7 +149,7 @@
     </div>
     <!-- 容忍 -->
     <div class="data-form-tags">
-      <el-form v-model="tolerationArr" label-width="80px">
+      <el-form :model="tolerationArr" label-width="80px">
         <el-form-item :label="$t('tolerate')">
           <el-button-group class="button-group-operate">
             <el-button v-for="(item, index) in TOLERATE_TABLE_GROUP_ARR" link class="button-group" :type="item.type"
@@ -169,7 +169,7 @@
                     </div>
                   </div>
                   <!-- <div class="table-items-btn-content">
-                    <el-form style="width:100%" v-model="tolerations" label-width="80px" :inline="true">
+                    <el-form style="width:100%" :model="tolerations" label-width="80px" :inline="true">
                       <el-row style="width:100%">
                         <el-col :span="6">
                           <el-form-item :label="$t('type')">{{ item.groupTypes }}</el-form-item>

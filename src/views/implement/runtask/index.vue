@@ -1,9 +1,8 @@
 <template>
   <div class="body-layout1">
-    <span class="layout-title">{{ treeData?.parent }}</span>
-    <el-divider class="costv-divider mt16 mb16" />
+    <saas-tabs :label="treeData?.parent" class="mt-20" />
     <div class="layout-content">
-      <el-form v-model="taskForm" label-width="100px">
+      <el-form :model="taskForm" label-width="100px">
         <el-form-item :label="$t('task')">
           <el-select class="w450" v-model="taskForm.choiceJob" @change="jobhandleChange">
             <el-option v-for="item in allTaskOptions" :key="item" :value="JSON.stringify(item)" :label="item.alias" />

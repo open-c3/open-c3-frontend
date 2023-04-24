@@ -14,5 +14,8 @@ const getters = {
   selectGroupArray: state => state.quickentry.selectGroupArray,
   variableArray: state => state.quickentry.variableArray,
   customArray: state => state.quickentry.customArray,
+
+  // implement
+  scpSourceFile: state => state.implement.scpSourceFile,
 }
 export default getters

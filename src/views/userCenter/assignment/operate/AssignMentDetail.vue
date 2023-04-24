@@ -3,7 +3,7 @@
     <template #content>
       <div class="mb20">
         <!-- 基本信息 -->
-        <el-form v-model="detailForm" label-width="100px" class="detail-form">
+        <el-form :model="detailForm" label-width="100px" class="detail-form">
           <el-row>
             <el-col :span="12">
               <el-form-item :label="`${$t('creatorTime')}：`">{{ detailForm.create_time }}</el-form-item>

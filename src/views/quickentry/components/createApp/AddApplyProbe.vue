@@ -8,7 +8,7 @@
     </el-button-group>
     <div class="add-item-con">
       <div class="mt10" v-if="selectButton !== ''">
-        <el-form v-model="tableFrom" label-width="130px" :inline="true">
+        <el-form :model="tableFrom" label-width="130px" :inline="true">
           <el-form-item :label="$t('firstDetectionTime')">
             <el-input-number v-model="tableFrom.initialDelaySeconds" :step="1" />
           </el-form-item>
@@ -20,7 +20,7 @@
           </el-form-item>
         </el-form>
 
-        <el-form class="mt10" v-model="tableFrom" label-width="100px" :inline="true">
+        <el-form class="mt10" :model="tableFrom" label-width="100px" :inline="true">
           <el-form-item v-if="selectButton === 'command'" :label="$t('commandLine')">
             <el-input v-model="tableFrom.exec.command" />
           </el-form-item>

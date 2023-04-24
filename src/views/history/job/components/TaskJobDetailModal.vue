@@ -2,7 +2,7 @@
   <Dialog v-bind="$attrs" :config="config" :title="editItem.title" @close="onClose" @success="onClose">
     <template #content>
       <div v-if="hasTable">
-        <el-form class="model-form " v-model="detailInfo" label-width="100px" :inline="true">
+        <el-form class="model-form " :model="detailInfo" label-width="100px" :inline="true">
           <!-- 任务名称 -->
           <el-form-item :label="`${$t('taskName')}：`">
             {{ detailInfo.extended?.name }}
@@ -21,7 +21,7 @@
           </el-form-item>
         </el-form>
 
-        <el-form class="model-form " v-model="detailInfo" label-width="100px" :inline="true">
+        <el-form class="model-form " :model="detailInfo" label-width="100px" :inline="true">
           <!-- 任务状态 -->
           <el-form-item :label="`${$t('jobxTaskStatus')}：`">
             <span :style="`color:${JOBX_GROUP_TABLE_STATUS[detailInfo.status].color}`">

@@ -11,7 +11,7 @@
         <el-row>
           <el-col :span="22">
             <div class="table-items-btn-content">
-              <el-form style="width:100%" v-model="tableData" label-width="110px" :inline="true">
+              <el-form style="width:100%" :model="tableData" label-width="110px" :inline="true">
                 <el-row style="width:100%">
                   <el-col v-if="typeFlag" :span="tableType === 'volume' ? 6 : 4">
                     <el-form-item :label="`${tableType === 'volume' ? $t('type') : ''}`">

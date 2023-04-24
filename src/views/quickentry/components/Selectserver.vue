@@ -1,7 +1,7 @@
 <template>
   <Dialog v-bind="$attrs" :config="config" :title="editItem.title" @close="close" @success="confirm">
     <template #content>
-      <el-form ref="form" v-model="selectForm" label-width="100px">
+      <el-form ref="form" :model="selectForm" label-width="100px">
         <el-form-item :label="`${$t('select')}${$t('type')}`" prop="type">
           <div class="select-server-content">
             <el-radio-group v-model="selectForm.type">
@@ -25,13 +25,14 @@
               <template #inip="{ row }">
                 <el-table-column :label="$t('privateIP')" width="150">
                   <template #default="scope">
-                    <div v-if="!scope.row.inip || scope.row.inip === ''">-</div>
+                    <div v-if="!(scope as any).row.inip || (scope as any).row.inip === ''">-</div>
                     <div v-else class="table-column-ip">
-                      <el-checkbox :ref="`exip-${scope.$index}`" v-model="scope.index" label="" class="mr20"
-                        @change="onInipChange(scope.row, $event)" />
-                      <span :class="`${scope.row.inip && !scope.row.inips.status ? '' : scope.row.inip && scope.row.inips.status === 'fail' ? 'is-fail' :
-                        scope.row.inip && scope.row.inips.status === 'success' ? 'is-success' : ''}`">
-                        {{ scope.row.inip }}
+                      <el-checkbox :ref="`exip-${(scope as any).$index}`" v-model="(scope as any).index" label=""
+                        class="mr20" @change="onInipChange((scope as any).row, $event)" />
+                      <span
+                        :class="`${(scope as any).row.inip && !(scope as any).row.inips.status ? '' : (scope as any).row.inip && (scope as any).row.inips.status === 'fail' ? 'is-fail' :
+                            (scope as any).row.inip && (scope as any).row.inips.status === 'success' ? 'is-success' : ''}`">
+                        {{ (scope as any).row.inip }}
                       </span>
                     </div>
                   </template>
@@ -40,13 +41,14 @@
               <template #exip="{ row }">
                 <el-table-column :label="$t('privateIP')" width="150">
                   <template #default="scope">
-                    <div v-if="!scope.row.exip || scope.row.exip === ''">-</div>
+                    <div v-if="!(scope as any).row.exip || (scope as any).row.exip === ''">-</div>
                     <div v-else class="table-column-ip">
-                      <el-checkbox :ref="`exip-${scope.$index}`" v-model="scope.index" label="" class="mr20"
-                        @change="onExipChange(scope.row, $event)" />
-                      <span :class="`${scope.row.exip && !scope.row.exips.status ? '' : scope.row.exip && scope.row.exips.status === 'fail' ? 'is-fail' :
-                        scope.row.exip && scope.row.exips.status === 'success' ? 'is-success' : ''}`">
-                        {{ scope.row.exip }}
+                      <el-checkbox :ref="`exip-${(scope as any).$index}`" v-model="(scope as any).index" label=""
+                        class="mr20" @change="onExipChange((scope as any).row, $event)" />
+                      <span
+                        :class="`${(scope as any).row.exip && !(scope as any).row.exips.status ? '' : (scope as any).row.exip && (scope as any).row.exips.status === 'fail' ? 'is-fail' :
+                            (scope as any).row.exip && (scope as any).row.exips.status === 'success' ? 'is-success' : ''}`">
+                        {{ (scope as any).row.exip }}
                       </span>
                     </div>
                   </template>
@@ -55,26 +57,29 @@
               <template #clientVersion="{ row }">
                 <el-table-column :label="$t('clientVersion')" width="150">
                   <template #default="scope">
-                    <div v-if="scope.row.inip">{{ scope.row.inips.version }}</div>
-                    <div v-if="scope.row.exip && !scope.row.inip">{{ scope.row.exips.version }}</div>
+                    <div v-if="(scope as any).row.inip">{{ (scope as any).row.inips.version }}</div>
+                    <div v-if="(scope as any).row.exip && !(scope as any).row.inip">{{ (scope as any).row.exips.version }}
+                    </div>
                   </template>
                 </el-table-column>
               </template>
               <template #clientLastDetectionTime="{ row }">
                 <el-table-column :label="$t('clientLastDetectionTime')" width="150">
                   <template #default="scope">
-                    <div v-if="scope.row.inip">{{ scope.row.inips.edit_time }}</div>
-                    <div v-if="scope.row.exip && !scope.row.inip">{{ scope.row.exips.edit_time }}</div>
+                    <div v-if="(scope as any).row.inip">{{ (scope as any).row.inips.edit_time }}</div>
+                    <div v-if="(scope as any).row.exip && !(scope as any).row.inip">{{ (scope as any).row.exips.edit_time
+                    }}</div>
                   </template>
                 </el-table-column>
               </template>
               <template #clientErrorReason="{ row }">
                 <el-table-column :label="$t('clientErrorReason')" width="150">
                   <template #default="scope">
-                    <div v-if="scope.row.inip && scope.row.inips.status === 'fail'">
-                      failcount:{{ scope.row.inips.fail }};{{ scope.row.inips.reason }}</div>
-                    <div v-if="scope.row.exip && !scope.row.inip && scope.row.exips.status === 'fail'">
-                      failcount:{{ scope.row.exips.fail }};{{ scope.row.exips.reason }}</div>
+                    <div v-if="(scope as any).row.inip && (scope as any).row.inips.status === 'fail'">
+                      failcount:{{ (scope as any).row.inips.fail }};{{ (scope as any).row.inips.reason }}</div>
+                    <div
+                      v-if="(scope as any).row.exip && !(scope as any).row.inip && (scope as any).row.exips.status === 'fail'">
+                      failcount:{{ (scope as any).row.exips.fail }};{{ (scope as any).row.exips.reason }}</div>
                   </template>
                 </el-table-column>
               </template>
@@ -114,7 +119,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, onMounted, reactive, toRefs, computed, getCurrentInstance, ComponentInternalInstance } from 'vue'
+import { defineComponent, onMounted, reactive, toRefs, computed, getCurrentInstance, ComponentInternalInstance, watch } from 'vue'
 import Table from '@/components/table/index.vue'
 import searchFrom from '@/components/search/index.vue'
 import store from '@/store'
@@ -162,6 +167,8 @@ interface StateInfo {
   exipSelectValues: Array<any>,
   radioGroupValues: any;
   inputVariableValues: string;
+  repIps: Array<string>;
+  ipsArray: Array<string>;
 }
 
 export default defineComponent({
@@ -181,12 +188,8 @@ export default defineComponent({
       default: {}
     },
     treeId: {
-      type: Number,
-      default: 4000000000
-    },
-    treeData: {
-      type: Object,
-      default: {}
+      type: String,
+      default: '4000000000',
     },
     radioOption: {
       type: Array<any>,
@@ -244,6 +247,8 @@ export default defineComponent({
       exipSelectValues: [],
       radioGroupValues: {},
       inputVariableValues: '',
+      repIps: [],
+      ipsArray: [],
     })
 
     // 获取服务器信息
@@ -322,13 +327,19 @@ export default defineComponent({
       if (state.selectForm.type === 'ip') {
         const ips: string[] = []
         // 选择的ip地址 
-        let repIps = ips.concat(state.exipSelectValues, state.inipSelectValues)
-        store.dispatch('setSelectIpArray', repIps)
+        state.repIps = ips.concat(state.exipSelectValues, state.inipSelectValues)
+        state.radioGroupValues = {}
+        state.inputVariableValues = ''
+        state.ipsArray= []
+        store.dispatch('setSelectIpArray', state.repIps)
         close(state.selectForm.type)
         return
       }
       // 分组
       if (state.selectForm.type === 'group') {
+        state.repIps = []
+        state.inputVariableValues = ''
+        state.ipsArray= []
         if (state.radioGroupValues['name']) {
           store.dispatch('setSelectGroupArray', [state.radioGroupValues])
         } else {
@@ -339,20 +350,25 @@ export default defineComponent({
       }
       // 变量
       if (state.selectForm.type === 'variable') {
+        state.repIps = []
+        state.radioGroupValues = {}
+        state.ipsArray= []
         store.dispatch('setVariableArray', [state.inputVariableValues])
         close(state.selectForm.type)
         return
       }
       // 手写
       if (state.selectForm.type === 'custom') {
-        const ips = []
+        state.repIps = []
+        state.radioGroupValues = {}
+        state.inputVariableValues = ''
         const textArray = state.custom.text.split(/\n| |,/)
         textArray.forEach(item => {
           if (item.length > 0) {
-            ips.push(item)
+            state.ipsArray.push(item)
           }
         })
-        store.dispatch('setCustomArray', ips)
+        store.dispatch('setCustomArray', state.ipsArray)
         close(state.selectForm.type)
         return
       }
@@ -365,6 +381,31 @@ export default defineComponent({
         proxy.$emit('close')
       }
     }
+
+    watch(() => state.selectForm.type, (value) => {
+      switch (value) {
+        case 'ip':
+          state.radioGroupValues = {}
+          state.inputVariableValues = ''
+          state.ipsArray = []
+          break
+        case 'group':
+          state.repIps = []
+          state.inputVariableValues = ''
+          state.ipsArray = []
+          break
+        case 'variable':
+          state.radioGroupValues = {}
+          state.repIps = []
+          state.ipsArray = []
+          break
+        case 'custom':
+          state.radioGroupValues = {}
+          state.repIps = []
+          state.inputVariableValues = ''
+          break
+      }
+    })
 
     onMounted(() => {
       getMacheInfoData()

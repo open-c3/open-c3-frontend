@@ -6,6 +6,7 @@ import {
   CreateTaskInfo,
   RunJobTaskInfo,
   RunScriptTaskInfo,
+  DistrictGileInfo,
 } from '../interface/implement'
 import {
   TreeIdInfo,
@@ -61,7 +62,7 @@ export const getGroupBatchesList = (params: TreeIdInfo): Promise<IResponseInfo |
  * @param uuid 
  */
 
-export const getJobformList = (params: JobGroupFormInfo): Promise<IResponseInfo | any>  => {
+export const getJobformList = (params: JobGroupFormInfo): Promise<IResponseInfo | any> => {
   return request({
     url: `/api/job/variable/${params.treeId}/${params.uuid}?empty=0&usrext=1`,
     method: 'get',
@@ -102,7 +103,7 @@ export const createNewTask = (data: CreateTaskInfo): Promise<IResponseInfo | any
  * @param data
  */
 
-export const runquicklyRunjob = (treeId: string| string[]| number, data: RunJobTaskInfo): Promise<IResponseInfo | any> => {
+export const runquicklyRunjob = (treeId: string | string[] | number, data: RunJobTaskInfo): Promise<IResponseInfo | any> => {
   return request({
     url: `/api/job/task/${treeId}/job`,
     method: 'post',
@@ -117,7 +118,7 @@ export const runquicklyRunjob = (treeId: string| string[]| number, data: RunJobT
  * @param data
  */
 
-export const runquicklyRunScript = (treeId: string| string[]| number, data: RunScriptTaskInfo): Promise<IResponseInfo | any> => {
+export const runquicklyRunScript = (treeId: string | string[] | number, data: RunScriptTaskInfo): Promise<IResponseInfo | any> => {
   return request({
     url: `/api/job/task/${treeId}/plugin_cmd`,
     method: 'post',
@@ -135,5 +136,20 @@ export const getJobUserList = (params: TreeIdInfo): Promise<IResponseInfo | any>
   return request({
     url: `/api/job/userlist/${params.treeId}`,
     method: 'get',
+  })
+}
+
+/**
+ * 分发文件 执行分发文件操作  post
+ * /api/job/task/{treeId}/plugin_scp
+ * @param  treeId => treeid
+ * @param data
+ */
+
+export const districtbuttonFile = (treeId: string | string[] | number, data: DistrictGileInfo): Promise<IResponseInfo | any> => {
+  return request({
+    url: `/api/job/task/${treeId}/plugin_scp`,
+    method: 'post',
+    data,
   })
 }
