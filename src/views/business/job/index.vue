@@ -1,8 +1,9 @@
 
 <template>
-  <div class="body-layout1 kanban">
-    <span>{{ treeData?.parent }}</span>
-    <el-divider class="costv-divider mt16 mb16"/>
+  <div class="body-layout1">
+    <!-- <span>{{ treeData?.parent }}</span>
+    <el-divider class="costv-divider mt16 mb16"/> -->
+    <saas-tabs :label="treeData?.parent" class="mt-20"/>
     <search-from :params="params" :config="config" @reset="reset" @query="getList"/>
     <el-divider class="costv-divider mt16 mb16"/>
     <div class="tr">

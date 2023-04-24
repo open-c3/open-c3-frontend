@@ -519,24 +519,32 @@ export default defineComponent({
               star: false
             },
             {
-              name: '机器管理',
-              url: ''
+              name: proxy.$t('nodeManagement'),
+              url: '/business/machine',
+              meta: { title: '机器管理' },
+              star: false
             },
             {
-              name: '报警通知',
-              url: ''
+              name: proxy.$t('alarmNotification'),
+              url: '/business/notify',
+              meta: { title: '报警通知' },
+              star: false
             },
             {
               name: '定时作业',
               url: ''
             },
             {
-              name: '代理设置(AGENT安装)',
-              url: ''
+              name: proxy.$t('proxySettings'),
+              url: '/business/agent',
+              meta: { title: '代理设置(AGENT安装)'},
+              star: false
             },
             {
-              name: '变量查看',
-              url: ''
+              name: proxy.$t('variableView'),
+              url: '/business/variable',
+              meta: { title: '变量查看'},
+              star: false
             }
           ]
         }
@@ -590,7 +598,7 @@ export default defineComponent({
         if (index === -1) {
           (star as any).menu.unshift(item)
         } else {
-          (star as any).menu[index] = item
+          (star as any).menu.splice(index, 1)
         }
         localStorage.setItem('star', JSON.stringify(star))
       } else {

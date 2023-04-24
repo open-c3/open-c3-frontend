@@ -184,6 +184,22 @@ const routes: Array<RouteRecordRaw> = [
       path: 'nodeBatch',
       component: () => import('@/views/business/nodeBatch/index.vue'),
       meta: { title: '机器分批' }
+    }, {
+      path: 'machine',
+      component: () => import('@/views/business/machine/index.vue'),
+      meta: { title: '机器管理' }
+    }, {
+      path: 'notify',
+      component: () => import('@/views/business/notify/index.vue'),
+      meta: { title: '报警通知' }
+    }, {
+      path: 'variable',
+      component: () => import('@/views/business/variate/index.vue'),
+      meta: { title: '变量查看' }
+    }, {
+      path: 'agent',
+      component: () => import('@/views/business/agent/index.vue'),
+      meta: { title: '代理设置(AGENT安装)' }
     }]
   }, {
     path: '/userCenter',
