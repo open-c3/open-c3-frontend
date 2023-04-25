@@ -1219,4 +1219,9 @@ export default {
   addAddress: 'add address',
   joblog: 'Job Log',
   terminateTaskMessage:'Are you sure you want to terminate the task?',
+  address:'address',
+  startOperate:'start Operate',
+  selectAll:'Select all (intranet IP)',
+  nodeEmpty:'The selected node is empty',
+  clear: 'clear',
 }

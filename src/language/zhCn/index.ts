@@ -1243,4 +1243,9 @@ export default {
   addAddress: '添加地址',
   joblog:'作业日志',
   terminateTaskMessage:'确认要终止任务吗？',
+  address:'地址',
+  startOperate:'开始操作',
+  selectAll:'全选（内网IP）',
+  nodeEmpty:'所选节点为空',
+  clear: '清除',
 }
