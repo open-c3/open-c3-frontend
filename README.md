@@ -6,7 +6,6 @@
 
 ## 项目结构
 
-
 ```docs
 ├── public                          //  静态资源目录
 │   ├── index.html                  //  入口 HTML 文件
