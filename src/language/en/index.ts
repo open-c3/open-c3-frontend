@@ -1205,5 +1205,15 @@ export default {
   deployWindowsExporter3_3: 'Browser access test',
   region: 'Region',
   proxy: 'Proxy',
-  network: 'Network'
+  network: 'Network',
+  allApproval: 'All Approvers Need To Approve',
+  strategy: 'strategy',
+  samePersonJumpOver:'If the submitter and approver are the same person, the approval will be skipped',
+  samePersionUpgradeLeader: 'If the submitter and the approver are the same person, they may be upgraded to a higher level leader for approval',
+  mustApprover:'Must Be Approved By The Approver',
+  onlyApprover:'Only One user Should Approve',
+  executeApproverQuickly:'Quick Approval Plugin',
+  approverCont: 'Approve it',
+  initiateApprovalMessage:'Are you sure you want to initiate an approval?',
+  viewApprovalHelp: 'View Approval Content Usage Variable Help',
 }
