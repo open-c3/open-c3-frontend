@@ -32,7 +32,7 @@ import baseForm from '@/components/baseForm/index.vue'
 import store from '@/store'
 import md5 from 'js-md5'
 import { TOKEN_CONFIG, TOKEN_THEAD_CONFIG } from '../config'
-import { getTokenList, getJobList, addToken, deleteToken } from '@/api/business/file'
+import { getTokenList, getJobThirdList, addToken, deleteToken } from '@/api/business/file'
 import { ElMessageBox } from 'element-plus'
 
 export default {
@@ -100,7 +100,7 @@ export default {
     onMounted(() => {
       state.params.token = md5(String(new Date().getTime()))
       getTokenData()
-      getJobList({project_id: store.getters.treeId}).then((res: any) => {
+      getJobThirdList({project_id: store.getters.treeId}).then((res: any) => {
         state.config.form.config[3].data = res.map(item => {
           return {id: item, label: item}
         })

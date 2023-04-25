@@ -1,5 +1,5 @@
 import request from '@/utils/request'
-import { getJobListData, getBusinessUseData, addTokenData } from '@/api/interface/business'
+import { getBusinessUseData, addTokenData } from '@/api/interface/business'
 // 获取文件列表
 export function getFileServer (treeId: number, params: getBusinessUseData) {
   return request({
@@ -18,7 +18,7 @@ export function getTokenList (treeId: number) {
 }
 
 // 获取作业列表
-export function getJobList (data: getJobListData) {
+export function getJobThirdList (data: {project_id: string | number}) {
   return request({
     url: '/api/job/third/option/jobname',
     method: 'post',
