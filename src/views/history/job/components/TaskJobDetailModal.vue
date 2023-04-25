@@ -40,7 +40,7 @@
       </div>
       <div>{{ $t('logDetailsText') }}</div>
       <div class="mt10">
-        <TaskWebsocket :interval="!(detailInfo.status === 'fail'|| detailInfo.status === 'success')" :locationStr="locationStr" :taskuuid="editItem.uuid" />
+        <TaskWebsocket :interval="!(detailInfo?.status === 'fail'|| detailInfo?.status === 'success')" :locationStr="locationStr" :taskuuid="editItem.uuid" />
       </div>
     </template>
     <template #footer>

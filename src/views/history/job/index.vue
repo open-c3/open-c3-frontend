@@ -224,7 +224,7 @@ export default defineComponent({
     const operate: (type: string, row: any) => void = (type: string, row: any) => {
       if (type === 'detail') {
         if (row.jobtype === 'plugin_scp' || row.jobtype === 'plugin_cmd' || row.jobtype === 'plugin_approval' ) {
-          router.push(`/history/jobdetail/${treeId.value}/${row.name.split('_')[2]}/${row.uuid}?jobtype=${row.jobtype}`)
+          router.push(`/history/jobdetail/${treeId.value}/${row.jobuuid}/${row.uuid}?jobtype=${row.jobtype}`)
         }else {
           router.push(`/history/jobdetail/${treeId.value}/${row.name.split('_')[2]}/${row.uuid}`)
         }

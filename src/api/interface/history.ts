@@ -13,6 +13,9 @@ export interface ITaskJobUUIDParams {
   taskuuid: string
 }
 
+export interface IKillTaskInfo extends ITaskJobUUIDParams {
+  slave: string
+}
 export interface IFlowlineDetailParams extends TreeIdInfo {
   uuid: string | string[] | number
   subtaskuuid?: string

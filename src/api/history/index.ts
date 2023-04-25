@@ -10,6 +10,7 @@ import {
   IRollbackTaskJobxParams,
   ISubTaskConfirmParams,
   ITaskJobUUIDParams,
+  IKillTaskInfo,
 } from '../interface/history'
 import {
   TreeIdInfo,
@@ -227,5 +228,18 @@ export const getPostEcsData =  (data: IAWSECSTicketidData): Promise<IResponseInf
     url: `/api/ci/v2/kubernetes/app/describe/ecs?ticketid=${data.ticketid}`,
     method: 'post',
     data: data.data
+  })
+}
+/**
+ * 作业任务详情 任务运行时终止任务  delete
+ * /api/job/slave/{slave}/killtask/{taskuuid}
+ * @param {string} slave
+ * @param {string} taskuuid
+ */
+
+export const deleteJobDetailTask =  (data: IKillTaskInfo): Promise<IResponseInfo | any> => {
+  return  request({
+    url: `/api/job/slave/${data.slave}/killtask/${data.taskuuid}`,
+    method: 'delete',
   })
 }

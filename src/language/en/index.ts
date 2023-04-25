@@ -1216,4 +1216,7 @@ export default {
   approverCont: 'Approve it',
   initiateApprovalMessage:'Are you sure you want to initiate an approval?',
   viewApprovalHelp: 'View Approval Content Usage Variable Help',
+  addAddress: 'add address',
+  joblog: 'Job Log',
+  terminateTaskMessage:'Are you sure you want to terminate the task?',
 }
