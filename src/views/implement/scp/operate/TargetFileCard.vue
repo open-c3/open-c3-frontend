@@ -33,7 +33,7 @@
         <!-- 执行账户 -->
         <template #dstUser>
           <div class="target-file-form-item">
-            <el-select v-model="params.dstUser" class="w450" placeholder="Select" size="large">
+            <el-select v-model="params.dstUser" class="w450" :placeholder="`${$t('configFormSelect')}${$t('executionAccount')}`" size="large">
               <el-option v-for="item in allProUsers" :key="item.username" :label="item.username" :value="item.username" />
             </el-select>
             <el-button class="ml20" type="primary" icon="Plus" @click="handleSelectSourceType('dstuser')"></el-button>
@@ -51,7 +51,7 @@
         <template #fileChown>
           <div class="target-file-form-item">
             <div>
-              <el-select v-model="params.fileChown" class="w450" placeholder="Select" size="large">
+              <el-select v-model="params.fileChown" class="w450"  :placeholder="`${$t('configFormSelect')}${$t('fileOwner')}`" size="large">
                 <el-option v-for="item in allProUsers" :key="item.username" :label="item.username" :value="item.username" />
               </el-select>
               <div class="target-file-form-item-button">{{$t('fileChownMessage')}}</div>

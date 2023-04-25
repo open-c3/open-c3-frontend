@@ -1229,5 +1229,15 @@ export default {
   deployWindowsExporter3_3: '浏览器访问测试一下',
   region: '区域',
   proxy: '代理',
-  network: '网段'
+  network: '网段',
+  allApproval: '所有审批人都要审批',
+  strategy: '策略',
+  samePersonJumpOver:'提交人和审批人为同一个人是跳过审批',
+  samePersionUpgradeLeader: '如果提交人和审批人为同一个人，可能会升级到上一级领导审批',
+  mustApprover:'必须审批人审批',
+  onlyApprover:'只要一个人审批',
+  executeApproverQuickly:'快速审批插件',
+  approverCont: '审批一下吧',
+  initiateApprovalMessage:'确认要发起审批吗？',
+  viewApprovalHelp: '查看审批内容使用变量帮助',
 }

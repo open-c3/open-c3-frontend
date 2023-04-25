@@ -71,7 +71,6 @@ export default defineComponent({
 
     // 源文件选择类型
     const handleSelectSourceType: (type: string) => void = (type: string): void => {
-      console.log(type)
       state.activeName = type
     }
 
@@ -121,7 +120,6 @@ export default defineComponent({
 .layout-content {
   margin: 30px auto;
   display: flex;
-  flex-direction: column;
   justify-content: center;
   align-items: center;
   &-form {
@@ -140,6 +138,7 @@ export default defineComponent({
   width: 800px;
 }
 .layout-content-confirm {
+  text-align: center;
   margin-top: 30px;
 }
 </style>

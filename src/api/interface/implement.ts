@@ -44,5 +44,19 @@ export interface RunScriptTaskInfo {
 }
 
 export interface DistrictGileInfo {
-  
+
+}
+
+export interface InitiateApprovalInfo extends TreeIdInfo {
+  data: {
+    action: string
+    approver: string
+    batches: string
+    cont: string
+    deployenv: string
+    everyone: string
+    name: string
+    relaxed: string
+    timeout: string
+  }
 }
