@@ -1240,4 +1240,7 @@ export default {
   approverCont: '审批一下吧',
   initiateApprovalMessage:'确认要发起审批吗？',
   viewApprovalHelp: '查看审批内容使用变量帮助',
+  addAddress: '添加地址',
+  joblog:'作业日志',
+  terminateTaskMessage:'确认要终止任务吗？',
 }

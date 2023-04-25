@@ -31,6 +31,8 @@
                   <span :style="`color:${JOBX_GROUP_TABLE_STATUS[detailInfo.status]?.color}`">
                     {{ JOBX_GROUP_TABLE_STATUS[detailInfo.status]?.text || '-' }}
                   </span>
+                  <el-button v-if="['running', 'waiting'].includes(detailInfo.status)" class="ml10 log-error-button"
+                    type="primary" @click="handleStopTask">{{ $t('terminateTask') }}</el-button>
                 </el-form-item>
               </el-col>
               <!-- 启动人 -->
@@ -91,25 +93,27 @@
         <div>
           <el-card v-for="(item, index) in jobStepInfo" :key="index" class="mt10">
             <template #header>
-              <div class="card-header">
+              <div class="card-header" v-if="itemTableConfig.length > 0">
                 <span>{{ itemTableConfig[index][`${item.subtask_type}-${index}`].title }}</span>
               </div>
+              <div v-else>{{ $t('joblog') }}</div>
             </template>
-            <div>
+            <div v-if="itemTableConfig.length > 0">
               <Table :thead="[]" :data="itemTableConfig[index][`${item.subtask_type}-${index}`].tableConfig.list">
                 <el-table-column type="expand">
-                  <template #default="{ row }">
-                    <el-form :model="row.extended" label-width="100px" :inline="true">
+                  <template #default="scope">
+                    <el-form :model="(scope as any)?.row.extended" label-width="100px" :inline="true">
                       <div v-if="item.subtask_type === 'approval'">
                         <el-form-item :label="`${$t('approvalContent')}：`">
-                          {{ row?.extended?.cont || '' }}
+                          {{ (scope as any)?.row?.extended?.cont || '' }}
                         </el-form-item>
                         <el-form-item label="pause：">
-                          {{ row?.extended?.pause || '' }}
+                          {{ (scope as any)?.row?.extended?.pause || '' }}
                         </el-form-item>
                       </div>
                       <div v-else>
-                        <el-form-item :label="`${cIndex}：`" v-for="(cItem, cIndex) in row.extended" :key="cItem.uuid">
+                        <el-form-item :label="`${cIndex}：`" v-for="(cItem, cIndex) in (scope as any)?.row.extended"
+                          :key="cItem.uuid">
                           {{ cItem || '-' }}
                         </el-form-item>
                       </div>
@@ -117,58 +121,59 @@
                   </template>
                 </el-table-column>
                 <el-table-column :label="$t('taskName')" prop="name" :align="'center'">
-                  <template #default="{ row }">
-                    {{ row?.extended?.name || '-' }}
+                  <template #default="scope">
+                    {{ (scope as any)?.row?.extended?.name || '-' }}
                   </template>
                 </el-table-column>
 
                 <el-table-column v-if="item.subtask_type === 'approval'" :label="$t('approver')" prop="approver"
                   :align="'center'">
-                  <template #default="{ row }">
-                    {{ row?.extended?.approver || '-' }}
+                  <template #default="scope">
+                    {{ (scope as any)?.row?.extended?.approver || '-' }}
                   </template>
                 </el-table-column>
 
                 <el-table-column v-else :label="$t('NumberExecutionHosts')" prop="nodecount" :align="'center'">
-                  <template #default="{ row }">
-                    {{ row?.nodecount || '-' }}
+                  <template #default="scope">
+                    {{ (scope as any)?.row?.nodecount || '-' }}
                   </template>
 
                 </el-table-column>
 
                 <el-table-column :label="$t('startAt')" prop="starttime" :align="'center'">
-                  <template #default="{ row }">
-                    {{ row?.starttime || '-' }}
+                  <template #default="scope">
+                    {{ (scope as any)?.row?.starttime || '-' }}
                   </template>
                 </el-table-column>
 
                 <el-table-column :label="$t('finishAt')" prop="finishtime" :align="'center'">
-                  <template #default="{ row }">
-                    {{ row?.finishtime || '-' }}
+                  <template #default="scope">
+                    {{ (scope as any)?.row?.finishtime || '-' }}
                   </template>
                 </el-table-column>
 
                 <el-table-column :label="$t('useTime')" prop="seftime" :align="'center'">
-                  <template #default="{ row }">
-                    {{ seftime(row?.starttime, row?.finishtime) }}
+                  <template #default="scope">
+                    {{ seftime((scope as any)?.row?.starttime, (scope as any)?.row?.finishtime) }}
                   </template>
                 </el-table-column>
 
                 <el-table-column :label="$t('status')" prop="status" :align="'center'">
-                  <template #default="{ row }">
-                    <span :style="`color:${JOBX_GROUP_TABLE_STATUS[row?.status]?.color}`">
-                      {{ row.status === '' || row.status === null ? '-' : JOBX_GROUP_TABLE_STATUS[row?.status]?.text }}
+                  <template #default="scope">
+                    <span :style="`color:${JOBX_GROUP_TABLE_STATUS[(scope as any)?.row?.status]?.color}`">
+                      {{ (scope as any)?.row.status === '' || (scope as any)?.row.status === null ? '-' :
+                        JOBX_GROUP_TABLE_STATUS[(scope as any)?.row?.status]?.text }}
                     </span>
                   </template>
                 </el-table-column>
 
                 <el-table-column :label="$t('operate')" prop="operate" :align="'center'">
-                  <template #default="{ row }">
+                  <template #default="scope">
                     <el-button-group
-                      v-for="(sItem, sIndex) in JOB_TASK_STATUS_BUTTON_GROUP[item.subtask_type]?.[row.status]"
+                      v-for="(sItem, sIndex) in JOB_TASK_STATUS_BUTTON_GROUP[item.subtask_type]?.[(scope as any)?.row.status]"
                       :key="sIndex">
-                      <el-button type="primary" link @click="taskOperate(sItem, index, row)"
-                        v-if="setJobTaskShow(sItem, index, row)">
+                      <el-button type="primary" link @click="taskOperate(sItem, index, (scope as any)?.row)"
+                        v-if="setJobTaskShow(sItem, index, (scope as any)?.row)">
                         {{ sItem.text }}
                       </el-button>
                     </el-button-group>
@@ -177,8 +182,8 @@
               </Table>
             </div>
             <!-- 作业日志 -->
-            <div class="mt20" v-if="!item.jobtype">
-              <span>{{ $t('taskLog') }}</span>
+            <div class="mt20" v-if="item.jobtype">
+              <span v-if="itemTableConfig.length > 0">{{ $t('taskLog') }}</span>
               <TaskWebsocket style="background-color:#000" :interval="false" :locationStr="locationStr"
                 :taskuuid="editItem.uuid" />
             </div>
@@ -218,10 +223,12 @@ import {
   getTaskJobInfo,
   updateImpleOperate,
   updateTaskOperate,
+  deleteJobDetailTask,
 } from '@/api/history/index'
 import {
   ISubTaskConfirmData,
   IFlowlineDetailParams,
+  IKillTaskInfo
 } from '@/api/interface/history'
 
 
@@ -252,11 +259,12 @@ export default defineComponent({
       hasTable: false,
       timer: null,
       detailInfo: {} as any,
-      jobStepInfo: {} as any,
+      jobStepInfo: [] as any,
       // itemTableConfig: [TASK_JOB_DETAIL_STEP_MAP],
       itemTableConfig: [],
       operateMessage: SUB_TASK_OPERATE_MESSAGE_GROUP,
       locationStr: '',
+      getScpCmdTaskLoaded: false,
     })
 
     // 获取 基本信息
@@ -275,7 +283,31 @@ export default defineComponent({
         if (dataRet.jobtype) {
           state.jobType = dataRet.jobtype
         }
-        // state.locationStr = `/api/jobx/slave/${state.detailInfo.slave}/ws?uuid=${route.params.taskuuid}`
+        if (state.jobType == 'jobs') {
+          getJobStepData()
+        } else if (state.jobType) {
+          if (state.getScpCmdTaskLoaded === false) {
+            getScpCmdTask()
+          }
+          state.getScpCmdTaskLoaded === true
+        }
+        state.locationStr = `/api/job/slave/${state.detailInfo.slave}/ws?uuid=${state.detailInfo.loguuid}`
+      }
+    }
+
+    // 获取作业任务信息 
+    const getScpCmdTask = async () => {
+      const params: IFlowlineDetailParams = {
+        treeId: route.params.treeId,
+        uuid: route.params.taskuuid,
+      }
+      const dataRet = await getTaskJobInfo(params)
+      if (dataRet) {
+        let quickData = dataRet
+        let serverCount = dataRet.slave.split(',').length
+        quickData.count = serverCount
+        state.jobStepInfo.splice(0, state.jobStepInfo.length)
+        state.jobStepInfo.push(quickData)
       }
     }
 
@@ -293,7 +325,7 @@ export default defineComponent({
           newArr.push({
             [`${item.subtask_type}-${index}`]: {
               value: item.subtask_type,
-              title:TASK_JOB_DETAIL_STEP_MAP_TEXT[item.subtask_type],
+              title: TASK_JOB_DETAIL_STEP_MAP_TEXT[item.subtask_type],
               tableConfig: {
                 list: [item],
               }
@@ -302,6 +334,24 @@ export default defineComponent({
         })
         state.itemTableConfig = [...newArr]
       }
+    }
+
+    // 终止任务
+    const handleStopTask = () => {
+      ElMessageBox.confirm(proxy.$t('terminateTaskMessage'), proxy.$t('terminateTask'), {
+        confirmButtonText: proxy.$t('confirm'),
+        cancelButtonText: proxy.$t('cancel'),
+        type: 'warning'
+      }).then(async () => {
+        const params:IKillTaskInfo =  {
+          slave:  state.detailInfo.slave,
+          taskuuid: route.params.taskuuid as string
+        }
+        const dataRet = await deleteJobDetailTask(params)
+        if (dataRet) {
+          proxy.$notification(proxy.$t('operationSuccess'))
+        }
+      })
     }
 
     // 返回上一级 
@@ -458,7 +508,7 @@ export default defineComponent({
     }
 
     onMounted(async () => {
-      await getJobStepData()
+      // await getJobStepData()
       await defaultOperate()
       getDetailData()
       handleDetailDataTimer()
@@ -484,6 +534,7 @@ export default defineComponent({
       emitSuccess,
       handleTaskDetail,
       setJobTaskShow,
+      handleStopTask,
     }
   }
 })
