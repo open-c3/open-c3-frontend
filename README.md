@@ -41,6 +41,10 @@ npm install
 
 npm run dev
 
+### 构建项目
+
+npm run build
+
 ## 技术栈 🛠️
 
 > open-c3-frontend项目基于 [Vite](https://cn.vitejs.dev/)搭建，框架使用的是[Vue3](https://cn.vuejs.org/)+ [TypeScript](https://www.tslang.cn/)开发。
