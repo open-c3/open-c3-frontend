@@ -151,10 +151,16 @@ body {
   }
   .m8 { margin: 8px; }
   .ml8 { margin-left: 8px; }
-  .mr8 { margin-right: 8px; }
+  .mr8 { margin-right: 8px!important; }
   .mt8 { margin-top: 8px; }
   .mb8 { margin-bottom: 8px; }
-  .ml-50 { margin-left: -50px;}
+
+  .m12 { margin: 12px; }
+  .ml12 { margin-left: 12px!important; }
+  .mr12 { margin-right: 12px!important; }
+  .mt12 { margin-top: 12px!important; }
+  .mb12 { margin-bottom: 12px!important; }
+
   .ml0 {
     margin-left: 0 !important;
   }
@@ -181,9 +187,6 @@ body {
   .mr40 { margin-right: 40px; }
   .mt40 { margin-top: 40px; }
   .mb40 { margin-bottom: 40px; }
-  .ml-120 {
-    margin-left: -120px;
-  }
   .ml-100 {
     margin-left: -100px;
   }
@@ -244,20 +247,8 @@ body {
     margin-left: 110px !important;
   }
 
-  .ml140 {
-    margin-left: 140px !important;
-  }
-
-  .ml145 {
-    margin-left: 145px !important;
-  }
-
   .ml96 {
     margin-left: 96px;
-  }
-
-  .mr-50 {
-    margin-right: -50px;
   }
 
   .mr2 {
@@ -266,10 +257,6 @@ body {
 
   .mr5 {
     margin-right: 5px !important;
-  }
-
-  .mr8 {
-    margin-right: 8px !important;
   }
 
   .mr10 {
@@ -450,6 +437,10 @@ body {
     width: 48px;
   }
 
+  .w64{
+    width: 64px;
+  }
+
   .w100 {
     width: 100px;
   }
@@ -570,31 +561,15 @@ body {
   .w650 {
     width: 650px;
   }
-
   .w640 {
     width: 640px;
   }
-
   .w740 {
     width: 740px;
   }
-
-  .w800 {
-    width: 800px;
-  }
-
   .w900 {
     width: 900px;
   }
-
-  .w1000 {
-    width: 1000px;
-  }
-
-  .w1100 {
-    width: 1100px;
-  }
-
   .h20{
     height: 20px;
   }
@@ -630,15 +605,15 @@ body {
   .h300 {
     height: 300px!important;
   }
-  .max-h300 {
+  .mh300 {
     max-height: 300px!important;
   }
 
   .h400 {
     height: 400px!important;
   }
-  .mh300 {
-    min-height: 300px;
+  .h420 {
+    height: 420px!important;
   }
   .hp100 {
     height: 100%!important;
@@ -704,7 +679,7 @@ body {
   }
 
   .db {
-    display: block;
+    display: block!important;
   }
 
   .df {
@@ -781,7 +756,7 @@ body {
   }
 
   .lh20 {
-    line-height: 20px;
+    line-height: 20px !important;
   }
   .lh25 {
     line-height: 25px;
@@ -836,7 +811,7 @@ body {
   }
 
   .vh {
-    visibility: hidden;
+    visibility: hidden!important;
   }
 
   // 圆角

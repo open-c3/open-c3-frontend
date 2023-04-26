@@ -14,7 +14,7 @@
     <Table :thead="thead" :data="utilization.list" :page="utilization.page" :pageSize="utilization.pageSize" :total="utilization.total" :pageChange="pageChange" :tableLoading="utilization.loading">
       <template #status="{ row }">
         <div v-if="row.status === 'low'" class="c-error">{{ row.status }}</div>
-        <div v-else-if="row.status === 'warn'" class="c-warn">{{ row.status }}</div>
+        <div v-else-if="row.status === 'warn'" class="c-warning">{{ row.status }}</div>
         <div v-else-if="row.status === 'normal'" class="c-success">{{ row.status }}</div>
         <div v-else>unknown</div>
       </template>
@@ -62,7 +62,7 @@ export default {
       thead: THEAD_CONFIG,
       monitorList: [
         { title: proxy.$t('lowUtilization') + ':low', num: 0, class: 'c-error', status: 'low' },
-        { title: proxy.$t('warn') + ':warn', num: 0, class: 'c-warn', status: 'warn' },
+        { title: proxy.$t('warn') + ':warn', num: 0, class: 'c-warning', status: 'warn' },
         { title: proxy.$t('normal') + ':normal', num: 0, class: 'c-success', status: 'normal' },
         { title: proxy.$t('unknown') + ':unknown', num: 0, class: '', status: 'unkown' }
       ],

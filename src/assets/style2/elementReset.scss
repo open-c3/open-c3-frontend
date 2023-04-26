@@ -397,18 +397,19 @@
     }
     tr:last-child {
       .el-table__cell.is-leaf {
-        border-top: none;
-        border-color: var(--el-border-color-lighter);
+        border-color: transparent;
       }
     }
   }
   .el-table__body {
     font-size: 12px;
     color: var(--color_text);
+    background-color: var(--color_bg)!important;
     .el-table-column--selection {
       // background-color: var(--color-bg-con);
     }
   }
+  
   .el-table__body-wrapper tr td.el-table-fixed-column--left {
     // background-color: var(--color-bg-con);
   }
