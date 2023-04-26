@@ -1201,7 +1201,7 @@ export default {
   selected: 'Selected',
   addAgentTitle: '{parent} Region:{name}',
   addNetworkPlaceholder: 'ip网段，如: 10.10.10.10/24 ,多个用逗号或者空格分开',
-  deleteNetwork: 'Delete network'
+  deleteNetwork: 'Delete network',
   allApproval: 'All Approvers Need To Approve',
   strategy: 'strategy',
   samePersonJumpOver:'If the submitter and approver are the same person, the approval will be skipped',
