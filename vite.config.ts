@@ -16,15 +16,15 @@ export default defineConfig({
     port: 3001,
     // 反向代理
     proxy: {
-        '/api': {
-          // http://juyun.c3.cmcloud.org/
-          target: 'http://demo01.openc3.polymericcloud.com/',
-          // target: 'http://10.60.77.73/',
-          // target: 'http://juyun.c3.cmcloud.org/',
-          // target: 'http://10.60.79.175/',
-          changeOrigin: true,
-          rewrite: path => path.replace(/^\/api/, '/api')
-        }
+      '/api': {
+        // http://juyun.c3.cmcloud.org/
+        target: 'http://demo01.openc3.polymericcloud.com/',
+        // target: 'http://10.60.77.73/',
+        // target: 'http://juyun.c3.cmcloud.org/',
+        // target: 'http://10.60.79.175/',
+        changeOrigin: true,
+        rewrite: path => path.replace(/^\/api/, '/api')
+      }
     },
   },
   build: {
@@ -80,6 +80,11 @@ export default defineConfig({
         pure_funcs: ['console.log', 'console.info'],
       },
     },
+    /**
+       * minify 压缩格式
+       * @param minify boolean | 'terser' | 'esbuild'
+       */
+    minify: 'terser',
   },
   resolve: {
     alias: {

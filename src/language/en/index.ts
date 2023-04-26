@@ -1220,4 +1220,13 @@ export default {
   selectAll:'Select all (intranet IP)',
   nodeEmpty:'The selected node is empty',
   clear: 'clear',
+  selectNode: 'select node',
+  enterQueryManually: 'Enter Query Manually', 
+  openHostTerminal:'Open host terminal',
+  nowDaysTask:`Today's Task`,
+  seconds: 'second',
+  fileDirectoryInfo:'file directory information',
+  upload: 'upload',
+  distributionFileMessage: 'Are you sure you want to distribute the file?',
+  inputAddressMessage: 'please enter address',
 }

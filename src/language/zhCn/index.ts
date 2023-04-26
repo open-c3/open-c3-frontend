@@ -1244,4 +1244,13 @@ export default {
   selectAll:'全选（内网IP）',
   nodeEmpty:'所选节点为空',
   clear: '清除',
+  selectNode: '选择节点',
+  enterQueryManually: '手动输入查询',
+  openHostTerminal:'打开主机终端',
+  nowDaysTask:'今日任务',
+  seconds: '秒',
+  fileDirectoryInfo: '文件目录信息',
+  upload: '上传',
+  distributionFileMessage: '确认分发文件吗？',
+  inputAddressMessage: '请输入地址',
 }
