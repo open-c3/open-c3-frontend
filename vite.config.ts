@@ -27,6 +27,60 @@ export default defineConfig({
         }
     },
   },
+  build: {
+    /**
+     * 类型： string | string[]
+     * 默认: modules
+     * 设置最终构建的浏览器兼容目标
+     */
+    target: 'es2015',
+    /**
+     * 类型： string
+     * 默认: dist
+     * 指定输出路径（相对于 项目根目录）
+     */
+    outDir: 'dist',
+    /**
+     * 类型： string
+     * 默认: assets
+     * 指定生成静态资源（js、css、img、fonts）的存放路径（相对于 build.outDir）。
+     */
+    assetsDir: 'assets',
+    /**
+     * 类型： boolean
+     * 默认: true
+     * 启用/禁用 CSS 代码拆分。如果禁用，整个项目中的所有 CSS 将被提取到一个 CSS 文件中
+     */
+    cssCodeSplit: true,
+    /**
+     * 类型： RollupOptions
+     * 自定义底层的 Rollup 打包配置。这与从 Rollup 配置文件导出的选项相同，并将与 Vite 的内部 Rollup 选项合并。
+     */
+    rollupOptions: {
+      // 确保外部化处理那些你不想打包进库的依赖
+      external: [],
+      // 指定文件输出的配置
+      output: {
+        chunkFileNames: `assets/js/[name]-[hash].js`,
+        entryFileNames: `assets/js/[name]-[hash].js`,
+        assetFileNames: `assets/[ext]/[name]-[hash].[ext]`,
+        manualChunks(id: any) {
+          if (id.includes('node_modules')) {
+            return 'vendor' //代码分割为第三方包
+          }
+        },
+      },
+    },
+    terserOptions: {
+      // 打包后移除console和注释
+      compress: {
+        keep_infinity: true,
+        drop_console: true,
+        drop_debugger: true,
+        pure_funcs: ['console.log', 'console.info'],
+      },
+    },
+  },
   resolve: {
     alias: {
       '@': path.resolve(__dirname, 'src'), // 设置别名
