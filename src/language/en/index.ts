@@ -1,6 +1,6 @@
 export default {
   jy: '聚云科技',
-  login_title: 'OPEN-C3',
+  login_title: 'Open-CMP',
   login: 'Login',
   forgetPassword: 'forget password',
   userName: 'userName',
