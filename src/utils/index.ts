@@ -6,7 +6,8 @@ import { ElNotification } from 'element-plus'
 
 import { t } from './language'
 
-export const g_url = 'http://demo01.openc3.polymericcloud.com'
+// export const g_url = 'http://demo01.openc3.polymericcloud.com'
+export const g_url = window.location.href.includes('localhost') ? 'http://demo01.openc3.polymericcloud.com' : window.location.protocol + '//' + window.location.host
 
 export const jumpPage = (path: string) => { // 页面跳转
   router.push(path)
