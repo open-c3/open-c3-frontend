@@ -6,6 +6,12 @@ import layout2 from '@/components/layout/index2.vue'
 const routes: Array<RouteRecordRaw> = [
   {
     path: '/',
+    redirect: '/dashboard/index',
+    component: layout2,
+    children: []
+  },
+  {
+    path: '/',
     component: layout2,
     children: [
       {
