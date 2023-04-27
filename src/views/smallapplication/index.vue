@@ -20,7 +20,7 @@
           :pageSizeChange="size => pageSizeChange(size)">
           <template #operate="scope">
             <div>
-              <el-button v-if="!tabsFlag" type="primary" link>{{ $t('goTo') }}</el-button>
+              <el-button v-if="!tabsFlag" type="primary" link @click="handleOpen">{{ $t('goTo') }}</el-button>
               <el-button v-if="tabsFlag" type="primary" link>{{ $t('edit') }}</el-button>
               <el-button v-if="tabsFlag" type="primary" link>{{ $t('delete') }}</el-button>
             </div>
@@ -29,6 +29,7 @@
       </el-card>
     </div>
   </div>
+  <RunTask :jobId="jobId"/>
 </template>
 
 
@@ -37,6 +38,7 @@ import { defineComponent, reactive, toRefs, getCurrentInstance, onMounted, compu
 import store from '@/store'
 import searchFrom from '@/components/search/index.vue'
 import Table from '@/components/table/index.vue'
+import RunTask from '@/views/implement/runtask/index.vue'
 import {
   LIGHT_APPLICATION_TABLE_THEAD,
   LIGHT_APPLICATION_SEARCH_CONFIG,
@@ -44,9 +46,10 @@ import {
 import {
   getSmallApplication
 } from '@/api/smallapplication/index'
+import router from '@/router'
 
 export default defineComponent({
-  components: { Table, searchFrom },
+  components: { Table, searchFrom, RunTask },
   setup() {
     const { proxy } = getCurrentInstance() as ComponentInternalInstance
     const treeId = computed(() => { return store.getters.treeId })
@@ -76,7 +79,9 @@ export default defineComponent({
         },
         config: LIGHT_APPLICATION_SEARCH_CONFIG,
       },
-      tabsFlag: window.location.hash.includes('global')
+      tabsFlag: window.location.hash.includes('global'),
+      jobId: '',
+      selectTreeId:treeId.value
     })
 
     // 获取轻应用列表
@@ -142,6 +147,12 @@ export default defineComponent({
       state.tableConfig.pageSize = size
     }
 
+    const handleOpen = (row: any) => {
+      state.jobId = row.jobid
+      state.selectTreeId = row.projectid
+      router.push('/implement/runtask')
+    }
+
     const defaultOperate = () => {
       if (state.tabsFlag) {
         state.tabsLabel = `${proxy.$t('edit')}/${proxy.$t('lightApplication')}`
@@ -171,6 +182,7 @@ export default defineComponent({
       pageSizeChange,
       reset,
       onSearch,
+      handleOpen,
     }
   }
 })
