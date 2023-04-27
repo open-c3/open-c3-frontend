@@ -44,10 +44,17 @@
   --el-color-primary-light-5: #939BFF!important; // 按钮link悬浮的颜色
   --el-color-primary-light-9: rgba(117, 127, 255, .1)!important;
 
+  --el-color-success-light-8: rgba(56, 198, 192, .3)!important;
+  --el-color-success-light-9: rgba(56, 198, 192, .1)!important;
+  --el-color-warning-light-8: rgba(248,185,108, .3)!important;
+  --el-color-warning-light-9: rgba(248,185,108, .1)!important;
+  --el-color-danger-light-8: rgba(233,100,100, .3)!important;
+  --el-color-danger-light-9: rgba(233,100,100, .1)!important;
+
   --el-text-color-disabled: transparent!important; // 组合输入框样式优化
   // --el-button-disabled-border-color: transparent; // 禁用按钮border颜色
-  --el-alert-warning-bg: #DEE1FF!important; // 警告背景色
-  --el-alert-warning-color: #333555!important; // 警告字体色
+
+
   --el-alert-warning-icon-color: #757FFF!important; // 警告icon色
 
 }
@@ -110,7 +117,7 @@
   --color-input-bg: #F6F9FD; // 输入框的背景颜色
   --color-dialog-line: #EFEFF5; // 弹框中上下线的颜色
 
-  --coloe-input-append-bg: #E8EEF8; // 符合按钮的背景颜色
+  --color-input-append-bg: #E8EEF8; // 符合按钮的背景颜色
 
   --color-date-color-overlay: #fff!important; // 时间选择框面板的颜色
   --color-date-disabled-text: #ACB3CB; // 时间选择框面板的上个月、下个月文字的颜色
@@ -136,6 +143,10 @@
 
   --el-color-primary-light-8: #d9ecff!important; // tag边框
   --el-text-color-placeholder: #CFD6ED!important;  // 禁用按钮的文本颜色
+
+  --el-alert-warning-bg: #DEE1FF!important; // 警告背景色
+  --el-alert-warning-color: #333555!important; // 警告字体色
+
 }
 .dark {
   // 中性色
@@ -226,7 +237,7 @@
   --el-calendar-thead-border: rgba(153,153,153,0.2); // 日历边框
   --el-calendar-icon-color: #ACB3CB; // 日历箭头颜色
   --el-pagination-all-total-color: #687591; // 分页组件总条数
-  --el-pagination-all-page-color: #21243F; // 总页数字体颜色
+  --el-pagination-all-page-color: #ACB3CB; // 总页数字体颜色
 
 
   --el-color-primary-light-8: #3E3F57!important; // tag边框
@@ -234,5 +245,8 @@
   --el-mask-color: #3E3F57!important; // loading遮罩的背景色
   --el-text-color-regular: #687591!important; // checkbox 文字颜色
   // --el-checkbox-checked-icon-color: #687591!important; // checkbox 框的颜色
+  --el-alert-warning-bg: #3E3F57!important; // 警告背景色
+  --el-alert-warning-color: #ACB3CB!important; // 警告字体色
+  
 
 }

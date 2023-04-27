@@ -130,13 +130,14 @@ export function dealMenus(menus, allRouters) {
 }
 
 export function findPage1() { // 找到能够跳转的第一个页面的path
-  let path = '403'
-  const menus = store.state.app.menus
-  if (menus.length) {
-    const menu0 = menus[0]
-    path = menu0?.children?.length ? menu0.children[0].link : menu0.link
-  }
-  return path
+  // let path = '403'
+  // const menus = store.state.app.menus
+  // if (menus.length) {
+  //   const menu0 = menus[0]
+  //   path = menu0?.children?.length ? menu0.children[0].link : menu0.link
+  // }
+  // return path
+  return '/dashboard/index'
 }
 
 

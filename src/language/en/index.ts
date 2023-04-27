@@ -1220,4 +1220,7 @@ export default {
   selectAll:'Select all (intranet IP)',
   nodeEmpty:'The selected node is empty',
   clear: 'clear',
+  noPermission: 'Sorry, you do not have permission to access this page',
+  backHomePage: 'return home',
+  noPage: 'Sorry, the page you visited does not exist'
 }
