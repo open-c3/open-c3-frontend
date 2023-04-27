@@ -596,7 +596,8 @@ export default defineComponent({
         star = JSON.parse(star)
         const index = (star as any).menu.findIndex(menuItem => menuItem.url === item.url)
         if (index === -1) {
-          (star as any).menu.unshift(item)
+          // (star as any).menu.unshift(item)
+          (star as any).menu.push(item)
         } else {
           (star as any).menu.splice(index, 1)
         }
