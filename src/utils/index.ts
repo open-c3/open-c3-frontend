@@ -6,7 +6,8 @@ import { ElNotification } from 'element-plus'
 
 import { t } from './language'
 
-export const g_url = 'http://demo01.openc3.polymericcloud.com'
+// export const g_url = 'http://demo01.openc3.polymericcloud.com'
+export const g_url = window.location.href.includes('localhost') ? 'http://demo01.openc3.polymericcloud.com' : window.location.protocol + '//' + window.location.host
 
 export const jumpPage = (path: string) => { // 页面跳转
   router.push(path)
@@ -129,13 +130,14 @@ export function dealMenus(menus, allRouters) {
 }
 
 export function findPage1() { // 找到能够跳转的第一个页面的path
-  let path = '403'
-  const menus = store.state.app.menus
-  if (menus.length) {
-    const menu0 = menus[0]
-    path = menu0?.children?.length ? menu0.children[0].link : menu0.link
-  }
-  return path
+  // let path = '403'
+  // const menus = store.state.app.menus
+  // if (menus.length) {
+  //   const menu0 = menus[0]
+  //   path = menu0?.children?.length ? menu0.children[0].link : menu0.link
+  // }
+  // return path
+  return '/dashboard/index'
 }
 
 

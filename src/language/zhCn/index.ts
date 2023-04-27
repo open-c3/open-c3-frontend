@@ -1244,4 +1244,7 @@ export default {
   selectAll:'全选（内网IP）',
   nodeEmpty:'所选节点为空',
   clear: '清除',
+  noPermission: '抱歉，您无权访问该页面',
+  backHomePage: '返回首页',
+  noPage: '抱歉，您访问的页面不存在' 
 }
