@@ -1253,4 +1253,6 @@ export default {
   upload: '上传',
   distributionFileMessage: '确认分发文件吗？',
   inputAddressMessage: '请输入地址',
+  deleteFiles:'删除文件',
+  backPerviousLevel:'返回上一层', 
 }

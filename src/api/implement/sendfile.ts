@@ -36,3 +36,17 @@ export const getJobTaskList = (treeId: string, params: getBusinessUseData): Prom
     params,
   })
 }
+
+/**
+ * 文件目录删除文件 post
+ * /api/job/sendfile/unlink/{treeId}?sudo={selectUser}&path={filepath}/filename
+ * @param {TreeIdInfo} treeId
+ * @param {*}  data
+ */
+
+export const deleteFileListItem = (data: FileListInfo): Promise<IResponseInfo | any> => {
+  return request({
+    url: `/api/job/sendfile/unlink/${data.treeId}?sudo=${data.selectUser}&path=${data.filepath}/filename`,
+    method: 'post',
+  })
+}

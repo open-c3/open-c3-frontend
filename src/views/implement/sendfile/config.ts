@@ -80,7 +80,7 @@ export const DRAWER_FILE_TABLE_THEAD = Object.freeze([
   { prop: 'info', label: 'information', align: 'center' },
   { prop: 'type', label: 'type', align: 'center' },
   { prop: 'path', label: 'path', align: 'center' },
-  { type: 'slot', prop: 'operate', label: 'operate', align: 'center' },
+  { type: 'slot', prop: 'operate', label: 'operate', align: 'center', width:200 },
 ])
 
 export const DRAWER_UPLOAD_TABLE_THEAD = Object.freeze([

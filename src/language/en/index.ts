@@ -1229,4 +1229,6 @@ export default {
   upload: 'upload',
   distributionFileMessage: 'Are you sure you want to distribute the file?',
   inputAddressMessage: 'please enter address',
+  deleteFiles:'delete File',
+  backPerviousLevel:'back to previous level', 
 }

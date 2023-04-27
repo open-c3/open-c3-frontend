@@ -13,11 +13,22 @@
         <template #header> {{ $t('fileDirectoryInfo') }} </template>
         <div>
           <Table :thead="tableConfig.thead" :data="tableConfig.list" :highlight-current-row="false"
-            :tableLoading="tableConfig.loading" :page="tableConfig.page" :pageSize="tableConfig.pageSize"
-            :total="tableConfig.total" :pageChange="pageChange" :pageSizeChange="pageSizeChange">
+            :tableLoading="tableConfig.loading">
             <template #operate="scope">
               <div>
-
+                <el-button v-if="(scope as any).row.type === 'parent'" type="primary" link @click="backdir()">
+                  {{ $t('backPerviousLevel') }}
+                </el-button>
+                <el-button v-if="(scope as any).row.type === 'dir'" type="primary" link
+                  @click="intodir((scope as any).row.path)">{{ $t('goTo') }}</el-button>
+                <el-button v-if="(scope as any).row.type === 'file'" type="primary" link
+                  @click="uploadOperate('download', (scope as any).row)">
+                  {{ $t('download') }}
+                </el-button>
+                <el-button v-if="(scope as any).row.type === 'file'" type="primary" link
+                  @click="deleteItems((scope as any).row)">
+                  {{ $t('deleteFiles') }}
+                </el-button>
               </div>
             </template>
           </Table>
@@ -31,20 +42,20 @@
           <div class="df jc_fe">
             <el-upload :action="action" :headers="headers" :show-file-list="false" :before-upload="beforeUpload"
               :on-success="uploadSuccess">
-              <el-button class="mb16" :loading="uploadLoading" type="primary" icon="upload">{{ $t('uploadFile')
-              }}</el-button>
+              <el-button class="mb16" :loading="uploadLoading" type="primary" icon="upload">
+              {{ $t('uploadFile')}}
+              </el-button>
             </el-upload>
           </div>
           <Table :thead="uploadConfig.thead" :data="uploadConfig.list" :highlight-current-row="false"
-            :tableLoading="uploadConfig.loading" :page="uploadConfig.page" :pageSize="uploadConfig.pageSize"
-            :total="uploadConfig.total" :pageChange="pageChange" :pageSizeChange="pageSizeChange">
+            :tableLoading="uploadConfig.loading">
             <template #size="scope">
               <div>
                 {{ bytesToSize((scope as any).row.size) || '-' }}
               </div>
             </template>
             <template #operate="{ row }">
-              <el-button @click="uploadOperate(row)" link type="primary">{{ $t('upload') }}</el-button>
+              <el-button @click="uploadOperate('upload', row)" link type="primary">{{ $t('upload') }}</el-button>
               <el-button @click="download(row.name)" link type="primary">{{ $t('download') }}</el-button>
               <el-button @click="deleteFun(row.id)" link type="primary">{{ $t('delete') }}</el-button>
             </template>
@@ -57,8 +68,7 @@
         <template #header>{{ $t('nowDaysTask') }} </template>
         <div>
           <Table :thead="taskConfig.thead" :data="taskConfig.list" :highlight-current-row="false"
-            :tableLoading="taskConfig.loading" :page="taskConfig.page" :pageSize="taskConfig.pageSize"
-            :total="taskConfig.total" :pageChange="pageChange" :pageSizeChange="pageSizeChange">
+            :tableLoading="taskConfig.loading">
           </Table>
         </div>
       </el-card>
@@ -86,6 +96,7 @@ import {
 import {
   getJobSendFileList,
   getJobTaskList,
+  deleteFileListItem,
 } from '@/api/implement/sendfile'
 import {
   districtbuttonFile
@@ -126,30 +137,18 @@ export default {
       uploadLoading: false,
       scriptStepFlag: true,
       tableConfig: {
-        total: 0,
         loading: false,
-        defaultList: [],
         list: [],
-        page: 1,
-        pageSize: 10,
         thead: [...DRAWER_FILE_TABLE_THEAD],
       },
       uploadConfig: {
-        total: 0,
         loading: false,
-        defaultList: [],
         list: [],
-        page: 1,
-        pageSize: 10,
         thead: [...DRAWER_UPLOAD_TABLE_THEAD],
       },
       taskConfig: {
-        total: 0,
         loading: false,
-        defaultList: [],
         list: [],
-        page: 1,
-        pageSize: 10,
         thead: [...DRAWER_TASK_TABLE_THEAD],
       },
       action: `/api/job/uploadv2/fileserver/${store.getters.treeId}`,
@@ -157,19 +156,19 @@ export default {
 
     })
 
+    const sendParams: FileListInfo = {
+      treeId: props.treeId,
+      filepath: state.params.address,
+      selectUser: props.info.selectUser,
+    }
+
     // 获取文件目录列表 
     const getFileListData = async () => {
-      const params: FileListInfo = {
-        treeId: props.treeId,
-        filepath: state.params.address,
-        selectUser: props.info.selectUser,
-      }
       state.tableConfig.loading = true
-      const dataRet = await getJobSendFileList(params).catch(err => { state.tableConfig.loading = false, state.tableConfig.list = [], state.tableConfig.total = 0 })
+      const dataRet = await getJobSendFileList(sendParams).catch(err => { state.tableConfig.loading = false, state.tableConfig.list = []})
       state.tableConfig.loading = false
       if (dataRet) {
         state.tableConfig.list = dataRet.reverse()
-        state.tableConfig.total = dataRet.length
       }
     }
 
@@ -179,47 +178,54 @@ export default {
         name: 'sendfile',
         time_start: moment().format('YYYY-MM-DD')
       }
-      const dataRet = await getJobTaskList(props.treeId, params)
+      const dataRet = await getJobTaskList(props.treeId, params).catch(err => { state.taskConfig.loading = false, state.taskConfig.list = []})
       if (dataRet) {
         state.taskConfig.list = dataRet.reverse()
-        state.taskConfig.total = dataRet.length
       }
     }
 
     // 获取上传文件管理列表
     const getUploadData = async () => {
       state.uploadConfig.loading = true
-      const dataRet = await getFileServer(Number(props.treeId), {}) as any
+      const dataRet = await (getFileServer(Number(props.treeId), {}) as any).catch(err => { state.uploadConfig.loading = false, state.uploadConfig.list = []})
       state.uploadConfig.loading = false
       if (dataRet) {
         state.uploadConfig.list = dataRet.reverse()
-        state.uploadConfig.total = dataRet.length
       }
     }
 
     // 文件分发上传
-    const uploadOperate = (row: any) => {
+    const uploadOperate = (type: string, row: any) => {
+      let temppath = state.params.address.split("/");
+      let temphost = temppath.shift();
+      let filepath = temppath.join("/");
+      const uploadParams: DistrictGileInfo = {
+        chmod: '644',
+        chown: props.info.selectUser,
+        dp: `/${filepath}/`,
+        dst: temphost,
+        dst_type: 'builtin',
+        name: `sendfile_upload_${state.params.address}/${row.name}`,
+        sp: row.name,
+        src: '',
+        src_type: 'fileserver',
+        timeout: 300,
+        user: props.info.selectUser
+      }
+      const downParams: DistrictGileInfo = {
+        ...uploadParams,
+        dp: '/tmp/abc/',
+        dst_type: 'builtin',
+        name: `sendfile_download_${state.params.address}/${row.path}`,
+        sp: `/${filepath}/${state.params.address}`,
+        src: temphost,
+        src_type: 'builtin',
+      }
       ElMessageBox.confirm(proxy.$t('distributionFileMessage'), proxy.$t('distributionFile'), {
         confirmButtonText: proxy.$t('confirm'),
         cancelButtonText: proxy.$t('cancel')
       }).then(async () => {
-        let temppath = state.params.address.split("/");
-        let temphost = temppath.shift();
-        let filepath = temppath.join("/");
-        const params: DistrictGileInfo = {
-          chmod: '644',
-          chown: props.info.selectUser,
-          dp: `/${filepath}/`,
-          dst: temphost,
-          dst_type: 'builtin',
-          name: `sendfile_upload_${state.params.address}/${row.name}`,
-          sp: row.name,
-          src: '',
-          src_type: 'fileserver',
-          timeout: 300,
-          user: props.info.selectUser
-        }
-        const dataRet = await districtbuttonFile(props.treeId, params)
+        const dataRet = await districtbuttonFile(props.treeId, type === 'upload' ? uploadParams : downParams)
         if (dataRet) {
           proxy.$notification(proxy.$t('operationSuccess'))
         }
@@ -257,6 +263,23 @@ export default {
       })
     }
 
+    //   进入文件目录下一层
+    const intodir = (path: string) => {
+      state.params.address = `${state.params.address}/${path}`
+      defaultOnload()
+    }
+    // 返回文件目录上一层
+    const backdir = () => {
+      let temppath = state.params.address.split("/")
+      temppath.pop();
+      state.params.address = temppath.join("/")
+      if (temppath.length === 0) {
+        context.emit('cancel')
+        return
+      }
+      defaultOnload()
+    }
+
     //手动输入查询
     const manualInputSearch = () => {
       if (!state.params.address) {
@@ -281,12 +304,20 @@ export default {
       window.open(terminalAddr + str, '_blank')
     }
 
-    const pageChange = () => {
-
-    }
-
-    const pageSizeChange = () => {
-
+    // 文件目录操作
+    const deleteItems = (path: string) => {
+      ElMessageBox.confirm(proxy.$t('deleteFile'), '', {
+        confirmButtonText: proxy.$t('confirm'),
+        cancelButtonText: proxy.$t('cancel')
+      }).then(() => {
+        state.tableConfig.loading = true
+        deleteFileListItem(sendParams).then(res => {
+          proxy.$notification('success')
+          getUploadData()
+        }).finally(() => {
+          state.tableConfig.loading = false
+        })
+      })
     }
 
     const defaultOnload = () => {
@@ -302,19 +333,6 @@ export default {
       context.emit('cancel')
     }
 
-    // 弹框成功的回调
-    const confirm = () => {
-      (proxy.$refs.form as any).validFun().then(valid => {
-        if (valid) {
-          // addCollector(store.getters.treeId, {}).then(res => {
-          //   context.emit('addSuccess')
-          //   proxy.$notification('success')
-          // }).finally(() => {
-          //   state.loading = false
-          // })
-        }
-      })
-    }
     return {
       treeData,
       ...toRefs(state),
@@ -325,12 +343,13 @@ export default {
       bytesToSize,
       beforeUpload,
       uploadSuccess,
-      pageChange,
-      pageSizeChange,
       uploadOperate,
       manualInputSearch,
       onOpenTerminal,
       addressReset,
+      deleteItems,
+      intodir,
+      backdir,
     }
   }
 }
