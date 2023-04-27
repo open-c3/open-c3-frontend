@@ -6,9 +6,9 @@
     </div>
     <div class="box-right">
       <div class="right-hd f60">403</div>
-      <div class="right-middle  mt24 ml96">{{ $t('sorry-jurisdiction') }}</div>
+      <div class="right-middle  mt24 ml96">{{ $t('noPermission') }}</div>
       <div class="right-btm tc h30  mt24 ml96">
-        <div class="right-cont f14 h22" @click="onclick">{{ $t('back-homepage') }}</div>
+        <div class="right-cont f14 h22" @click="onclick">{{ $t('backHomePage') }}</div>
       </div>
     </div>
   </div>

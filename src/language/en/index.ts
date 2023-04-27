@@ -1234,4 +1234,7 @@ export default {
   lightApplicationConfig: 'LightAPP config',
   lightApplication:'Light Application',
   lastUpdateTime: 'Last Updated',
+  noPermission: 'Sorry, you do not have permission to access this page',
+  backHomePage: 'return home',
+  noPage: 'Sorry, the page you visited does not exist'
 }

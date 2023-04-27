@@ -1258,4 +1258,7 @@ export default {
   lightApplicationConfig: '轻应用配置', 
   lightApplication:'轻应用',
   lastUpdateTime: '最后更新时间',
+  noPermission: '抱歉，您无权访问该页面',
+  backHomePage: '返回首页',
+  noPage: '抱歉，您访问的页面不存在' 
 }
