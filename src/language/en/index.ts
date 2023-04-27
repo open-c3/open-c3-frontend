@@ -1231,4 +1231,7 @@ export default {
   inputAddressMessage: 'please enter address',
   deleteFiles:'delete File',
   backPerviousLevel:'back to previous level', 
+  lightApplicationConfig: 'LightAPP config',
+  lightApplication:'Light Application',
+  lastUpdateTime: 'Last Updated',
 }

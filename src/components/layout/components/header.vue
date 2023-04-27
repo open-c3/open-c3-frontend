@@ -146,8 +146,9 @@ export default defineComponent({
             meta: { title: '审计日志'}
           },
           {
-            name: '轻应用配置',
-            url: ''
+            name: proxy.$t('lightApplicationConfig'),
+            url: '/global/smallapplication',
+            meta: { title: '轻应用配置'}
           },
           {
             name: proxy.$t('addressBookManage'),
@@ -477,7 +478,7 @@ export default defineComponent({
         {
           title: {
             name: '业务管理',
-            icon: 'basic',
+            icon: 'quickly',
             url: '/business',
             class: ''
           },
@@ -547,7 +548,22 @@ export default defineComponent({
               star: false
             }
           ]
-        }
+        },
+        {
+          title: {
+            name: proxy.$t('lightApplication'),
+            icon: 'small-app',
+            url: '/smallapplication',
+            class: ''
+          },
+          list:[
+            {
+              name: proxy.$t('lightApplicationConfig'),
+              url: '/smallapplication/index',
+              star: false
+            }
+          ]
+        },
       ],
       currentIndex: 0,
       collectMenu: []

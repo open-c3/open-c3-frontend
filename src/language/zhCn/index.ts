@@ -1255,4 +1255,7 @@ export default {
   inputAddressMessage: '请输入地址',
   deleteFiles:'删除文件',
   backPerviousLevel:'返回上一层', 
+  lightApplicationConfig: '轻应用配置', 
+  lightApplication:'轻应用',
+  lastUpdateTime: '最后更新时间',
 }
