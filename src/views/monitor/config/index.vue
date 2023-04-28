@@ -489,11 +489,4 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
-.monitor-config{
-  width: 100%;
-  .monitor-config-content{
-    width: calc(100% - 140px);
-  }
-}
-
 </style>

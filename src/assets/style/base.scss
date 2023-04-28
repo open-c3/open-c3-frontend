@@ -1,7 +1,7 @@
-@font-face {
-  font-family: "numberFont";
-  src: url('../../assets/font/futura.ttc');
-}
+// @font-face {
+//   font-family: "numberFont";
+//   src: url('../../assets/font/futura.ttc');
+// }
 body {
   
   .pr {
@@ -208,7 +208,9 @@ body {
   .ml10 {
     margin-left: 10px;
   }
-
+  .ml16 {
+    margin-left: 16px;
+  }
   .ml20 {
     margin-left: 20px;
   }
@@ -300,6 +302,14 @@ body {
 
   .mt0 {
     margin-top: 0 !important;
+  }
+
+  .mt2{
+    margin-top: 2px;
+  }
+  
+  .mt3 {
+    margin-top: 3px !important;
   }
 
   .mt5 {
@@ -451,6 +461,10 @@ body {
     width: 130px;
   }
 
+  .w144 {
+    width: 144px;
+  }
+
   .w145 {
     width: 145px;
   }
@@ -497,6 +511,9 @@ body {
   .w300 {
     width: 300px;
   }
+  .w303 {
+    width: 303px!important;
+  }
   .w318 {
     width: 318px;
   }
@@ -515,7 +532,9 @@ body {
   .w416 {
     width: 416px !important;
   }
-
+  .w430 {
+    width: 430px;
+  }
   .w440 {
     width: 440px;
   }
@@ -550,6 +569,14 @@ body {
 
   .w650 {
     width: 650px;
+  }
+
+  .w640 {
+    width: 640px;
+  }
+
+  .w740 {
+    width: 740px;
   }
 
   .w800 {
@@ -603,6 +630,9 @@ body {
   .h300 {
     height: 300px!important;
   }
+  .max-h300 {
+    max-height: 300px!important;
+  }
 
   .h400 {
     height: 400px!important;
@@ -648,6 +678,10 @@ body {
 
   .f20 {
     font-size: 20px;
+  }
+
+  .f30 {
+    font-size: 30px;
   }
 
   .f60 {
@@ -783,7 +817,7 @@ body {
     color: var(--color_text_menu_2);
   }
   .c { // 正文颜色
-    color: var(--color_text);
+    color: var(--color_text)!important;
   }
   .c-success {
     color: var(--el-color-success);
@@ -791,11 +825,12 @@ body {
   .c-error {
     color: var(--el-color-error);
   }
-
-  .c-warn {
-    color: var(--el-color-warning);
+  .c-primary {
+    color: var(--color_primary);
   }
-
+  .c-warning {
+    color: var(--color_text_warning);
+  }
   .wba {
     word-break: break-all;
   }
@@ -815,6 +850,9 @@ body {
   .br8 {
     border-radius: 8px!important;
   }
+  .br4 {
+    border-radius: 4px!important;
+  }
   .br-tl8 {
     border-top-left-radius: 8px;
   }
@@ -825,6 +863,9 @@ body {
   // 边框
   .bb1 {
     border-bottom: 1px solid var(--color_border);
+  }
+  .bt1 {
+    border-top: 1px solid var(--color_border);
   }
 
   .clearfix:after,
@@ -850,12 +891,22 @@ body {
   .ofa{
     overflow: auto;
   }
+  .ofax {
+    overflow-x: auto;
+  }
+  .ofay {
+    overflow-y: scroll;
+  }
   .rotate45{
     transform: rotate(45deg);;
   }
   .border-none{
     border: none !important;
   }
+  .bg { // 基础背景
+    background-color: var(--color_bg_con);
+  }
+
   @keyframes rotate360{
     from {transform: rotate(0deg);}
     to {transform: rotate(359deg);}
@@ -883,7 +934,12 @@ body {
     @include alert-status(var(--el-color-success), var(--color_white));
   }
   .primary-alert-status{
-    @include alert-status(#939BFF, var(--color_white));
+    // @include alert-status(#939BFF, var(--color_white));
+    @include alert-status(rgba(147, 155, 255, 0.3), var(--color_text));
+    .alert-title > .el-icon {
+      color: var(--color_primary)!important;
+    }
+
   }
   // 只有一列的主体节本样式
   .body-layout1{
@@ -915,7 +971,7 @@ body {
     height: calc(100% - 24px);
     .top {
       background-color: var(--color_bg_con);
-      padding: 12px 24px;
+      padding: 8px 24px;
       height: 56px;
     }
     .bottom {
@@ -934,7 +990,7 @@ body {
   }
   // 数字font-family
   .new-amount-money {
-    font-family: 'numberFont'!important;
+    // font-family: 'numberFont'!important;
   }
 }
 // 复制文字样式

@@ -4,7 +4,8 @@
     <div class="layout-content">
       <el-form :model="taskForm" label-width="100px">
         <el-form-item :label="$t('task')">
-          <el-select class="w450" v-model="taskForm.choiceJob" @change="jobhandleChange">
+          <el-select class="w450" v-model="taskForm.choiceJob">
+            <!--  @change="value => jobhandleChange(value)" -->
             <el-option v-for="item in allTaskOptions" :key="item" :value="JSON.stringify(item)" :label="item.alias" />
           </el-select>
         </el-form-item>
@@ -18,7 +19,7 @@
           <!-- C3TEXT -->
           <el-form-item v-if="!varsValue[item.name] && item.name === 'C3TEXT'" :label="item.name">
             <el-input class="w450" type="textarea" v-model="item.value" :placeholder="$t('content')" />
-            <div class="mt5">{{ item.describe || '' }}</div>
+            <div class="ml10">{{ item.describe || '' }}</div>
           </el-form-item>
 
           <!-- C3SUBTREE -->
@@ -26,18 +27,18 @@
             <el-select class="w450" v-model="item.value">
               <el-option v-for="(cItem, cIndex) in c3Subtree" :key="cIndex" :value="cItem.id" :label="cItem.name" />
             </el-select>
-            <div class="mt5">{{ item.describe || '' }}</div>
+            <div class="ml10">{{ item.describe || '' }}</div>
           </el-form-item>
 
           <!-- item.name !== C3SUBTREE、 C3TEXT -->
           <el-form-item v-if="!varsValue[item.name] && item.name !== 'C3SUBTREE' && item.name !== 'C3SUBTREE'"
             :label="item.name">
-            <el-input v-model="item.value" :placeholder="$t('fillTaskVariables')" />
-            <div class="mt5">{{ item.describe || '' }}</div>
+            <el-input class="w450" v-model="item.value" :placeholder="$t('fillTaskVariables')" />
+            <div class="ml10">{{ item.describe || '' }}</div>
           </el-form-item>
 
           <!-- varsValue[item.name] -->
-          <el-form-item v-if="varsValue[item.name]" :label="item.name">
+          <el-form-item v-if="varsValue[item.name]" :label="item.name" required>
             <div v-if="handwritten[item.name]">
               <el-input class="w450" v-model="item.value" :placeholder="$t('fillTaskVariables')" />
             </div>
@@ -68,14 +69,17 @@
       </div>
     </div>
   </div>
-  <component :ref="compType" :is="compType" v-if="compFlag" v-model="compFlag" :radioOption="SELECT_SERVER_RADIO_OPTION"
+
+  <component :is="compType" v-if="compFlag" v-model="compFlag" :radioOption="SELECT_SERVER_RADIO_OPTION"
     :treeData="treeData" :treeId="treeId" :editItem="editItem" :config="ADD_ENV_GROUPS_CONFIG" @close="compClose"
     @success="compSuccess" />
 </template>
 
 <script lang="ts">
-import { defineComponent, onMounted, reactive, toRefs, computed, watch, getCurrentInstance, ComponentInternalInstance } from 'vue'
+import { defineComponent, onMounted, reactive, toRefs, computed, watch, getCurrentInstance, ComponentInternalInstance, Component } from 'vue'
 import store from '@/store'
+import { useRoute } from 'vue-router'
+import router from '@/router'
 import Selectserver from '@/views/quickentry/components/Selectserver.vue'
 import {
   ADD_ENV_GROUPS_CONFIG,
@@ -98,13 +102,14 @@ import {
   CreateTaskInfo,
   RunJobTaskInfo,
 } from '@/api/interface/implement'
+import { ElMessageBox } from 'element-plus'
 
 interface StateInfo {
   taskForm: any;
   allTaskOptions: Array<any>
   ciInfo: any;
   allGroups: Array<any>;
-  _rollbackVersion_: string;
+  rollbackVersion_: string;
   deployVersion: string;
   iamtask4Jobx: number;
   showJobxGroup: number;
@@ -117,44 +122,26 @@ interface StateInfo {
   varTemp: Array<any>;
   jobVar: Array<any>;
   handwritten: any;
-  compType: string;
+  compType: Component;
   editItem: any;
   compFlag: boolean;
   selectIpStr: string;
+  treeId: string
 }
 
 export default defineComponent({
-  props: {
-    jobId: {
-      type: String,
-      default: '',
-      required: false
-    }
-  },
+  props: {},
   components: {
     Selectserver,
   },
   setup(props) {
     const { proxy } = getCurrentInstance() as ComponentInternalInstance
-    const treeId = computed(() => {
-      return store.getters.treeId
-    })
-
-    const treeData = computed(() => {
-      return store.getters.treeData
-    })
-
-    const selectIpArray = computed(() => {
-      return store.getters.selectIpArray
-    })
-
-    const selectGroupArray = computed(() => {
-      return store.getters.selectGroupArray
-    })
-
-    const customArray = computed(() => {
-      return store.getters.customArray
-    })
+    const treeId = computed(() => { return store.getters.treeId })
+    const treeData = computed(() => { return store.getters.treeData })
+    const selectIpArray = computed(() => { return store.getters.selectIpArray })
+    const selectGroupArray = computed(() => { return store.getters.selectGroupArray })
+    const customArray = computed(() => { return store.getters.customArray })
+    const route = useRoute()
 
     const state: StateInfo = reactive({
       taskForm: {
@@ -163,7 +150,7 @@ export default defineComponent({
       allTaskOptions: [],
       ciInfo: {},
       allGroups: [],
-      _rollbackVersion_: '',
+      rollbackVersion_: '',
       deployVersion: '',
       iamtask4Jobx: 0,
       showJobxGroup: 0,
@@ -181,17 +168,16 @@ export default defineComponent({
       varTemp: [],
       jobVar: [],
       handwritten: {},
-      compType: '',
+      compType: {},
       editItem: {},
       compFlag: false,
       selectIpStr: '',
+      treeId: '',
     })
 
     //获取所有作业列表
-    const getAllGroupsData = async () => {
-      const params: TreeIdInfo = {
-        treeId: treeId.value
-      }
+    const getAllGroupsData = async (treeId: string | number | string[]) => {
+      const params: TreeIdInfo = { treeId }
       const dataRet = await getAllGroupList(params)
       if (dataRet) {
         dataRet.forEach(item => {
@@ -203,10 +189,12 @@ export default defineComponent({
         const jobDataRet = await getTreeJobs(params)
         if (jobDataRet) {
           state.jobsLoadover = true
-          if (props.jobId) {
+          if (route.query.jobid) {
             jobDataRet.forEach(item => {
-              state.allTaskOptions = [item]
-              state.taskForm.choiceJob = item
+              if (String(item.id) === route.query.jobid) {
+                state.allTaskOptions = [item]
+                state.taskForm.choiceJob = item
+              }
             })
           } else {
             state.allTaskOptions = jobDataRet
@@ -236,7 +224,7 @@ export default defineComponent({
     // 加载子服务树 
     const getLoadSubTree = async () => {
       const params: TreeIdInfo = {
-        treeId: treeId.value
+        treeId: state.treeId
       }
       const dataRet = await getSubTreeList(params)
       if (dataRet) {
@@ -247,7 +235,7 @@ export default defineComponent({
 
     // 默认操作
     const defaultOption = () => {
-      state._rollbackVersion_ = ''
+      state.rollbackVersion_ = ''
       state.deployVersion = ''
       state.iamtask4Jobx = 0
       state.showJobxGroup = 0
@@ -277,7 +265,7 @@ export default defineComponent({
         defaultOption()
         state.taskData.jobname = newValue.name
         const params: JobGroupFormInfo = {
-          treeId: treeId.value,
+          treeId: state.treeId,
           uuid: newValue.uuid
         }
         const dataRet = await getJobformList(params)
@@ -315,7 +303,7 @@ export default defineComponent({
               }
             } else {
               if (item.name === '_rollbackVersion_') {
-                state._rollbackVersion_ = item.value
+                state.rollbackVersion_ = item.value
               }
               if (item.name === 'version') {
                 state.deployVersion = item.value
@@ -341,7 +329,7 @@ export default defineComponent({
 
     const handleSelectServer = (item: any, index: number) => {
       state.compFlag = true
-      state.compType = 'Selectserver'
+      state.compType = Selectserver
       state.editItem = {
         title: proxy.$t('SelectiveMachine')
       }
@@ -356,38 +344,79 @@ export default defineComponent({
       compClose()
     }
 
+    const disabledConfirm = (): boolean => {
+      const emptyArr = []
+      for (let key in state.taskData.variable) {
+        if (key && state.taskData.variable[key] === '') {
+          emptyArr.push(key)
+        }
+      }
+      return emptyArr.length === 0
+    }
     // 提交表单
     const handleConfirm = async () => {
       let varDict = {}
+      let routerPath = ''
       state.jobVar.forEach(item => {
         varDict[item.name] = item.value
       })
-      if (state._rollbackVersion_!== '') {
-        varDict['_rollbackVersion_'] = state._rollbackVersion_
+      if (state.rollbackVersion_ !== '') {
+        varDict['_rollbackVersion_'] = state.rollbackVersion_
       }
-      if (state.deployVersion!== '') {
+      if (state.deployVersion !== '') {
         varDict['version'] = state.deployVersion
       }
       state.taskData.variable = varDict
-      if (state.taskData.group === null ) {
+      if (state.taskData.group === null) {
         delete state.taskData.group
       }
-      if (state.taskData.uuid === null ) {
+      if (state.taskData.uuid === null) {
         delete state.taskData.uuid
       }
-      if (state.iamtask4Jobx) {
-        const params: CreateTaskInfo = {
-          id: treeId.value,
-          data: state.taskData
-        }
-        const dataRet = await createNewTask(params)
 
+      if (disabledConfirm()) {
+        if (state.iamtask4Jobx) {
+          const params: CreateTaskInfo = {
+            id: state.treeId,
+            data: state.taskData
+          }
+          routerPath = `/history/jobxdetail/${state.treeId}/${state.taskForm.choiceJob.uuid}`
+          await defaultMessage({ message: proxy.$t('createTaskDesc'), title: proxy.$t('createTaskTitle') }, params, routerPath, createNewTask)
+        } else {
+          const params: RunJobTaskInfo = {
+            jobuuid: state.taskForm.choiceJob.uuid,
+            variable: state.taskData.variable,
+          }
+          routerPath = `/history/jobdetail/${state.treeId}/${state.taskForm.choiceJob.uuid}`
+          await defaultMessage({ message: proxy.$t('executeJobMessage'), title: proxy.$t('executeJob') }, params, routerPath, runquicklyRunjob)
+        }
+      } else {
+        proxy.$notification('fillForms', 'error')
       }
-      console.log(state.jobVar)
+    }
+
+    const defaultMessage = ({ message, title }, params, routerPath, callback) => {
+      return ElMessageBox.confirm(message, title, {
+        confirmButtonText: proxy.$t('confirm'),
+        cancelButtonText: proxy.$t('cancel'),
+        type: 'warning'
+      }).then(async () => {
+        const dataRet = await callback(state.treeId, params)
+        if (dataRet) {
+          proxy.$notification('operationSuccess')
+          router.push(`${routerPath}/${dataRet.uuid}`)
+        }
+      })
     }
 
     onMounted(() => {
-      getAllGroupsData()
+      if (route.query.projectid) {
+        state.treeId = route.query.projectid as string
+        getAllGroupsData(route.query.projectid)
+      } else {
+        state.treeId = treeId.value
+        getAllGroupsData(treeId.value)
+      }
     })
 
     watch(() => [selectIpArray.value, selectGroupArray.value, customArray.value], (value) => {
@@ -398,6 +427,19 @@ export default defineComponent({
         newIpInput[0].value = value[1].join(',')
       } else if (state.selectIpStr === 'custom') {
         newIpInput[0].value = value[2]
+      }
+    })
+
+    watch(() => treeId.value, (acc, cur) => {
+      if (acc !== cur) {
+        state.taskForm.choiceJob = ''
+        getAllGroupsData(treeId.value)
+      }
+    })
+
+    watch(() => state.taskForm.choiceJob, (value) => {
+      if (value !== '') {
+        jobhandleChange(JSON.stringify(value))
       }
     })
 

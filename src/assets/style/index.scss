@@ -41,3 +41,17 @@ html, body, #app, #main {
 .br_table {
   border-right: 1px solid var(--el-border-color-lighter)!important;
 }
+// 报告
+.radioTimeCon {
+  .el-radio {
+    min-width: 100px;
+    .el-radio__label {
+      font-size: 12px!important;
+      min-width: 100px;
+    }
+  }
+}
+.popperClassTimeReport { // 报告的时间范围中的date一直存在
+  z-index: 3000!important;
+  top: 415px!important;
+}
