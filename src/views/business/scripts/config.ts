@@ -324,8 +324,8 @@ export const BUILT_IN_PLUGIN:string[] = ['kubectl', 'terraform', 'terraformv2', 
 // 表头
 export const RUN_THEAD_CONFIG = Object.freeze([
   { prop: 'id', label: 'id', align: 'center', type: 'slot' },
-  { prop: 'type', label: 'name', align: 'center' },
-  { prop: 'create_user', label: 'type', align: 'center' },
+  { prop: 'name', label: 'name', align: 'center' },
+  { prop: 'type', label: 'type', align: 'center', type: 'slot' },
   { prop: 'operate', label: 'operate', align: 'center', type: 'slot' }
 ])
 
@@ -351,6 +351,6 @@ export const ADD_USER_CONFIG = Object.freeze({
 
 // 选择服务器
 export const SELECT_SERVER_CONFIG = Object.freeze({
-  width: '800px',
+  width: '1000px',
   title: 'selectServer'
 })
