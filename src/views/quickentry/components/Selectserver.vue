@@ -31,7 +31,7 @@
                         class="mr20" @change="onInipChange((scope as any).row, $event)" />
                       <span
                         :class="`${(scope as any).row.inip && !(scope as any).row.inips.status ? '' : (scope as any).row.inip && (scope as any).row.inips.status === 'fail' ? 'is-fail' :
-                            (scope as any).row.inip && (scope as any).row.inips.status === 'success' ? 'is-success' : ''}`">
+                          (scope as any).row.inip && (scope as any).row.inips.status === 'success' ? 'is-success' : ''}`">
                         {{ (scope as any).row.inip }}
                       </span>
                     </div>
@@ -47,7 +47,7 @@
                         class="mr20" @change="onExipChange((scope as any).row, $event)" />
                       <span
                         :class="`${(scope as any).row.exip && !(scope as any).row.exips.status ? '' : (scope as any).row.exip && (scope as any).row.exips.status === 'fail' ? 'is-fail' :
-                            (scope as any).row.exip && (scope as any).row.exips.status === 'success' ? 'is-success' : ''}`">
+                          (scope as any).row.exip && (scope as any).row.exips.status === 'success' ? 'is-success' : ''}`">
                         {{ (scope as any).row.exip }}
                       </span>
                     </div>
@@ -181,7 +181,8 @@ export default defineComponent({
   props: {
     config: {
       type: Object,
-      default: ADD_ENV_GROUPS_CONFIG
+      default: ADD_ENV_GROUPS_CONFIG,
+      required: false,
     },
     editItem: {
       type: Object,
@@ -197,7 +198,7 @@ export default defineComponent({
     }
   },
 
-  emits: ['success', 'close', 'selectRepo'],
+  emits: ['success', 'close'],
 
   setup(props, context) {
     const { proxy } = getCurrentInstance() as ComponentInternalInstance
@@ -330,8 +331,11 @@ export default defineComponent({
         state.repIps = ips.concat(state.exipSelectValues, state.inipSelectValues)
         state.radioGroupValues = {}
         state.inputVariableValues = ''
-        state.ipsArray= []
+        state.ipsArray = []
         store.dispatch('setSelectIpArray', state.repIps)
+        store.dispatch('setSelectGroupArray', [])
+        store.dispatch('setVariableArray', [])
+        store.dispatch('setCustomArray', [])
         close(state.selectForm.type)
         return
       }
@@ -339,9 +343,12 @@ export default defineComponent({
       if (state.selectForm.type === 'group') {
         state.repIps = []
         state.inputVariableValues = ''
-        state.ipsArray= []
+        state.ipsArray = []
         if (state.radioGroupValues['name']) {
           store.dispatch('setSelectGroupArray', [state.radioGroupValues])
+          store.dispatch('setSelectIpArray', [])
+          store.dispatch('setVariableArray', [])
+          store.dispatch('setCustomArray', [])
         } else {
           proxy.$notification(proxy.$t('selectGroupMsg'), 'error')
         }
@@ -352,8 +359,11 @@ export default defineComponent({
       if (state.selectForm.type === 'variable') {
         state.repIps = []
         state.radioGroupValues = {}
-        state.ipsArray= []
+        state.ipsArray = []
         store.dispatch('setVariableArray', [state.inputVariableValues])
+        store.dispatch('setSelectGroupArray', [])
+        store.dispatch('setSelectIpArray', [])
+        store.dispatch('setCustomArray', [])
         close(state.selectForm.type)
         return
       }
@@ -369,6 +379,9 @@ export default defineComponent({
           }
         })
         store.dispatch('setCustomArray', state.ipsArray)
+        store.dispatch('setVariableArray', [])
+        store.dispatch('setSelectGroupArray', [])
+        store.dispatch('setSelectIpArray', [])
         close(state.selectForm.type)
         return
       }
