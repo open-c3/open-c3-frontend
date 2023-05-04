@@ -183,3 +183,22 @@ export const bytesToSize = (bytes: number) => {
   const i = Math.floor(Math.log(bytes) / Math.log(k))
   return (bytes / Math.pow(k, i)).toPrecision(3) + ' ' + sizes[i]
 }
+
+export const ADD_USER_CONFIG = Object.freeze({
+  width: '500px',
+  title: 'addUser',
+  form: {
+    config: [
+      {
+        label: 'accName',
+        prop: 'username',
+        type: 'text',
+        placeholder: 'accountName',
+        rules: [
+          { required: true, trigger: 'blur', message: t('requiredText') }
+        ],
+        span: 24
+      }
+    ]
+  }
+})
