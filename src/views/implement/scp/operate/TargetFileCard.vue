@@ -33,44 +33,60 @@
         <!-- 执行账户 -->
         <template #dstUser>
           <div class="target-file-form-item">
-            <el-select v-model="params.dstUser" class="w450" :placeholder="`${$t('configFormSelect')}${$t('executionAccount')}`" size="large">
+            <el-select v-model="params.dstUser" class="w450"
+              :placeholder="`${$t('configFormSelect')}${$t('executionAccount')}`" size="large">
               <el-option v-for="item in allProUsers" :key="item.username" :label="item.username" :value="item.username" />
             </el-select>
-            <el-button class="ml20" type="primary" icon="Plus" @click="handleSelectSourceType('dstuser')"></el-button>
+            <el-button class="ml20" type="primary" icon="Plus" @click="handleUser"></el-button>
           </div>
         </template>
 
         <!-- 目标机器 -->
         <template #choiceResult>
           <div class="target-file-form-item">
-            <el-button type="primary" icon="Plus"></el-button>
+            <el-button type="primary" icon="Plus" @click="handleServer"></el-button>
           </div>
+          <Table :thead="thead" :data="params.choiceResult" class="w600 mt10">
+            <template #id="{ index }">{{ index + 1 }}</template>
+            <template #type="{ row }">
+              <div>{{ CHOICE_NODE_TYPE[row.type] }}</div>
+            </template>
+            <template #operate="{ row, index }">
+              <el-button link type="primary" @click="handleDeleteItem(index)">{{ $t('delete') }}</el-button>
+            </template>
+          </Table>
         </template>
 
         <!-- 文件归属者 -->
         <template #fileChown>
           <div class="target-file-form-item">
             <div>
-              <el-select v-model="params.fileChown" class="w450"  :placeholder="`${$t('configFormSelect')}${$t('fileOwner')}`" size="large">
-                <el-option v-for="item in allProUsers" :key="item.username" :label="item.username" :value="item.username" />
+              <el-select v-model="params.fileChown" class="w450"
+                :placeholder="`${$t('configFormSelect')}${$t('fileOwner')}`" size="large">
+                <el-option v-for="item in allProUsers" :key="item.username" :label="item.username"
+                  :value="item.username" />
               </el-select>
-              <div class="target-file-form-item-button">{{$t('fileChownMessage')}}</div>
+              <div class="target-file-form-item-button">{{ $t('fileChownMessage') }}</div>
             </div>
-            <el-button class="ml20" type="primary" icon="Plus" @click="handleSelectSourceType('fileChown')"></el-button>
+            <el-button class="ml20" type="primary" icon="Plus" @click="handleUser"></el-button>
           </div>
         </template>
 
         <!-- 文件权限 -->
         <template #chmod>
           <el-input class="w450" v-model="params.chmod" />
-          <div class="target-file-form-item-button">{{$t('chmodMessage')}}</div>
+          <div class="target-file-form-item-button">{{ $t('chmodMessage') }}</div>
         </template>
       </base-form>
     </div>
   </el-card>
-  <component :ref="compType[activeName]" :is="compType[activeName]" v-if="compFlag" v-model="compFlag"
-    :treeId="String(treeId)" :config="compConfig[activeName]" :radioOption="SELECT_SERVER_RADIO_OPTION"
-    :editItem="compParams" @close="compClose" @success="compSuccess" />
+
+  <!-- 选择服务器 -->
+  <Selectserver v-if="serverFlag" v-bind="$attrs" v-model="serverFlag" :config="serverConfig" :editItem="compParams"
+    :treeId="String(treeId)" :radioOption="SELECT_SERVER_RADIO_OPTION" @success="serverSuccess" @close="serverClose" />
+
+  <!-- 添加用户 -->
+  <AddUserModal v-if="addUserFlag" v-bind="$attrs" v-model="addUserFlag" :compParams="compParams" @success="compSuccess" @close="compClose" />
 </template>
 
 <script lang="ts">
@@ -79,8 +95,7 @@ import Table from '@/components/table/index.vue'
 import baseForm from '@/components/baseForm/index.vue'
 import store from '@/store'
 import Selectserver from '@/views/quickentry/components/Selectserver.vue'
-import ShareCardModal from './ShareCardModal.vue'
-import BuildCardModal from './BuildCardModal.vue'
+import AddUserModal from './AddUserModal.vue'
 import {
   SHARE_DIALOG_CONFIG,
   BUILD_DIALOG_CONFIG,
@@ -90,14 +105,17 @@ import {
 import {
   SELECT_SERVER_RADIO_OPTION,
   ADD_ENV_GROUPS_CONFIG,
+  RUN_THEAD_CONFIG,
+  CHOICE_NODE_TYPE,
 } from '../../config'
 import {
   getJobUserList
 } from '@/api/implement/index'
+import { deepClone } from '@/utils'
 import { TreeIdInfo } from '@/api/interface'
 
 export default defineComponent({
-  components: { Table, ShareCardModal, Selectserver, BuildCardModal, baseForm },
+  components: { Table, Selectserver, baseForm, AddUserModal },
   props: {
     treeId: {
       type: String,
@@ -107,13 +125,25 @@ export default defineComponent({
   setup(props) {
     const { proxy } = getCurrentInstance() as ComponentInternalInstance
 
+    const selectIpArray = computed(() => {
+      return store.getters.selectIpArray
+    })
+
+    const selectGroupArray = computed(() => {
+      return store.getters.selectGroupArray
+    })
+
+    const customArray = computed(() => {
+      return store.getters.customArray
+    })
+
     const state = reactive({
       tableName: '',
       activeName: 'share',
-      compFlag: false,
+      addUserFlag: false,
       compParams: {},
       sourceFileType: SCP_SOURCE_FILE_SELECT_TYPE_HEAD,
-      compType: { share: 'ShareCardModal', server: 'Selectserver', build: 'BuildCardModal' },
+      compType: { share: 'ShareCardModal', server: Selectserver, build: 'BuildCardModal' },
       compConfig: { share: SHARE_DIALOG_CONFIG, server: ADD_ENV_GROUPS_CONFIG, build: BUILD_DIALOG_CONFIG },
       serverList: [],
       config: TARGET_SOURCE_CONFIG,
@@ -129,11 +159,15 @@ export default defineComponent({
         unClickDeployenv: 'always', // 生效环境
         unClickAction: 'always',    // 生效动作
         unClickBatches: 'always',   // 分批
-      }
+      },
+      thead: deepClone(RUN_THEAD_CONFIG),
+      selectIpStr: '',
+      serverFlag: false,
+      serverConfig: ADD_ENV_GROUPS_CONFIG,
     })
 
     // 获取用户列表 
-    const getUserData: () => Promise<void> = async () => {
+    const getUserData = async () => {
       const params: TreeIdInfo = { treeId: props.treeId }
       const dataRet = await getJobUserList(params)
       if (dataRet) {
@@ -141,33 +175,66 @@ export default defineComponent({
       }
     }
 
-    const handleSelectSourceType: (type: string) => void = (type: string): void => {
-      state.activeName = type
-      state.compFlag = true
+    const handleUser = (type: string) => {
+      state.addUserFlag = true
       state.compParams = {
-        title: proxy.$t('selectServer')
+        title: proxy.$t('addUser')
       }
     }
 
-    const compClose: () => void = () => {
-      state.compFlag = false
+    const handleServer = () => {
+      state.serverFlag = true
+      state.compParams['title'] = proxy.$t('selectServer')
+    }
+
+    const compClose = (type?: string) => {
+      getUserData()
+      state.addUserFlag = false
     }
 
     const compSuccess: () => void = (): void => {
       compClose()
     }
 
+    const serverSuccess = () => {
+      serverClose()
+    }
+
+    const serverClose = (type?: string) => {
+      state.serverFlag = false
+      state.selectIpStr = type
+    }
+
+    const handleDeleteItem = (index: number) => {
+      state.params.choiceResult.splice(index, 1)
+    }
+
     onMounted(() => {
       getUserData()
     })
 
+    watch(() => [selectIpArray.value, selectGroupArray.value, customArray.value], (value) => {
+      if (state.selectIpStr === 'ip') {
+        state.params.choiceResult = value[0].map(item => { return { name: item, type: 'node' } })
+      } else if (state.selectIpStr === 'group') {
+        state.params.choiceResult = value[1].map(item => { return { name: item.name, type: item.plugin } })
+      } else if (state.selectIpStr === 'custom') {
+        state.params.choiceResult = value[2].map(item => { return { name: item, type: 'node' } })
+      }
+    })
+
     return {
       SELECT_SERVER_RADIO_OPTION,
+      CHOICE_NODE_TYPE,
       ...toRefs(state),
-      handleSelectSourceType,
+      handleUser,
       compClose,
       compSuccess,
       getUserData,
+      handleServer,
+      serverClose,
+      serverSuccess,
+      handleDeleteItem,
     }
   }
 })
@@ -201,12 +268,14 @@ export default defineComponent({
   justify-content: flex-start;
   align-items: center;
 }
+
 .target-file-form-item {
   display: flex;
   justify-content: flex-start;
   align-items: flex-start;
+
   &-button {
-    font-size:12px;
+    font-size: 12px;
     color: var(--el-color-gray)
   }
 }
