@@ -1,6 +1,6 @@
 // 作业管理列表搜索
-export interface getJobListData {
-  jobname?: string;
+export interface getJobListInfo {
+  name?: string;
   create_user?: string;
   edit_user?: string;
   create_time_start?: string;
@@ -83,7 +83,7 @@ export interface createJobxGroupData {
 }
 
 // 获取机器列表
-export interface getMachineListParams{
+export interface getMachineListParams {
   name?: string;
   create_user?: string;
   create_time_start?: string;
@@ -98,11 +98,47 @@ export interface addMachineData {
 }
 
 // 报警通知列表
-export interface getNotifyListParams{
+export interface getNotifyListParams {
   name?: string;
 }
 
 // 添加报警人
 export interface addNotifyUserData {
   user: string;
+}
+
+export interface JobItemsData {
+  create_time: string
+  create_user: string
+  edit_time: string
+  edit_user: string
+  hasvariable: number
+  id: string | number
+  name: string
+  stepcount: number
+  uuid: string
+}
+
+export interface JobItemsInfo {
+  treeId: string | string[] | number
+  uuid: string
+}
+
+export interface JobItemsVariableQueryInfo {
+  empty?: string | number
+  exclude?: string
+  env?: 'in' | 'test' | 'online'
+}
+export interface JobItemsVariableInfo {
+  treeId: string | string[] | number
+  jobuuid: string,
+  query?: JobItemsVariableQueryInfo
+}
+
+export interface RunJobItemInfo {
+  treeId: string | string[] | number
+  data: {
+    jobuuid: string
+    variable?: { [propsName: string]: string }
+  }
 }

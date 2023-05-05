@@ -226,7 +226,7 @@ export default defineComponent({
         if (row.jobtype === 'plugin_scp' || row.jobtype === 'plugin_cmd' || row.jobtype === 'plugin_approval') {
           router.push(`/history/jobdetail/${treeId.value}/${row.jobuuid}/${row.uuid}?jobtype=${row.jobtype}`)
         } else {
-          router.push(`/history/jobdetail/${treeId.value}/${row.name.split('_')[2]}/${row.uuid}`)
+          router.push(`/history/jobdetail/${treeId.value}/${row.name.indexOf('_') > 0? row.name.split('_')[2]: 'empty'}/${row.uuid}`)
         }
       } else if (type === 'redo') {
         ElMessageBox.confirm(proxy.$t('redoTaskMessage'), proxy.$t('redoTask'), {

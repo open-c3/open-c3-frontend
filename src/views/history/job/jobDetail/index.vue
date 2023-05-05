@@ -172,7 +172,7 @@
                     <el-button-group
                       v-for="(sItem, sIndex) in JOB_TASK_STATUS_BUTTON_GROUP[item.subtask_type]?.[(scope as any)?.row.status]"
                       :key="sIndex">
-                      <el-button type="primary" link @click="taskOperate(sItem, index, (scope as any)?.row)"
+                      <el-button class="ml10" type="primary" link @click="taskOperate(sItem, index, (scope as any)?.row)"
                         v-if="setJobTaskShow(sItem, index, (scope as any)?.row)">
                         {{ sItem.text }}
                       </el-button>
@@ -208,9 +208,8 @@ import Table from '@/components/table/index.vue'
 import TaskWebsocket from '../components/TaskWebsocket.vue'
 import TaskJobDetailModal from '../components/TaskJobDetailModal.vue'
 
-import { seftime, deepClone } from '@/utils'
+import { seftime } from '@/utils'
 import {
-  ITEM_TABLE_HEAD,
   TASK_JOB_DETAIL_STEP_MAP_TEXT,
   JOBX_GROUP_TABLE_STATUS,
   TASK_JOB_DETAIL_MODAL_CONFIG,
@@ -260,7 +259,6 @@ export default defineComponent({
       timer: null,
       detailInfo: {} as any,
       jobStepInfo: [] as any,
-      // itemTableConfig: [TASK_JOB_DETAIL_STEP_MAP],
       itemTableConfig: [],
       operateMessage: SUB_TASK_OPERATE_MESSAGE_GROUP,
       locationStr: '',
@@ -268,7 +266,7 @@ export default defineComponent({
     })
 
     // 获取 基本信息
-    const getDetailData: () => Promise<void> = async (): Promise<void> => {
+    const getDetailData = async () => {
       const params: IFlowlineDetailParams = {
         treeId: route.params.treeId,
         uuid: route.params.taskuuid,
@@ -276,16 +274,15 @@ export default defineComponent({
       const dataRet = await getTaskJobInfo(params)
       if (dataRet) {
         state.detailInfo = { ...dataRet, loguuid: `${dataRet.uuid}${dataRet.jobuuid}${dataRet.jobtype.split('_')[1]}` }
-
         if (dataRet.status === 'fail' || dataRet.status === 'success') {
           clearTimer('timer')
         }
         if (dataRet.jobtype) {
           state.jobType = dataRet.jobtype
         }
-        if (state.jobType == 'jobs') {
+        if (dataRet.jobtype === 'jobs') {
           getJobStepData()
-        } else if (state.jobType) {
+        } else if (dataRet.jobtype) {
           if (state.getScpCmdTaskLoaded === false) {
             getScpCmdTask()
           }
@@ -312,7 +309,7 @@ export default defineComponent({
     }
 
     // 获取 作业步骤 
-    const getJobStepData: () => Promise<void> = async (): Promise<void> => {
+    const getJobStepData = async () => {
       const newArr = JSON.parse(JSON.stringify(state.itemTableConfig))
       const params: IFlowlineDetailParams = {
         treeId: route.params.treeId,
@@ -320,7 +317,7 @@ export default defineComponent({
       }
       const dataRet = await getSubTaskInfo(params)
       if (dataRet) {
-        state.jobStepInfo = [...dataRet]
+        state.jobStepInfo = dataRet
         state.jobStepInfo.forEach((item, index) => {
           newArr.push({
             [`${item.subtask_type}-${index}`]: {
@@ -343,8 +340,8 @@ export default defineComponent({
         cancelButtonText: proxy.$t('cancel'),
         type: 'warning'
       }).then(async () => {
-        const params:IKillTaskInfo =  {
-          slave:  state.detailInfo.slave,
+        const params: IKillTaskInfo = {
+          slave: state.detailInfo.slave,
           taskuuid: route.params.taskuuid as string
         }
         const dataRet = await deleteJobDetailTask(params)
@@ -361,7 +358,7 @@ export default defineComponent({
     }
 
     // 查看任务日志
-    const handleTaskDetail: () => void = (): void => {
+    const handleTaskDetail = () => {
       state.compFlag = true
       state.hasTable = false
       state.compType = 'TaskJobDetailModal'
@@ -374,12 +371,12 @@ export default defineComponent({
     }
 
     // 刷新作业步骤
-    const onRefresh: () => void = (): void => {
+    const onRefresh = () => {
       getJobStepData()
     }
 
     // 作业步骤任务状态条件
-    const setJobTaskShow: (item: any, index: number, row: any) => boolean = (item: any, index: number, row: any): boolean => {
+    const setJobTaskShow = (item: any, index: number, row: any): boolean => {
       if (item.type === row.subtask_type) {
         return {
           success: {
@@ -413,7 +410,7 @@ export default defineComponent({
     }
 
     // 按钮操作
-    const taskOperate: (item: any, index: number, row: any) => void = (item: any, index: number, row: any): void => {
+    const taskOperate = (item: any, index: number, row: any) => {
       const commonParams: ISubTaskConfirmData = {
         taskuuid: route.params.taskuuid as string,
         subtaskuuid: row.uuid,
@@ -431,6 +428,7 @@ export default defineComponent({
         next: { treeId: route.params.treeId, data: { ...commonParams, control: 'next' } },
         retry: { treeId: route.params.treeId, data: { ...commonParams, control: 'running' } },
         ignore: { treeId: route.params.treeId, data: { ...commonParams, control: 'ignore' } },
+        shutTask: { treeId: route.params.treeId, data: { ...commonParams, control: 'fail' } },
         termination: { treeId: route.params.treeId, data: { ...commonParams, control: 'fail' } },
       }
       switch (item.value) {
@@ -470,11 +468,11 @@ export default defineComponent({
     }
 
     // 组件成功回调
-    const emitSuccess: () => void = (): void => {
+    const emitSuccess = () => {
       emitClose()
     }
 
-    const emitClose: () => void = (): void => {
+    const emitClose = () => {
       state.compFlag = false
     }
 
@@ -501,7 +499,7 @@ export default defineComponent({
       if (acc !== cur) { }
     })
 
-    const defaultOperate: () => void = (): void => {
+    const defaultOperate = () => {
       if (route.query?.jobtype) {
         state.jobType = route.query?.jobtype as string
       }

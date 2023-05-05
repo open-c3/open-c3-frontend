@@ -1266,4 +1266,10 @@ export default {
   ciThead:'Build ID (flow ID)',
   scpDeleteTip: 'When enabled, delete files not found in SRC in DEST when synchronizing folders',
   targetPathTip : 'The destination path ending with ‘/’ represents a directory and not a file. For example,/tmp/means to save the file to this directory,/tmp/test.txt means to save the file to this directory, and the file name is test.txt',
+  have:'have',
+  none:'none',
+  clone: 'clone',
+  deleteTask: 'delete job',
+  deleteTaskDescribe: 'Are you sure you want to delete this assignment?',
+  emptyVariableTitle: 'Fill in empty variables',
 }
