@@ -76,7 +76,7 @@ export default defineComponent({
 
     // 开始执行
     const handleConfirm: () => void = ():void => {
-      return (proxy.$refs.form as any).validFun().then(valid => {
+      return (proxy.$refs.form as any).validate().then(valid => {
         if (valid) {
           ElMessageBox.confirm(proxy.$t('distributionFileMessage'), proxy.$t('distributionFile'), {
             confirmButtonText: proxy.$t('confirm'),
@@ -122,6 +122,7 @@ export default defineComponent({
   display: flex;
   justify-content: center;
   align-items: center;
+  flex-direction: column;
   &-form {
     width: 50%;
   }

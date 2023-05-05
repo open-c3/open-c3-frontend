@@ -24,12 +24,25 @@ export const getMachineList = (data: TreeIdInfo): Promise<DevicePromiseInfo | an
 
 /**
  * 获取CMDB资源信息 get
- * /api/ci/v2/c3mc/cmdb/menu?treeid={treeid}&timemachine={selectedtimemachine}
+ * /api/agent/device/menu/treeid={treeid}&timemachine={selectedtimemachine}
  * @param treeId
  */
 export const getCMDBResourceList = (treeId:string| string[]| number, params: CMDBDataMenuInfo): Promise<DevicePromiseInfo | any> => {
   return request({
     url: `/api/agent/device/menu/${treeId}`,
+    method: 'get',
+    params
+  })
+}
+
+/**
+ * 获取CMDB资源信息V2 get
+ * /api/ci/v2/c3mc/cmdb/menu?treeid={treeid}&timemachine={selectedtimemachine}
+ * @param treeId
+ */
+export const getCMDBV2ResourceList = (treeId:string| string[]| number, params: CMDBDataMenuInfo): Promise<DevicePromiseInfo | any> => {
+  return request({
+    url: `/api/ci/v2/c3mc/cmdb/menu?treeid=${treeId}`,
     method: 'get',
     params
   })
