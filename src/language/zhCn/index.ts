@@ -1291,4 +1291,10 @@ export default {
   ciThead: '构建ID（流水线ID）',
   scpDeleteTip: '开启后，同步文件夹时删除DEST中SRC没有的文件',
   targetPathTip: '目标路径以‘/’结尾代表一个目录，不以‘/’结尾表示一个文件。如：/tmp/表示将文件保存到此目录下，/tmp/test.txt表示将文件保存到此目录下，文件名为test.txt',
+  have:'有',
+  none:'无',
+  clone: '克隆',
+  deleteTask: '删除作业',
+  deleteTaskDescribe: '确认删除该作业吗？',
+  emptyVariableTitle: '填写空变量',
 }

@@ -4,7 +4,7 @@ export const SEARCH_CONFIG = Object.freeze({
   formConfig: [
     {
       label: '',
-      prop: 'jobname',
+      prop: 'name',
       type: 'text',
       placeholder: 'JobName'
     },
@@ -64,14 +64,14 @@ export const SEARCH_CONFIG = Object.freeze({
 
 // 表头
 export const THEAD_CONFIG = Object.freeze([
-  { prop: 'startsAt', label: 'JobName', align: 'center' },
-  { prop: 'alertname', label: 'associatedFlow', align: 'center' },
-  { prop: 'instance', label: 'step', align: 'center' },
-  { prop: 'status', label: 'variable', align: 'center' },
-  { prop: 'summary', label: 'createUser', align: 'center' },
-  { prop: 'value', label: 'creatorTime', align: 'center' },
-  { prop: 'bindTT', label: 'editUser', align: 'center' },
-  { prop: 'bindTT', label: 'lastModifiedTime', align: 'center' },
+  { prop: 'name', label: 'JobName', align: 'center' },
+  { type: 'slot', prop: 'flowline', label: 'associatedFlow', align: 'center' },
+  { prop: 'stepcount', label: 'step', align: 'center' },
+  { type: 'slot', prop: 'hasvariable', label: 'variable', align: 'center' },
+  { prop: 'create_user', label: 'createUser', align: 'center' },
+  { prop: 'create_time', label: 'creatorTime', align: 'center' },
+  { prop: 'edit_user', label: 'editUser', align: 'center' },
+  { prop: 'edit_time', label: 'lastModifiedTime', align: 'center' },
   { prop: 'operate', label: 'operate', align: 'center', type: 'slot' }
 ])
 // 全局变量参数
@@ -126,9 +126,9 @@ export const ADD_SCRIPT_STEP_CONFIG = Object.freeze({
         prop: 'btn',
         type: 'radio',
         data: [
-          { name: t('manualEntry'), value: 'manual'},
-          { name: t('scriptClone'), value: 'clone'},
-          { name: t('localScript'), value: 'local'}
+          { name: t('manualEntry'), value: 'manual' },
+          { name: t('scriptClone'), value: 'clone' },
+          { name: t('localScript'), value: 'local' }
         ],
         span: 24
       },
@@ -137,14 +137,14 @@ export const ADD_SCRIPT_STEP_CONFIG = Object.freeze({
         prop: 'btn',
         type: 'radio',
         data: [
-          { name: 'shell', value: 'shell'},
-          { name: 'python', value: 'python'},
-          { name: 'perl', value: 'perl'},
-          { name: 'php', value: 'php'},
-          { name: 'shell', value: 'manual'},
-          { name: t('builtIn'), value: 'buildin'},
-          { name: t('autoRecognition'), value: 'auto'}
-          
+          { name: 'shell', value: 'shell' },
+          { name: 'python', value: 'python' },
+          { name: 'perl', value: 'perl' },
+          { name: 'php', value: 'php' },
+          { name: 'shell', value: 'manual' },
+          { name: t('builtIn'), value: 'buildin' },
+          { name: t('autoRecognition'), value: 'auto' }
+
         ],
         span: 24
       },
@@ -199,3 +199,20 @@ export const ADD_SCRIPT_STEP_CONFIG = Object.freeze({
     ]
   }
 })
+
+export const SETTING_VARIABLE_MAP = Object.freeze({
+  0: t('none'),
+  1: t('have'),
+})
+
+export const EMPTY_VARIABLE_CONFIG = Object.freeze({
+  width: '800px',
+  title: 'emptyVariableTitle',
+})
+
+export const EMPTY_TABLE_THEAD = Object.freeze([
+  { type: 'slot', prop: 'order', label: 'serialNumber', align: 'center' },
+  { type: 'slot', prop: 'name', label: 'variableName', align: 'center' },
+  { type: 'slot', prop: 'value', label: 'value', align: 'center' },
+  { type: 'slot', prop: 'describe', label: 'describe', align: 'center' },
+])
