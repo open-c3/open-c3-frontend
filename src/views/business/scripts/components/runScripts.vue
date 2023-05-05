@@ -1,94 +1,96 @@
 <template>
   <div>
-    <Drawer v-bind="$attrs" :loading="loading"  @close="close" width="800px">
+    <Drawer v-bind="$attrs" :loading="loading" @close="close" width="800px">
       <template #drawerHeader>
-          <div class="el-drawer__header">
-            <span class="el-drawer__title">
-              {{ treeData?.parent }}
-            </span>
-            <el-icon @click="close" class="el-drawer__close-btn"><Close /></el-icon>
-          </div>
-        </template>
+        <div class="el-drawer__header">
+          <span class="el-drawer__title">
+            {{ treeData?.parent }}
+          </span>
+          <el-icon @click="close" class="el-drawer__close-btn">
+            <Close />
+          </el-icon>
+        </div>
+      </template>
       <template #content>
         <base-form ref="form" :config="config.form" :params="params" class="mt10">
           <template #scripts_cont>
-            <div v-if="params.scriptType=='buildin' && params.from == 'manual'">
+            <div v-if="params.scriptType == 'buildin' && params.from == 'manual'">
               <span class="f12 mr5">{{ $t('builtInPlugIn') }}:</span>
               <el-button v-for="item in builtInPlugIn" :key="item" link>{{ item }}</el-button>
             </div>
-            <v-ace-editor
-              v-model:value="params.scripts_cont"
-              @init="editorInit"
-              lang="yaml"
-              theme="cobalt"
-              style="height: 400px;width: 100%;"/>
+            <v-ace-editor v-model:value="params.scripts_cont" @init="editorInit" lang="yaml" theme="cobalt"
+              style="height: 400px;width: 100%;" />
             <a :href="url" target="_blank">{{ $t('commandHelp') }}</a>
           </template>
           <template #selectedUser>
             <el-select v-model="params.selectedUser" class="w450">
-              <el-option v-for="item in allUser" :key="item.id" :value="item.id">{{ item.username }}</el-option>
+              <el-option v-for="item in allUser" :key="item.id" :value="item.username" :label="item.username"/>
             </el-select>
-            <el-button v-if="params.scriptType !== 'buildin'" @click="addUser.flag = true" icon="plus" type="primary" class="ml10"/>
+            <el-button v-if="params.scriptType !== 'buildin'" @click="addUser.flag = true" icon="plus" type="primary"
+              class="ml10" />
           </template>
           <!-- 目标机器 -->
           <template #choiceResult>
             <div class="wp100">
-              <el-button @click="selectServer.flag = true" type="primary">{{ $t('selectServer') }}</el-button>
+              <el-button @click="handleServer" type="primary">{{ $t('selectServer') }}</el-button>
             </div>
             <Table :thead="thead" :data="params.choiceResult" class="w600 mt10">
-              <template #id="{index}">{{ index+1 }}</template>
-              <template #operate="{ row }">
-                <el-button link type="primary">{{ $t('delete') }}</el-button>
+              <template #id="{ index }">{{ index + 1 }}</template>
+              <template #type="{ row }">
+                <div>{{ CHOICE_NODE_TYPE[row.type] }}</div>
+              </template>
+              <template #operate="{ index }">
+                <el-button link type="primary" @click="handleDeleteItem(index)">{{ $t('delete') }}</el-button>
               </template>
             </Table>
           </template>
         </base-form>
       </template>
       <template #footer>
-        <el-button>{{ $t('executeScripts') }}</el-button>
+        <el-button @click="confirm">{{ $t('executeScripts') }}</el-button>
       </template>
     </Drawer>
     <!-- 新增账户 -->
-    <Dialog v-if="addUser.flag" v-bind="$attrs" :config="addUser.config" :loading="addUser.loading" @close="addUser.flag = false" @success="addUserConfirm">
+    <Dialog v-if="addUser.flag" v-bind="$attrs" :config="addUser.config" :loading="addUser.loading"
+      @close="addUser.flag = false" @success="addUserConfirm">
       <template #content>
-        <base-form ref="addUserForm" :config="addUser.config.form" :params="addUser.params"/>
+        <base-form ref="addUserForm" :config="addUser.config.form" :params="addUser.params" />
       </template>
     </Dialog>
     <!-- 选择服务器 -->
-    <Dialog v-if="selectServer.flag" v-bind="$attrs" :config="selectServer.config" :loading="selectServer.loading" @close="selectServer.flag = false" @success="addServer">
-      <template #content>
-        {{ selectServer.params.formType }}
-        <el-radio-group v-model="selectServer.params.formType">
-          <el-radio v-for="item in selectServer.formType" :label="item.id">{{item.name}}</el-radio>
-        </el-radio-group>
-        <template v-if="selectServer.params.formType === 'custom'">
-          <p>{{ $t('handwrittenIPMultiple') }}</p>
-          <p>{{ $t('handwrittenIPMultiple2') }}</p>
-          <el-input v-model="selectServer.params.customstr" type="textarea" class="h300"/>
-        </template>
-      </template>
-    </Dialog>
+    <Selectserver v-if="selectServer.flag" v-bind="$attrs" :config="selectServer.config" :editItem="editItem"
+      :treeId="String(treeId)" :radioOption="selectServer.formType" @success="addServer" @close="compClose" />
   </div>
 </template>
 <script lang="ts">
-import { reactive, toRefs, onMounted, watch, getCurrentInstance, computed } from 'vue'
+import { defineComponent, reactive, toRefs, onMounted, watch, getCurrentInstance, computed } from 'vue'
 import store from '@/store'
 import Drawer from '@/components/drawer/index.vue'
 import baseForm from '@/components/baseForm/index.vue'
 import Table from '@/components/table/index.vue'
 import Dialog from '@/components/dialog/index.vue'
 import { VAceEditor } from 'vue3-ace-editor'
-// import 'brace/ext/searchbox'
+import Selectserver from '@/views/quickentry/components/Selectserver.vue'
 import 'ace-builds/src-noconflict/mode-yaml'
 import 'ace-builds/src-noconflict/theme-cobalt'
 import 'ace-builds/src-noconflict/ext-searchbox'
+// import 'brace/ext/searchbox'
 // import 'brace/theme/cobalt'
 import { RUN_CONFIG, RUN_THEAD_CONFIG, ADD_USER_CONFIG, SELECT_SERVER_CONFIG, BUILT_IN_PLUGIN } from '../config'
+import { CHOICE_NODE_TYPE, LEAVE_CHOICE_NODE_TYPE_REGEXP } from '@/views/implement/config'
 import { getScripts, getScriptDetail } from '@/api/business/scripts'
 import { getBusinessUse, createBusinessUse } from '@/api/business/user'
 import { g_url } from '@/utils'
-export default {
-  components: { Drawer, baseForm, Table, VAceEditor, Dialog },
+import { ElMessageBox } from 'element-plus'
+import {
+  runquicklyRunScript,
+} from '@/api/implement/index'
+import {
+  RunScriptTaskInfo
+} from '@/api/interface/implement'
+
+export default defineComponent({
+  components: { Drawer, baseForm, Table, VAceEditor, Dialog, Selectserver },
   emits: ['close', 'addSuccess'],
   props: {
     info: {
@@ -96,11 +98,29 @@ export default {
       default: null
     }
   },
-  setup (prop, context) {
+  setup(prop, context) {
     const { proxy } = getCurrentInstance()
+
+    const treeId = computed(() => {
+      return store.getters.treeId
+    })
+
     const treeData = computed(() => {
       return store.getters.treeData
     })
+
+    const selectIpArray = computed(() => {
+      return store.getters.selectIpArray
+    })
+
+    const selectGroupArray = computed(() => {
+      return store.getters.selectGroupArray
+    })
+
+    const customArray = computed(() => {
+      return store.getters.customArray
+    })
+
     const state = reactive({
       url: `${g_url}/book/客户端内置命令/`,
       addUser: {
@@ -116,9 +136,9 @@ export default {
         config: SELECT_SERVER_CONFIG,
         loading: false,
         formType: [
-          { name: proxy.$t('selectServerViaIP'), id: 'ip'},
-          { name: proxy.$t('groupSelection'), id: 'group'},
-          { name: proxy.$t('handwrittenIP'), id: 'custom'}
+          { name: proxy.$t('selectServerViaIP'), id: 'ip' },
+          { name: proxy.$t('groupSelection'), id: 'group' },
+          { name: proxy.$t('handwrittenIP'), id: 'custom' }
         ],
         params: {
           formType: '',
@@ -139,15 +159,21 @@ export default {
         choiceResult: [], // 目标机器
         scripts_cont: '',
         s_argv: '', // 脚本参数
-        s_timeout: '', // 超时时间
+        s_timeout: 60, // 超时时间
         deployenv: 'always', // 生效环境
         action: 'always', // 生效动作
         batches: 'always', // 分配
-        id: ''
+        id: '',
+        node_type: '',
+        node_cont: '',
       },
       config: RUN_CONFIG,
       loading: false,
-      scriptStepFlag: true
+      scriptStepFlag: true,
+      editItem: {},
+      serverList: [],
+      selectIpStr: '',
+      showmachineFlag: true, // 目标机器是否展示
     })
     const editorInit = (editor) => {
       editor.setReadOnly(true)
@@ -159,9 +185,40 @@ export default {
     const confirm = () => {
       (proxy.$refs.form as any).validFun().then(valid => {
         if (valid) {
+          ElMessageBox.confirm(proxy.$t('executeScriptsMessage'), proxy.$t('executeScripts'), {
+            confirmButtonText: proxy.$t('confirm'),
+            cancelButtonText: proxy.$t('cancel'),
+            type: 'warning'
+          }).then(async () => {
+            if (state.params.scriptType === 'buildin') {
+              if (!state.showmachineFlag) {
+                state.params.node_type = 'builtin'
+                state.params.node_cont = 'openc3skipnode'
+              }
+            }
+            const params: RunScriptTaskInfo = {
+              name: state.params.name,
+              user: String(state.params.selectedUser),
+              node_type: state.params.node_type,
+              node_cont: state.params.choiceResult.map(item => item.name).join(','),
+              scripts_type: state.params.scriptType,
+              scripts_cont: state.params.scripts_cont,
+              scripts_argv: state.params.s_argv,
+              timeout: state.params.s_timeout,
+              deployenv: state.params.deployenv,
+              action: state.params.action,
+              batches: state.params.batches,
+            }
+            const dataRet = await runquicklyRunScript(treeId.value, params)
+            if (dataRet) {
+              proxy.$notification('success')
+            }
+          }).finally(() => {
+          })
         }
       })
     }
+
     // 根据id获取详情
     const detail = (id: number) => {
       getScriptDetail(store.getters.treeId, id).then((res: any) => {
@@ -190,37 +247,72 @@ export default {
       })
     }
     const addServer = () => {
-      const choiceResult = state.selectServer.params.customstr.split(/\n| |,/)
-      state.params.choiceResult = choiceResult.map(item => item.length > 0)
-      // var ips = [];
-      // angular.forEach(vm.customstr.split(/\n| |,/), function (value, key) {
-      //     if( value.length > 0 )
-      //     {
-      //         ips.push(value)
-      //     }
-      // });
-      // $uibModalInstance.close(
-      //     ips
-      // );
+      compClose()
     }
+
+    const compClose = (type?: string) => {
+      state.selectServer.flag = false
+      state.selectIpStr = type
+    }
+
+    const handleServer = () => {
+      state.selectServer.flag = true
+      state.editItem = {
+        title: proxy.$t('selectServer')
+      }
+    }
+
+    const handleDeleteItem = (index: number) => {
+      state.params.choiceResult.splice(index, 1)
+    }
+
     onMounted(() => {
       getAllUser()
-      if(prop.info) {
+      if (prop.info) {
         state.params.name = prop.info.name
         detail(prop.info.id)
       }
     })
+
+    watch(() => [selectIpArray.value, selectGroupArray.value, customArray.value], (value) => {
+      if (state.selectIpStr === 'ip') {
+        state.params.node_type = 'builtin'
+        state.params.choiceResult = value[0].map(item => { return { name: item, type: 'node' } })
+      } else if (state.selectIpStr === 'group') {
+        state.params.node_type = 'group'
+        state.params.choiceResult = value[1].map(item => { return { name: item.name, type: item.plugin } })
+      } else if (state.selectIpStr === 'custom') {
+        state.params.node_type = 'builtin'
+        state.params.choiceResult = value[2].map(item => { return { name: item, type: 'node' } })
+      }
+    })
+
+    watch(() => state.params.scripts_cont, (value) => {
+      if (LEAVE_CHOICE_NODE_TYPE_REGEXP.filter(item => value.search(item) === 0).length === 0) {
+        state.config.form.config.filter(item => item.prop === 'choiceResult')[0].hidden = false
+      } else {
+        state.config.form.config.filter(item => item.prop === 'choiceResult')[0].hidden = true
+      }
+    })
+
     return {
+      treeId,
+      customArray,
+      selectIpArray,
+      selectGroupArray,
+      CHOICE_NODE_TYPE,
       ...toRefs(state),
       close,
       confirm,
       treeData,
       editorInit,
       addUserConfirm,
-      addServer
+      addServer,
+      handleServer,
+      compClose,
+      handleDeleteItem,
     }
   }
-}
+})
 </script>
-<style lang="scss">
-</style>
+<style lang="scss"></style>

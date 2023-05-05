@@ -60,3 +60,8 @@ export interface InitiateApprovalInfo extends TreeIdInfo {
     timeout: string
   }
 }
+
+export interface FileListInfo extends TreeIdInfo {
+  selectUser: string;
+  filepath: string;
+}

@@ -208,6 +208,16 @@ const routes: Array<RouteRecordRaw> = [
       meta: { title: '代理设置(AGENT安装)' }
     }]
   }, {
+    path: '/smallapplication',
+    component: layout,
+    children: [
+      {
+        path: 'index',
+        component: () => import('@/views/smallapplication/index.vue')
+      },
+    ]
+  }
+  , {
     path: '/userCenter',
     component: layout,
     meta: { title: '客户中心' },
@@ -301,6 +311,11 @@ const routes: Array<RouteRecordRaw> = [
         path: 'auditLog',
         component: () => import('@/views/global/auditLog/index.vue'),
         meta: { title: '审计日志' }
+      },
+      {
+        path: 'smallapplication',
+        component: () => import('@/views/smallapplication/index.vue'),
+        meta: { title: '轻应用配置' }
       },
       {
         path: 'userAddr',
