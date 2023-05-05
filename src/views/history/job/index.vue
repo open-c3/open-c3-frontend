@@ -1,7 +1,7 @@
 <template>
   <div class="body-layout1">
     <!-- <span class="layout-title">{{ treeData?.parent }}</span> -->
-    <saas-tabs :label="treeData?.parent" class="mt-20"/>
+    <saas-tabs :label="treeData?.parent" class="mt-20" />
     <search-from :params="params" :config="config" @reset="searchReset" @query="handleSearch">
       <template #user>
         <div class="df">
@@ -223,26 +223,26 @@ export default defineComponent({
 
     const operate: (type: string, row: any) => void = (type: string, row: any) => {
       if (type === 'detail') {
-        if (row.jobtype === 'plugin_scp' || row.jobtype === 'plugin_cmd' || row.jobtype === 'plugin_approval' ) {
+        if (row.jobtype === 'plugin_scp' || row.jobtype === 'plugin_cmd' || row.jobtype === 'plugin_approval') {
           router.push(`/history/jobdetail/${treeId.value}/${row.jobuuid}/${row.uuid}?jobtype=${row.jobtype}`)
-        }else {
+        } else {
           router.push(`/history/jobdetail/${treeId.value}/${row.name.split('_')[2]}/${row.uuid}`)
         }
-      }else if (type === 'redo') {
+      } else if (type === 'redo') {
         ElMessageBox.confirm(proxy.$t('redoTaskMessage'), proxy.$t('redoTask'), {
-        confirmButtonText: proxy.$t('confirm'),
-        cancelButtonText: proxy.$t('cancel'),
-        type: 'warning'
-      }).then(async () => {
-        const params:ITaskJobUUIDParams = {
-          taskuuid: row.uuid
-        }
-        const dataRet = await getRedoTaskJob(treeId.value, params)
-        if (dataRet) {
-          proxy.$notification('operationSuccess')
-          getData()
-        }
-      })
+          confirmButtonText: proxy.$t('confirm'),
+          cancelButtonText: proxy.$t('cancel'),
+          type: 'warning'
+        }).then(async () => {
+          const params: ITaskJobUUIDParams = {
+            taskuuid: row.uuid
+          }
+          const dataRet = await getRedoTaskJob(treeId.value, params)
+          if (dataRet) {
+            proxy.$notification('operationSuccess')
+            getData()
+          }
+        })
       }
     }
 

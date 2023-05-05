@@ -85,10 +85,11 @@ export const getSubTreeList = (params: TreeIdInfo): Promise<IResponseInfo | any>
 /**
  * 创建任务 post
  * /api/jobx/task/{treeId}/job/byname
- * @param data: CreateTaskInfo
+ * @param {TreeIdInfo} treeId
+ * @param {CreateTaskInfo} data: 
  */
 
-export const createNewTask = (data: CreateTaskInfo): Promise<IResponseInfo | any> => {
+export const createNewTask = (treeId: string | string[] | number, data: CreateTaskInfo): Promise<IResponseInfo | any> => {
   return request({
     url: `/api/jobx/task/${data.id}/job/byname`,
     method: 'post',

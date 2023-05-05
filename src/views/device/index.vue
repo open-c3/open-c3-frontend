@@ -73,7 +73,8 @@ import {
 
 import {
   getMachineList,
-  getCMDBResourceList
+  getCMDBResourceList,
+  getCMDBV2ResourceList,
 } from '@/api/device/index'
 import {
   CMDBDataMenuInfo,
@@ -215,7 +216,8 @@ export default defineComponent({
       },
         state.loading = true
       const params: CMDBDataMenuInfo = { timemachine: time }
-      const dataRet = await getCMDBResourceList(treeId.value, params).catch(err => state.loading = false)
+      // const dataRet = await getCMDBResourceList(treeId.value, params).catch(err => state.loading = false)
+      const dataRet = await getCMDBV2ResourceList(treeId.value, params).catch(err => state.loading = false)
       if (dataRet) {
         state.loading = false
         const newData = JSON.parse(JSON.stringify(dataRet))

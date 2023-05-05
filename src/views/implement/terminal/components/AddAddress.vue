@@ -21,13 +21,13 @@
   </Dialog>
 </template>
 <script lang="ts">
-import { reactive, toRefs, getCurrentInstance, watch } from 'vue'
+import { defineComponent, reactive, toRefs, getCurrentInstance, watch } from 'vue'
 import Dialog from '@/components/dialog/index.vue'
 import Table from '@/components/table/index.vue'
 import { getNodeInfo } from '@/api/monitor/config'
 import { CHOICE_SERVER_CONFIG } from '../config'
 
-export default {
+export default defineComponent({
   components: { Dialog, Table },
   emits: ['close', 'choiceServer'],
   props: {
@@ -97,6 +97,6 @@ export default {
       operate,
     }
   }
-}
+})
 </script>
 <style lang="scss"></style>

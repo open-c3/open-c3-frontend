@@ -35,8 +35,8 @@
             <template #type="{ row }">
               <div>{{ CHOICE_NODE_TYPE[row.type] }}</div>
             </template>
-            <template #operate="{ row }">
-              <el-button link type="primary">{{ $t('delete') }}</el-button>
+            <template #operate="{ row, index }">
+              <el-button link type="primary" @click="handleDeleteItem(index)">{{ $t('delete') }}</el-button>
             </template>
           </Table>
         </template>
@@ -54,7 +54,7 @@
     </template>
   </Dialog>
   <component :ref="compType" :is="compType" v-if="compFlag" v-model="compFlag" :radioOption="SELECT_SERVER_RADIO_OPTION"
-    :treeData="treeData" :treeId="treeId" :editItem="editItem" :config="ADD_ENV_GROUPS_CONFIG" @close="compClose"
+    :treeData="treeData" :treeId="String(treeId)" :editItem="editItem" :config="ADD_ENV_GROUPS_CONFIG" @close="compClose"
     @success="compSuccess" />
 </template>
 
@@ -183,8 +183,9 @@ export default defineComponent({
     const handleBuildinSet: (name: string) => void = (name: string): void => {
       state.params.scripts_cont = `#!${name}`
     }
-    // 添加成功
-    const getList: () => void = (): void => {
+
+    const handleDeleteItem = (index: number) => {
+      state.params.choiceResult.splice(index, 1)
     }
 
     // 获取全部执行账户
@@ -263,7 +264,6 @@ export default defineComponent({
       formNoDisable.forEach(item => {
         state.config.form.config.filter(cItem => cItem.prop === item)[0].disabled = false
         if (item === 'name') {
-          // ${moment().format('sss')}
           state.params.name = `${proxy.$t('executeScriptsQuickly')}-${moment().format('YYYYMMDDHHmmss')}`
         }
       })
@@ -276,10 +276,13 @@ export default defineComponent({
 
     watch(() => [selectIpArray.value, selectGroupArray.value, customArray.value], (value) => {
       if (state.selectIpStr === 'ip') {
+        state.params.node_type = 'builtin'
         state.params.choiceResult = value[0].map(item => { return { name: item, type: 'node' } })
       } else if (state.selectIpStr === 'group') {
+        state.params.node_type = 'group'
         state.params.choiceResult = value[1].map(item => { return { name: item.name, type: item.plugin } })
       } else if (state.selectIpStr === 'custom') {
+        state.params.node_type = 'builtin'
         state.params.choiceResult = value[2].map(item => { return { name: item, type: 'node' } })
       }
     })
@@ -299,7 +302,6 @@ export default defineComponent({
       SELECT_SERVER_RADIO_OPTION,
       ADD_ENV_GROUPS_CONFIG,
       ...toRefs(state),
-      getList,
       handleBuildinSet,
       editorInit,
       compSuccess,
@@ -307,6 +309,7 @@ export default defineComponent({
       addUserConfirm,
       handleConfirm,
       handleSelectServer,
+      handleDeleteItem,
     }
   }
 })
